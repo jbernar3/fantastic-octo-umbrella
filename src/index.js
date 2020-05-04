@@ -1,1 +1,1 @@
-import Form from "./js/components/Form";
+import SignUp from "./js/components/SignUp";
