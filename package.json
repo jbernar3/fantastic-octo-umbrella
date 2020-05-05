@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development"
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -20,19 +20,21 @@
   },
   "homepage": "https://github.com/jbernar3/fantastic-octo-umbrella#readme",
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
+    "@material-ui/core": "^4.9.13",
+    "@material-ui/icons": "^4.9.1",
     "babel-loader": "^8.1.0",
     "html-loader": "^1.1.0",
-    "html-webpack-plugin": "^4.2.0",
-    "webpack": "^4.42.1",
+    "html-webpack-plugin": "^4.3.0",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
-    "webpack-merge": "^4.2.2"
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2"
   }
 }
