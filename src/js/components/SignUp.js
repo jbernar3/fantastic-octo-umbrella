@@ -84,15 +84,17 @@ export default function SignUp(props) {
                 firstName : fName,
                 lastName : lName,
                 email : email,
-                password : password
+                password : password,
+                wantsPromotions : wantsPromMsg
             };
 
             const xhr = new XMLHttpRequest();
             xhr.addEventListener('load', () => {
-
+                console.log(xhr.response);
             });
-            xhr.open('POST', 'http://localhost:3000/signup', true);
-            xhr.send(JSON.stringify({ HELLO : "WORLD" }));
+            xhr.open('POST', 'http://localhost:3000/signup', false);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(postParameters));
             setSignedUp(true);
         }
     };
