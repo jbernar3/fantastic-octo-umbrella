@@ -90,7 +90,7 @@ export default function SignUp(props) {
 
             const xhr = new XMLHttpRequest();
             xhr.addEventListener('load', () => {
-                console.log(xhr.response);
+                console.log(JSON.parse(xhr.response)[0]._id);
             });
             xhr.open('POST', 'http://localhost:3000/signup', false);
             xhr.setRequestHeader("Content-Type", "application/json");
