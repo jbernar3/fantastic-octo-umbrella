@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignInSide() {
+function SignInSide(props) {
     const classes = useStyles();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -91,7 +91,10 @@ export default function SignInSide() {
                 setErrorMsg("Error signing up. Please try again.");
             } else {
                 setErrorMsg("");
+                const user = JSON.parse(xhr.response);
                 console.log(JSON.parse(xhr.response).first_name);
+                console.log(props);
+                props.onSignin(user.email, user.first_name, user.last_name);
                 setSignedIn(true);
             }
         });
@@ -179,4 +182,14 @@ export default function SignInSide() {
             </Grid>
         </Grid>
     );
+}
+
+export default class Signin extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        console.log(this.props);
+        return (<SignInSide onSignin={this.props.onClick}/>)
+    }
 }
