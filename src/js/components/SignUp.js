@@ -19,7 +19,7 @@ function Copyright() {
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+                Arma
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    error_textfield: {
+        borderColor: "red",
+        borderWidth: 300,
+    }
 }));
 
 export default function SignUp(props) {
@@ -55,6 +59,7 @@ export default function SignUp(props) {
     const [password, setPassword] = React.useState("");
     const [wantsPromMsg, setWantsPromMsg] = React.useState(false);
     const [signedUp, setSignedUp] = React.useState(false);
+    const [errorMsg, setErrorMsg] = React.useState("");
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -64,6 +69,7 @@ export default function SignUp(props) {
         } else if (name === "lastName") {
             setLName(value);
         } else if (name === "email") {
+            setErrorMsg("");
             setEmail(value);
         } else if (name === "password") {
             setPassword(value);
@@ -71,32 +77,30 @@ export default function SignUp(props) {
     };
 
     const handleSubmit = () => {
-        if (fName === "") {
-            console.log("first name required");
-        } else if (lName === "") {
-            console.log("last name required");
-        } else if (email === "") {
-            console.log("email required");
-        } else if (password === "") {
-            console.log("password required");
-        } else {
-            const postParameters = {
-                firstName : fName,
-                lastName : lName,
-                email : email,
-                password : password,
-                wantsPromotions : wantsPromMsg
-            };
+        const postParameters = {
+            firstName : fName,
+            lastName : lName,
+            email : email,
+            password : password,
+            wantsPromotions : wantsPromMsg
+        };
 
-            const xhr = new XMLHttpRequest();
-            xhr.addEventListener('load', () => {
-                console.log(JSON.parse(xhr.response)[0]._id);
-            });
-            xhr.open('POST', 'http://localhost:3000/signup', false);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.send(JSON.stringify(postParameters));
-            setSignedUp(true);
-        }
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', () => {
+            console.log(xhr.response);
+            if (xhr.response === "user exists") {
+                setErrorMsg("Email address already registered. Please sign in.");
+            } else if (xhr.response === "error") {
+                setErrorMsg("Error signing up. Please try again.");
+            } else {
+                setErrorMsg("");
+                console.log(JSON.parse(xhr.response)._id);
+                setSignedUp(true);
+            }
+        });
+        xhr.open('POST', 'http://localhost:3000/signup', false);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(postParameters));
     };
 
     if (signedUp) {
@@ -152,7 +156,9 @@ export default function SignUp(props) {
                                     autoComplete="email"
                                     value={email}
                                     onChange={handleChange}
+                                    classes={{root : classes.error_textfield}}
                                 />
+                                {errorMsg !== "" ? <div style={{color: "red"}}>{errorMsg}</div> : ""}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -181,6 +187,7 @@ export default function SignUp(props) {
                             color="primary"
                             className={classes.submit}
                             onClick={handleSubmit}
+                            disabled={fName === "" || lName === "" || email === "" || password === ""}
                         >
                             Sign Up
                         </Button>

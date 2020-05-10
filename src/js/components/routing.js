@@ -10,6 +10,7 @@ const Body = () => (
         <Switch>
             <ProtectedRoute exact path={"/"} component={Home} />
             <Route exact path={"/signup"} component={SignUp} />
+            <Route exact path={"/home"} component={Home} />
             <Route exact path={"/signin"} component={Signin} />
             <Route path={"*"} component={() => "404 NOT FOUND"}/>
         </Switch>

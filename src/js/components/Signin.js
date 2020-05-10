@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Redirect } from 'react-router-dom';
 
 function Copyright() {
     return (
@@ -59,7 +60,50 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
     const classes = useStyles();
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [signedIn, setSignedIn] = React.useState(false);
+    const [errorMsg, setErrorMsg] = React.useState("");
 
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setErrorMsg("");
+        if (name === "email") {
+            setEmail(value);
+        } else if (name === "password") {
+            setPassword(value);
+        }
+    };
+
+    const handleSubmit = (event) => {
+        const postParameters = {
+            email : email,
+            password : password
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', () => {
+            console.log(xhr.response);
+            if (xhr.response === "dne") {
+                setErrorMsg("Incorrect username or password.");
+            } else if (xhr.response === "error") {
+                setErrorMsg("Error signing up. Please try again.");
+            } else {
+                setErrorMsg("");
+                console.log(JSON.parse(xhr.response).first_name);
+                setSignedIn(true);
+            }
+        });
+        xhr.open('POST', 'http://localhost:3000/signin', false);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(postParameters));
+    };
+
+    if (signedIn) {
+        console.log("about to redirect");
+        return (<Redirect to={"home"}/>);
+    }
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -83,6 +127,8 @@ export default function SignInSide() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            value={email}
+                            onChange={handleChange}
                         />
                         <TextField
                             variant="outlined"
@@ -94,7 +140,10 @@ export default function SignInSide() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            value={password}
+                            onChange={handleChange}
                         />
+                        {errorMsg !== "" ? <div>{errorMsg}</div> : ""}
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
@@ -105,6 +154,8 @@ export default function SignInSide() {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+                            disabled={email === "" || password === ""}
+                            onClick={handleSubmit}
                         >
                             Sign In
                         </Button>
@@ -115,7 +166,7 @@ export default function SignInSide() {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/#/signup" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

@@ -3,6 +3,8 @@ import React from "react";
 import {render} from "react-dom";
 import {HashRouter as Router} from 'react-router-dom';
 import Routes from "./js/components/routing";
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 export default class App extends React.Component {
     render() {
@@ -20,4 +22,9 @@ export default class App extends React.Component {
     }
 }
 
-render(<App />, window.document.getElementById('container'));
+const store = createStore();
+
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>, window.document.getElementById('container'));
