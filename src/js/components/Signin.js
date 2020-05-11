@@ -86,7 +86,6 @@ function SignInSide(props) {
 
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
-            console.log(xhr.response);
             if (xhr.response === "dne") {
                 setErrorMsg("Incorrect username or password.");
             } else if (xhr.response === "error") {
@@ -94,7 +93,8 @@ function SignInSide(props) {
             } else {
                 setErrorMsg("");
                 const user = JSON.parse(xhr.response);
-                props.onSignin(user.email, user.first_name, user.last_name);
+                console.log(user);
+                props.onSignin(user._id, user.email, user.first_name, user.last_name);
                 setSignedIn(true);
             }
         });
@@ -191,8 +191,8 @@ class Signin extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onClick: (email, fName, lName) => {
-            dispatch(signinUser(email, fName, lName))
+        onClick: (userID, email, fName, lName) => {
+            dispatch(signinUser(userID, email, fName, lName))
         }
     };
 };

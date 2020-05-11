@@ -7,6 +7,7 @@ export const SIGNOUT_USER = 'SIGNOUT_USER';
 
 export const INITIAL_STATE = {
     type: SIGNIN_USER,
+    userID: "",
     email: "",
     firstName: "",
     lastName: ""
@@ -17,8 +18,8 @@ export const INITIAL_STATE = {
  * action creators
  */
 
-export function signinUser(email, firstName, lastName) {
-    return { type: SIGNIN_USER, email, firstName, lastName}
+export function signinUser(userID, email, firstName, lastName) {
+    return { type: SIGNIN_USER, userID, email, firstName, lastName}
 }
 
 export function signoutUser() {

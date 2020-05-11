@@ -9,12 +9,14 @@ function signin(state = INITIAL_STATE, action) {
     switch (action.type) {
         case SIGNIN_USER:
             return Object.assign({}, state, {
+                userID: action.userID,
                 email: action.email,
                 firstName: action.firstName,
                 lastName: action.lastName
             });
         case SIGNOUT_USER:
             return Object.assign({}, state, {
+                userID: "",
                 email: "",
                 firstName: "",
                 lastName: ""
