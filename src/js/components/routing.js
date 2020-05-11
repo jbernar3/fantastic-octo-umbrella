@@ -12,11 +12,12 @@ class Routing extends Component {
     render() {
         const { auth } = this.props;
         if (auth) {
+            console.log("IN AUTHORIZED ROUTING");
             return (<Switch>
                 <Route exact path={"/"} component={HomeContainer} />
                 <Route exact path={"/signup"} component={SignUp} />
                 <Route exact path={"/home"} component={HomeContainer} />
-                <Route exact path={"/signin"} component={SigninContainer} />
+                <Route exact path={"/signin"} component={Signin} />
                 <Route path={"*"} component={NotFoundContainer}/>
             </Switch>);
         } else {
@@ -30,6 +31,8 @@ class Routing extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log("IN MAP STATE TO PROPS");
+    console.log(state.signin.email);
     return {
         auth: state.signin.email !== "",
     }

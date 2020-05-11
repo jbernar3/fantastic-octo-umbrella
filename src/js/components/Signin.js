@@ -103,7 +103,7 @@ function SignInSide(props) {
         xhr.send(JSON.stringify(postParameters));
     };
 
-    if (signedIn) {
+    if (signedIn || props.auth) {
         return (<Redirect to={"home"}/>);
     }
     return (
@@ -185,7 +185,7 @@ function SignInSide(props) {
 class Signin extends Component {
     
     render() {
-        return (<SignInSide onSignin={this.props.onClick}/>)
+        return (<SignInSide onSignin={this.props.onClick} auth={this.props.auth}/>)
     }
 }
 
@@ -197,7 +197,13 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
+function mapStateToProps(state) {
+    return {
+        auth: state.signin.email !== "",
+    }
+}
 
-const SigninContainer = connect(null, mapDispatchToProps)(Signin);
+
+const SigninContainer = connect(mapStateToProps, mapDispatchToProps)(Signin);
 
 export default SigninContainer
