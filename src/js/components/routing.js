@@ -5,6 +5,7 @@ import Signin from "./Signin";
 import HomeContainer from "./Home";
 import {connect} from "react-redux";
 import SigninContainer from "./Signin";
+import NotFoundContainer from "./NotFound";
 
 class Routing extends Component {
 
@@ -16,14 +17,13 @@ class Routing extends Component {
                 <Route exact path={"/signup"} component={SignUp} />
                 <Route exact path={"/home"} component={HomeContainer} />
                 <Route exact path={"/signin"} component={SigninContainer} />
-                <Route path={"*"} component={() => "404 NOT FOUND"}/>
+                <Route path={"*"} component={NotFoundContainer}/>
             </Switch>);
         } else {
             return (<Switch>
-                <Route exact path={"/"} component={SigninContainer} />
                 <Route exact path={"/signup"} component={SignUp} />
                 <Route exact path={"/signin"} component={SigninContainer} />
-                <Route path={"*"} component={() => "404 NOT FOUND"}/>
+                <Route path={"*"} component={NotFoundContainer}/>
             </Switch>);
         }
     }

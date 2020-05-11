@@ -192,7 +192,6 @@ class Signin extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         onClick: (email, fName, lName) => {
-            console.log(dispatch);
             dispatch(signinUser(email, fName, lName))
         }
     };

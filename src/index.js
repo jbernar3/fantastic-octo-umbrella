@@ -7,8 +7,9 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import armaReducers from "./js/reducers";
 import { signinUser} from "./actions";
+import { store} from "./js/redux.resist";
 
-const store = createStore(armaReducers);
+// const store = createStore(armaReducers);
 
 export default class App extends React.Component {
     render() {

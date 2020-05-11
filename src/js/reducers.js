@@ -1,4 +1,4 @@
-import {SIGNIN_USER} from "../actions";
+import {SIGNIN_USER, SIGNOUT_USER} from "../actions";
 import {INITIAL_STATE} from "../actions";
 import { combineReducers } from 'redux'
 const assert = require('assert');
@@ -12,6 +12,12 @@ function signin(state = INITIAL_STATE, action) {
                 email: action.email,
                 firstName: action.firstName,
                 lastName: action.lastName
+            });
+        case SIGNOUT_USER:
+            return Object.assign({}, state, {
+                email: "",
+                firstName: "",
+                lastName: ""
             });
         default:
             return state;
