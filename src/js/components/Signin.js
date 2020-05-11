@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
+import {signinUser} from "../../actions";
+import {connect} from "react-redux";
 
 function Copyright() {
     return (
@@ -92,8 +94,6 @@ function SignInSide(props) {
             } else {
                 setErrorMsg("");
                 const user = JSON.parse(xhr.response);
-                console.log(JSON.parse(xhr.response).first_name);
-                console.log(props);
                 props.onSignin(user.email, user.first_name, user.last_name);
                 setSignedIn(true);
             }
@@ -104,7 +104,6 @@ function SignInSide(props) {
     };
 
     if (signedIn) {
-        console.log("about to redirect");
         return (<Redirect to={"home"}/>);
     }
     return (
@@ -119,7 +118,6 @@ function SignInSide(props) {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <form className={classes.form} noValidate>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -177,19 +175,30 @@ function SignInSide(props) {
                         <Box mt={5}>
                             <Copyright />
                         </Box>
-                    </form>
+
                 </div>
             </Grid>
         </Grid>
     );
 }
 
-export default class Signin extends Component {
-    constructor(props) {
-        super(props);
-    }
+class Signin extends Component {
+    
     render() {
-        console.log(this.props);
         return (<SignInSide onSignin={this.props.onClick}/>)
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onClick: (email, fName, lName) => {
+            console.log(dispatch);
+            dispatch(signinUser(email, fName, lName))
+        }
+    };
+};
+
+
+const SigninContainer = connect(null, mapDispatchToProps)(Signin);
+
+export default SigninContainer

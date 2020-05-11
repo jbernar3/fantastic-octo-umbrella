@@ -1,9 +1,20 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
-export default class Home extends Component {
+class Home extends Component {
     render() {
         return(
-            <div>This is home page.</div>
+            <div>This is home page, {this.props.firstName}</div>
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        firstName: state.signin.firstName
+    }
+}
+
+const HomeContainer = connect(mapStateToProps)(Home);
+
+export default HomeContainer
