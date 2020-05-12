@@ -33,7 +33,7 @@ class Home extends Component {
     handleNewCategory() {
         const postParameters = {
             userID: this.props.userID,
-            catName: "Machine Learning"
+            catName: this.state.newCategoryField
         };
 
         const xhr = new XMLHttpRequest();
@@ -51,8 +51,6 @@ class Home extends Component {
             categoryID: this.state.categorySelectID,
             url: this.state.newSourceField
         };
-        console.log("in handle new source");
-        console.log(this.state.categorySelectID);
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             console.log(xhr.response);
