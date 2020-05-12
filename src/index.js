@@ -8,6 +8,7 @@ import { createStore } from 'redux';
 import armaReducers from "./js/reducers";
 import { signinUser} from "./actions";
 import { store} from "./js/redux.resist";
+import "./index.css";
 
 // const store = createStore(armaReducers);
 

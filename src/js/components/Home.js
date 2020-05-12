@@ -4,6 +4,12 @@ import {signinUser, signoutUser, updateCategories} from "../../actions";
 import TextField from '@material-ui/core/TextField'
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import SideMenuBar from "./SideMenuBar";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import NewCategoryPopup from "./NewCategoryPopup";
 
 class Home extends Component {
     constructor(props) {
@@ -12,12 +18,33 @@ class Home extends Component {
             newCategoryField: "",
             newSourceField: "",
             categorySelect: "",
-            categorySelectID: ""
+            categorySelectID: "",
+            openAddCategoryDialog: false,
+            openAddSourceDialog: false
         };
         this.handleNewCategory = this.handleNewCategory.bind(this);
         this.handleNewSource = this.handleNewSource.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
+        this.handleOpenDialog = this.handleOpenDialog.bind(this);
+        this.handleCloseNewCatDialog = this.handleCloseNewCatDialog.bind(this);
+        this.handleCloseNewSourceDialog = this.handleCloseNewSourceDialog.bind(this);
+    }
+
+    handleOpenDialog(dialogName) {
+        if (dialogName === "newCategory") {
+            this.setState({openAddCategoryDialog: true});
+        } else if (dialogName === "newSource") {
+            this.setState({openAddSourceDialog: true});
+        }
+    }
+
+    handleCloseNewCatDialog() {
+        this.setState({openAddCategoryDialog: false});
+    }
+
+    handleCloseNewSourceDialog() {
+        this.setState({openAddSourceDialog: false});
     }
 
     handleInputChange(event) {
@@ -30,10 +57,10 @@ class Home extends Component {
         }
     }
 
-    handleNewCategory() {
+    handleNewCategory(categoryName) {
         const postParameters = {
             userID: this.props.userID,
-            catName: this.state.newCategoryField
+            catName: categoryName
         };
 
         const xhr = new XMLHttpRequest();
@@ -42,6 +69,7 @@ class Home extends Component {
                 console.log("handle new category error");
             } else {
                 this.props.updateCategories(JSON.parse(xhr.response));
+                this.setState({openAddCategoryDialog: false});
             }
         });
         xhr.open('POST', 'http://localhost:3000/new_category', false);
@@ -73,14 +101,16 @@ class Home extends Component {
             categorySelectID: this.props.categories[parseInt(event.target.value.substring(0,1))].category_id}, () => {console.log(this.state.categorySelectID)})
     }
 
-    handleClickOrg() {
-        console.log("CLICK ORG")
-    }
-
 
     render() {
         return(
-            <div>This is home page, {this.props.firstName}
+            <div className={"main_content"}>
+                <Dialog name={"newCategory"} open={this.state.openAddCategoryDialog} onClose={this.handleCloseNewCatDialog} aria-labelledby="form-dialog-title">
+                    <NewCategoryPopup handleSubmit={this.handleNewCategory} />
+                </Dialog>
+                <Dialog name={"newSource"} open={this.state.openAddSourceDialog} onClose={this.handleCloseNewSourceDialog} aria-labelledby="form-dialog-title">Add Source</Dialog>
+                <SideMenuBar handleOpenDialog={this.handleOpenDialog} handleCloseDialog={this.handleCloseDialog} />
+                This is home page, {this.props.firstName}
                 <TextField id="new_category"
                            label="New Category"
                            name="new_category"
