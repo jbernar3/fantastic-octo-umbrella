@@ -14,14 +14,16 @@ function signin(state = INITIAL_STATE, action) {
                 userID: action.userID,
                 email: action.email,
                 firstName: action.firstName,
-                lastName: action.lastName
+                lastName: action.lastName,
+                categories: action.categories
             });
         case SIGNOUT_USER:
             return Object.assign({}, state, {
                 userID: "",
                 email: "",
                 firstName: "",
-                lastName: ""
+                lastName: "",
+                categories: null
             });
         // case REHYDRATE:
         //     const signin = action.payload.signin;

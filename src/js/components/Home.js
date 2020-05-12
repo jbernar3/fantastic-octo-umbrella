@@ -2,17 +2,22 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {signinUser, signoutUser} from "../../actions";
 import TextField from '@material-ui/core/TextField'
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             newCategoryField: "",
-            newSourceField: ""
+            newSourceField: "",
+            categorySelect: "",
+            categorySelectID: ""
         };
         this.handleNewCategory = this.handleNewCategory.bind(this);
         this.handleNewSource = this.handleNewSource.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleCategoryChange = this.handleCategoryChange.bind(this);
     }
 
     handleInputChange(event) {
@@ -43,8 +48,8 @@ class Home extends Component {
     handleNewSource() {
         const postParameters = {
             userID: this.props.userID,
-            categoryID: "5eb9894bdb432a16a07f38ef",
-            url: "youtube.com"
+            categoryID: this.state.categorySelectID,
+            url: this.state.newSourceField
         };
 
         const xhr = new XMLHttpRequest();
@@ -55,6 +60,11 @@ class Home extends Component {
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(postParameters));
     }
+
+    handleCategoryChange(event) {
+        this.setState({categorySelect: event.target.value, categorySelectID: event.target.name});
+    }
+
 
     render() {
         return(
@@ -78,6 +88,18 @@ class Home extends Component {
                 <button onClick={this.props.logOut}>Log Out</button>
                 <button onClick={this.handleNewCategory}>Add Category</button>
                 <button onClick={this.handleNewSource}>Add Source</button>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={this.state.categorySelect}
+                    onChange={this.handleCategoryChange}
+                >
+                    {this.props.categories.map(function(category, index) {
+                        console.log("EXAMPLE CATEGORY");
+                        console.log(category);
+                        return <MenuItem key={index} name={category.category_id} value={category.category_name}>{category.category_name}</MenuItem>
+                    })}
+                </Select>
             </div>
         )
     }
@@ -86,7 +108,8 @@ class Home extends Component {
 function mapStateToProps(state) {
     return {
         userID: state.signin.userID,
-        firstName: state.signin.firstName
+        firstName: state.signin.firstName,
+        categories: state.signin.categories
     }
 }
 

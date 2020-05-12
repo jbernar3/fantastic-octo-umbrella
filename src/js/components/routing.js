@@ -1,14 +1,12 @@
 import {Route, Switch} from 'react-router-dom';
 import SignUp from "./SignUp";
 import React, {Component} from "react";
-import Signin from "./Signin";
 import HomeContainer from "./Home";
 import {connect} from "react-redux";
 import SigninContainer from "./Signin";
 import NotFoundContainer from "./NotFound";
 
 class Routing extends Component {
-
     render() {
         const { auth } = this.props;
         if (auth) {
@@ -17,7 +15,7 @@ class Routing extends Component {
                 <Route exact path={"/"} component={HomeContainer} />
                 <Route exact path={"/signup"} component={SignUp} />
                 <Route exact path={"/home"} component={HomeContainer} />
-                <Route exact path={"/signin"} component={Signin} />
+                <Route exact path={"/signin"} component={SigninContainer} />
                 <Route path={"*"} component={NotFoundContainer}/>
             </Switch>);
         } else {
