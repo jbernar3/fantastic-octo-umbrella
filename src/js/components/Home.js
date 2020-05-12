@@ -51,7 +51,8 @@ class Home extends Component {
             categoryID: this.state.categorySelectID,
             url: this.state.newSourceField
         };
-
+        console.log("in handle new source");
+        console.log(this.state.categorySelectID);
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             console.log(xhr.response);
@@ -62,7 +63,12 @@ class Home extends Component {
     }
 
     handleCategoryChange(event) {
-        this.setState({categorySelect: event.target.value, categorySelectID: event.target.name});
+        this.setState({categorySelect: event.target.value,
+            categorySelectID: this.props.categories[parseInt(event.target.value.substring(0,1))].category_id}, () => {console.log(this.state.categorySelectID)})
+    }
+
+    handleClickOrg() {
+        console.log("CLICK ORG")
     }
 
 
@@ -97,7 +103,7 @@ class Home extends Component {
                     {this.props.categories.map(function(category, index) {
                         console.log("EXAMPLE CATEGORY");
                         console.log(category);
-                        return <MenuItem key={index} name={category.category_id} value={category.category_name}>{category.category_name}</MenuItem>
+                        return <MenuItem key={index} value={index + category.category_name}>{category.category_name}</MenuItem>
                     })}
                 </Select>
             </div>
