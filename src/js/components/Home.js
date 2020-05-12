@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {signinUser, signoutUser} from "../../actions";
+import {signinUser, signoutUser, updateCategories} from "../../actions";
 import TextField from '@material-ui/core/TextField'
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -38,7 +38,11 @@ class Home extends Component {
 
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
-            console.log(xhr.response);
+            if (xhr.response === "error") {
+                console.log("handle new category error");
+            } else {
+                this.props.updateCategories(JSON.parse(xhr.response));
+            }
         });
         xhr.open('POST', 'http://localhost:3000/new_category', false);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -53,7 +57,11 @@ class Home extends Component {
         };
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
-            console.log(xhr.response);
+            if (xhr.response === "error") {
+                console.log("handle new category error");
+            } else {
+                this.props.updateCategories(JSON.parse(xhr.response));
+            }
         });
         xhr.open('POST', 'http://localhost:3000/new_source', false);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -99,11 +107,15 @@ class Home extends Component {
                     onChange={this.handleCategoryChange}
                 >
                     {this.props.categories.map(function(category, index) {
-                        console.log("EXAMPLE CATEGORY");
-                        console.log(category);
                         return <MenuItem key={index} value={index + category.category_name}>{category.category_name}</MenuItem>
                     })}
                 </Select>
+                {this.props.categories.map(function(category, index) {
+                    return <div>{category.category_name}
+                        {category.sources.map(function(source, index) {
+                            return <div>{source.source_name}</div>
+                        })}</div>
+                })}
             </div>
         )
     }
@@ -121,6 +133,11 @@ function mapDispatchToProps(dispatch) {
     return {
         logOut: () => {
             dispatch(signoutUser())
+        },
+        updateCategories: (categories) => {
+            console.log("IN UPDATE CATEGORIES");
+            console.log(categories);
+            dispatch(updateCategories(categories))
         }
     }
 }

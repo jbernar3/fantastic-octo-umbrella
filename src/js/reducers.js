@@ -1,4 +1,4 @@
-import {SIGNIN_USER, SIGNOUT_USER} from "../actions";
+import {SIGNIN_USER, SIGNOUT_USER, UPDATE_CATEGORIES} from "../actions";
 import {INITIAL_STATE} from "../actions";
 import { combineReducers } from 'redux'
 import { REHYDRATE} from "redux-persist";
@@ -24,6 +24,10 @@ function signin(state = INITIAL_STATE, action) {
                 firstName: "",
                 lastName: "",
                 categories: null
+            });
+        case UPDATE_CATEGORIES:
+            return Object.assign({}, state, {
+                categories: action.categories
             });
         // case REHYDRATE:
         //     const signin = action.payload.signin;
