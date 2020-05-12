@@ -10,6 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import NewCategoryPopup from "./NewCategoryPopup";
+import NewSourcePopup from "./NewSourcePopup";
 
 class Home extends Component {
     constructor(props) {
@@ -77,18 +78,20 @@ class Home extends Component {
         xhr.send(JSON.stringify(postParameters));
     }
 
-    handleNewSource() {
+    handleNewSource(sourceURL, sourceTitle, categoryID) {
         const postParameters = {
             userID: this.props.userID,
-            categoryID: this.state.categorySelectID,
-            url: this.state.newSourceField
+            categoryID: categoryID,
+            url: sourceURL,
+            sourceTitle: sourceTitle
         };
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             if (xhr.response === "error") {
-                console.log("handle new category error");
+                console.log("handle new source error");
             } else {
                 this.props.updateCategories(JSON.parse(xhr.response));
+                this.setState({openAddSourceDialog: false});
             }
         });
         xhr.open('POST', 'http://localhost:3000/new_source', false);
@@ -108,7 +111,9 @@ class Home extends Component {
                 <Dialog name={"newCategory"} open={this.state.openAddCategoryDialog} onClose={this.handleCloseNewCatDialog} aria-labelledby="form-dialog-title">
                     <NewCategoryPopup handleSubmit={this.handleNewCategory} />
                 </Dialog>
-                <Dialog name={"newSource"} open={this.state.openAddSourceDialog} onClose={this.handleCloseNewSourceDialog} aria-labelledby="form-dialog-title">Add Source</Dialog>
+                <Dialog name={"newSource"} open={this.state.openAddSourceDialog} onClose={this.handleCloseNewSourceDialog} aria-labelledby="form-dialog-title">
+                    <NewSourcePopup categories={this.props.categories} handleSubmit={this.handleNewSource} />
+                </Dialog>
                 <SideMenuBar handleOpenDialog={this.handleOpenDialog} handleCloseDialog={this.handleCloseDialog} />
                 This is home page, {this.props.firstName}
                 <TextField id="new_category"

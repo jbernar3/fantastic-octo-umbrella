@@ -7,6 +7,8 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import CardHeader from "@material-ui/core/CardHeader";
 import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles({
     root: {
@@ -59,6 +61,7 @@ const useStyles = makeStyles({
 export default function NewSourcePopup(props) {
     const classes = useStyles();
     const [categoryName, setCategoryName] = useState("");
+    const [categoryID, setCategoryID] = useState("");
     const [sourceTitle, setSourceTitle] = useState("");
     const [sourceURL, setSourceURL] = useState("");
 
@@ -76,8 +79,13 @@ export default function NewSourcePopup(props) {
         if (sourceURL === "") {
             console.log("error message");
         } else {
-            props.handleSubmit(sourceURL, sourceTitle);
+            props.handleSubmit(sourceURL, sourceTitle, categoryID);
         }
+    };
+
+    const handleCategoryChange = (event) => {
+        setCategoryName(event.target.value);
+        setCategoryID(props.categories[parseInt(event.target.value.substring(0,1))].category_id);
     };
 
     return (
@@ -104,6 +112,16 @@ export default function NewSourcePopup(props) {
                            value={sourceTitle}
                            onChange={handleInputChange}
                 />
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={categoryName}
+                    onChange={handleCategoryChange}
+                >
+                    {props.categories.map(function(category, index) {
+                        return <MenuItem key={index} value={index + category.category_name}>{category.category_name}</MenuItem>
+                    })}
+                </Select>
                 <button onClick={handleSubmit}>Add Source</button>
             </CardContent>
         </Card>
