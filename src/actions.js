@@ -5,6 +5,7 @@
 export const SIGNIN_USER = 'SIGNIN_USER';
 export const SIGNOUT_USER = 'SIGNOUT_USER';
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
+export const CHANGE_DISPLAY_CATEGORY = 'CHANGE_DISPLAY_CATEGORY';
 
 export const INITIAL_STATE = {
     type: SIGNIN_USER,
@@ -12,7 +13,8 @@ export const INITIAL_STATE = {
     email: "",
     firstName: "",
     lastName: "",
-    categories: null
+    categories: null,
+    indexDisplayCategory: -1
 };
 
 
@@ -30,4 +32,8 @@ export function signoutUser() {
 
 export function updateCategories(categories) {
     return {type: UPDATE_CATEGORIES, categories}
+}
+
+export function changeDisplayCategory(index) {
+    return {type: CHANGE_DISPLAY_CATEGORY, index}
 }

@@ -1,4 +1,4 @@
-import {SIGNIN_USER, SIGNOUT_USER, UPDATE_CATEGORIES} from "../actions";
+import {SIGNIN_USER, SIGNOUT_USER, UPDATE_CATEGORIES, CHANGE_DISPLAY_CATEGORY} from "../actions";
 import {INITIAL_STATE} from "../actions";
 import { combineReducers } from 'redux'
 import { REHYDRATE} from "redux-persist";
@@ -15,7 +15,8 @@ function signin(state = INITIAL_STATE, action) {
                 email: action.email,
                 firstName: action.firstName,
                 lastName: action.lastName,
-                categories: action.categories
+                categories: action.categories,
+                indexDisplayCategory: -1
             });
         case SIGNOUT_USER:
             return Object.assign({}, state, {
@@ -23,11 +24,16 @@ function signin(state = INITIAL_STATE, action) {
                 email: "",
                 firstName: "",
                 lastName: "",
-                categories: null
+                categories: null,
+                indexDisplayCategory: -1
             });
         case UPDATE_CATEGORIES:
             return Object.assign({}, state, {
                 categories: action.categories
+            });
+        case CHANGE_DISPLAY_CATEGORY:
+            return Object.assign({}, state, {
+                indexDisplayCategory: action.index
             });
         // case REHYDRATE:
         //     const signin = action.payload.signin;

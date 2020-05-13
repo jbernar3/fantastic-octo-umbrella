@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {signinUser, signoutUser, updateCategories} from "../../actions";
+import {changeDisplayCategory, signinUser, signoutUser, toggleDisplayCategory, updateCategories} from "../../actions";
 import TextField from '@material-ui/core/TextField'
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -11,6 +11,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import NewCategoryPopup from "./NewCategoryPopup";
 import NewSourcePopup from "./NewSourcePopup";
+import CategoryDisplayPopup from "./CategoryDisplayPopup";
 
 class Home extends Component {
     constructor(props) {
@@ -30,6 +31,8 @@ class Home extends Component {
         this.handleOpenDialog = this.handleOpenDialog.bind(this);
         this.handleCloseNewCatDialog = this.handleCloseNewCatDialog.bind(this);
         this.handleCloseNewSourceDialog = this.handleCloseNewSourceDialog.bind(this);
+        this.handleCategoryDisplay = this.handleCategoryDisplay.bind(this);
+        this.handleCategoryDisplayClose = this.handleCategoryDisplayClose.bind(this);
     }
 
     handleOpenDialog(dialogName) {
@@ -104,8 +107,18 @@ class Home extends Component {
             categorySelectID: this.props.categories[parseInt(event.target.value.substring(0,1))].category_id}, () => {console.log(this.state.categorySelectID)})
     }
 
+    handleCategoryDisplay(event) {
+        console.log("IN HANDLE CATEGORY DISPLAY");
+        console.log(event.target.value);
+        this.props.changeDisplayCategory(parseInt(event.target.value));
+    }
+
+    handleCategoryDisplayClose() {
+        this.props.closeDisplayCategory();
+    }
 
     render() {
+        const self = this;
         return(
             <div className={"main_content"}>
                 <Dialog name={"newCategory"} open={this.state.openAddCategoryDialog} onClose={this.handleCloseNewCatDialog} aria-labelledby="form-dialog-title">
@@ -116,40 +129,19 @@ class Home extends Component {
                 </Dialog>
                 <SideMenuBar handleOpenDialog={this.handleOpenDialog} handleCloseDialog={this.handleCloseDialog} />
                 This is home page, {this.props.firstName}
-                <TextField id="new_category"
-                           label="New Category"
-                           name="new_category"
-                           autoComplete="new_category"
-                           autoFocus
-                           value={this.state.newCategoryField}
-                           onChange={this.handleInputChange}
-                />
-                <TextField id="new_source"
-                           label="New Source"
-                           name="new_source"
-                           autoComplete="new_source"
-                           autoFocus
-                           value={this.state.newSourceField}
-                           onChange={this.handleInputChange}
-                />
                 <button onClick={this.props.logOut}>Log Out</button>
-                <button onClick={this.handleNewCategory}>Add Category</button>
-                <button onClick={this.handleNewSource}>Add Source</button>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={this.state.categorySelect}
-                    onChange={this.handleCategoryChange}
-                >
-                    {this.props.categories.map(function(category, index) {
-                        return <MenuItem key={index} value={index + category.category_name}>{category.category_name}</MenuItem>
-                    })}
-                </Select>
                 {this.props.categories.map(function(category, index) {
-                    return <div>{category.category_name}
-                        {category.sources.map(function(source, index) {
-                            return <div>{source.source_name}</div>
-                        })}</div>
+                    return <React.Fragment>
+                        <button value={index} onClick={self.handleCategoryDisplay}>{category.category_name}</button>
+                        <Dialog open={self.props.indexDisplayCategory === index} onClose={self.handleCategoryDisplay}>
+                            <CategoryDisplayPopup categoryName={category.category_name} />
+                            <DialogContent>
+                                {category.sources.map(function(source) {
+                                    return <div>{source.source_name}</div>
+                                })}
+                            </DialogContent>
+                        </Dialog>
+                    </React.Fragment>;
                 })}
             </div>
         )
@@ -160,7 +152,8 @@ function mapStateToProps(state) {
     return {
         userID: state.signin.userID,
         firstName: state.signin.firstName,
-        categories: state.signin.categories
+        categories: state.signin.categories,
+        indexDisplayCategory: state.signin.indexDisplayCategory
     }
 }
 
@@ -170,9 +163,13 @@ function mapDispatchToProps(dispatch) {
             dispatch(signoutUser())
         },
         updateCategories: (categories) => {
-            console.log("IN UPDATE CATEGORIES");
-            console.log(categories);
             dispatch(updateCategories(categories))
+        },
+        changeDisplayCategory: (index) => {
+            dispatch(changeDisplayCategory(index))
+        },
+        closeDisplayCategory: () => {
+            dispatch(changeDisplayCategory(-1))
         }
     }
 }
