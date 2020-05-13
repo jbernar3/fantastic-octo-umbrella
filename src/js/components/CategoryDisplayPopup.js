@@ -10,10 +10,12 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Dialog from "@material-ui/core/Dialog";
+import AddIcon from '@material-ui/icons/Add';
+import CollapseAddShift from "./CollapseAddShift";
 
 const useStyles = makeStyles({
     popupcard: {
-        minWidth: '80ch',
+        minWidth: '70ch',
         minHeight: '60ch'
     },
     content: {
@@ -58,14 +60,35 @@ const useStyles = makeStyles({
     button: {
         margin: 3,
     },
+    addIcon: {
+        float: 'right'
+    },
+    sources: {
+        marginLeft: -40000
+    }
 });
 
 export default function NewSourcePopup(props) {
     const classes = useStyles();
+    const [openAdd, setOpenAdd] = React.useState(false);
 
     const handleClose = (event) => {
         event.persist();
         props.onClose(event);
+        setOpenAdd(false);
+    };
+
+    const handleToggleClickAdd = () => {
+        setOpenAdd(!openAdd);
+    };
+
+    const toggleHover = (isEnter) => (event) => {
+        event.persist();
+        if (isEnter) {
+            document.body.style.cursor = "pointer";
+        } else {
+            document.body.style.cursor = "default";
+        }
     };
 
 
@@ -74,13 +97,17 @@ export default function NewSourcePopup(props) {
             <Card className={classes.popupcard} variant="outlined">
                 <CardHeader
                     className={classes.header}
-                    title={props.categoryName}
-                    //subheader={ shiftInfo.orgName }
-                />
+                    title={<div>{props.category.category_name}<AddIcon onMouseEnter={toggleHover(true)} onMouseLeave={toggleHover(false)}
+                                                             className={classes.addIcon} onClick={handleToggleClickAdd} /></div>}
+                    subheader="created on"
+                    />
                 <CardContent className={classes.content}>
-                    {props.sources.map(function(source, index) {
-                        return (<div key={index}>{source.source_name},</div>);
-                    })}
+                    <CollapseAddShift showAddShift={openAdd} />
+                    <br />
+                    <div className={classes.sources}>
+                        {props.category.sources.map(function(source, index) {
+                        return (<div key={index}>{source.source_name}</div>);})}
+                    </div>
                 </CardContent>
             </Card>
         </Dialog>

@@ -148,7 +148,7 @@ class Home extends Component {
                                 return  <Grid key={index} item>
                                     <CategoryDisplay index={index} openClick={self.handleCategoryDisplay} categoryName={category.category_name} sources={category.sources}/>
                                     <CategoryDisplayPopup dialogOpen={self.props.indexDisplayCategory === index}  onClose={self.handleCategoryDisplay}
-                                                          categoryName={category.category_name} sources={category.sources} />
+                                                          category={category} />
                                 </Grid>})}
                         </Grid>
                     </Grid>
