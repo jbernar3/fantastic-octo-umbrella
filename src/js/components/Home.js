@@ -12,6 +12,17 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import NewCategoryPopup from "./NewCategoryPopup";
 import NewSourcePopup from "./NewSourcePopup";
 import CategoryDisplayPopup from "./CategoryDisplayPopup";
+import MenuBar from "./MenuBar";
+import CategoryDisplay from "./CategoryDisplay";
+import Grid from "@material-ui/core/Grid";
+import {makeStyles} from "@material-ui/core/styles";
+import SideBar from "./SideBar";
+
+const classes = makeStyles({
+    root: {
+        flexGrow: 1,
+    },
+});
 
 class Home extends Component {
     constructor(props) {
@@ -103,17 +114,18 @@ class Home extends Component {
     }
 
     handleCategoryChange(event) {
+        event.persist();
         this.setState({categorySelect: event.target.value,
             categorySelectID: this.props.categories[parseInt(event.target.value.substring(0,1))].category_id}, () => {console.log(this.state.categorySelectID)})
     }
 
-    handleCategoryDisplay(event) {
+    handleCategoryDisplay(index) {
         console.log("IN HANDLE CATEGORY DISPLAY");
-        console.log(event.target.value);
-        this.props.changeDisplayCategory(parseInt(event.target.value));
+        this.props.changeDisplayCategory(index);
     }
 
-    handleCategoryDisplayClose() {
+    handleCategoryDisplayClose(event) {
+        event.persist();
         this.props.closeDisplayCategory();
     }
 
@@ -127,22 +139,20 @@ class Home extends Component {
                 <Dialog name={"newSource"} open={this.state.openAddSourceDialog} onClose={this.handleCloseNewSourceDialog} aria-labelledby="form-dialog-title">
                     <NewSourcePopup categories={this.props.categories} handleSubmit={this.handleNewSource} />
                 </Dialog>
-                <SideMenuBar handleOpenDialog={this.handleOpenDialog} handleCloseDialog={this.handleCloseDialog} />
-                This is home page, {this.props.firstName}
-                <button onClick={this.props.logOut}>Log Out</button>
-                {this.props.categories.map(function(category, index) {
-                    return <React.Fragment>
-                        <button value={index} onClick={self.handleCategoryDisplay}>{category.category_name}</button>
-                        <Dialog open={self.props.indexDisplayCategory === index} onClose={self.handleCategoryDisplay}>
-                            <CategoryDisplayPopup categoryName={category.category_name} />
-                            <DialogContent>
-                                {category.sources.map(function(source) {
-                                    return <div>{source.source_name}</div>
-                                })}
-                            </DialogContent>
-                        </Dialog>
-                    </React.Fragment>;
-                })}
+                <MenuBar userName={this.props.firstName} logOut={this.props.logOut} />
+                <SideBar />
+                <Grid container className={classes.root} spacing={2}>
+                    <Grid item xs={12}>
+                        <Grid container justify="center" spacing={5}>
+                            {this.props.categories.map(function(category, index) {
+                                return  <Grid key={index} item>
+                                    <CategoryDisplay index={index} openClick={self.handleCategoryDisplay} categoryName={category.category_name} sources={category.sources}/>
+                                    <CategoryDisplayPopup dialogOpen={self.props.indexDisplayCategory === index}  onClose={self.handleCategoryDisplay}
+                                                          categoryName={category.category_name} sources={category.sources} />
+                                </Grid>})}
+                        </Grid>
+                    </Grid>
+                </Grid>
             </div>
         )
     }

@@ -9,10 +9,12 @@ import CardHeader from "@material-ui/core/CardHeader";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import Dialog from "@material-ui/core/Dialog";
 
 const useStyles = makeStyles({
-    root: {
-        minWidth: '30ch',
+    popupcard: {
+        minWidth: '80ch',
+        minHeight: '60ch'
     },
     content: {
         display: 'flex',
@@ -61,17 +63,26 @@ const useStyles = makeStyles({
 export default function NewSourcePopup(props) {
     const classes = useStyles();
 
+    const handleClose = (event) => {
+        event.persist();
+        props.onClose(event);
+    };
+
 
     return (
-        <Card className={classes.root} variant="outlined">
-            <CardHeader
-                className={classes.header}
-                title={props.categoryName}
-                //subheader={ shiftInfo.orgName }
-            />
-            <CardContent className={classes.content}>
-                This is category content..... nice..
-            </CardContent>
-        </Card>
+        <Dialog className={classes.dialog} open={props.dialogOpen} onClose={handleClose}>
+            <Card className={classes.popupcard} variant="outlined">
+                <CardHeader
+                    className={classes.header}
+                    title={props.categoryName}
+                    //subheader={ shiftInfo.orgName }
+                />
+                <CardContent className={classes.content}>
+                    {props.sources.map(function(source, index) {
+                        return (<div key={index}>{source.source_name},</div>);
+                    })}
+                </CardContent>
+            </Card>
+        </Dialog>
     );
 }

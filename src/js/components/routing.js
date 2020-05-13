@@ -5,17 +5,18 @@ import HomeContainer from "./Home";
 import {connect} from "react-redux";
 import SigninContainer from "./Signin";
 import NotFoundContainer from "./NotFound";
+import ProfileContainer from "./Profile";
 
 class Routing extends Component {
     render() {
         const { auth } = this.props;
         if (auth) {
-            console.log("IN AUTHORIZED ROUTING");
             return (<Switch>
                 <Route exact path={"/"} component={HomeContainer} />
                 <Route exact path={"/signup"} component={SignUp} />
                 <Route exact path={"/home"} component={HomeContainer} />
                 <Route exact path={"/signin"} component={SigninContainer} />
+                <Route exact path={"/profile"} component={ProfileContainer} />
                 <Route path={"*"} component={NotFoundContainer}/>
             </Switch>);
         } else {
