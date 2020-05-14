@@ -1,8 +1,8 @@
-import SignUp from "./js/components/SignUp";
+import SignUp from "./js/components/page_components/SignUp";
 import React from "react";
 import {render} from "react-dom";
 import {HashRouter as Router} from 'react-router-dom';
-import Routing from "./js/components/routing";
+import Routing from "./js/components/general_components/routing";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import armaReducers from "./js/reducers";

@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
-import {signinUser} from "../../actions";
+import {signinUser} from "../../../actions";
 import {connect} from "react-redux";
 
 function Copyright() {

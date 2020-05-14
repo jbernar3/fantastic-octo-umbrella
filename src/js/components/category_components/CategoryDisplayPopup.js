@@ -11,7 +11,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Dialog from "@material-ui/core/Dialog";
 import AddIcon from '@material-ui/icons/Add';
-import CollapseAddShift from "./CollapseAddShift";
 
 const useStyles = makeStyles({
     popupcard: {
@@ -64,7 +63,10 @@ const useStyles = makeStyles({
         float: 'right'
     },
     sources: {
-        marginLeft: -40000
+
+    },
+    collapse_container: {
+        width: '100%'
     }
 });
 
@@ -78,8 +80,8 @@ export default function NewSourcePopup(props) {
         setOpenAdd(false);
     };
 
-    const handleToggleClickAdd = () => {
-        setOpenAdd(!openAdd);
+    const handleAddBtnClick = () => {
+        props.handleOpenDialog("newSource", props.category.category_name, props.category.category_id)
     };
 
     const toggleHover = (isEnter) => (event) => {
@@ -98,12 +100,10 @@ export default function NewSourcePopup(props) {
                 <CardHeader
                     className={classes.header}
                     title={<div>{props.category.category_name}<AddIcon onMouseEnter={toggleHover(true)} onMouseLeave={toggleHover(false)}
-                                                             className={classes.addIcon} onClick={handleToggleClickAdd} /></div>}
+                                                             className={classes.addIcon} onClick={handleAddBtnClick} /></div>}
                     subheader="created on"
                     />
                 <CardContent className={classes.content}>
-                    <CollapseAddShift showAddShift={openAdd} />
-                    <br />
                     <div className={classes.sources}>
                         {props.category.sources.map(function(source, index) {
                         return (<div key={index}>{source.source_name}</div>);})}

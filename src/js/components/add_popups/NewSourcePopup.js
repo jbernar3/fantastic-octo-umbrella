@@ -60,8 +60,8 @@ const useStyles = makeStyles({
 
 export default function NewSourcePopup(props) {
     const classes = useStyles();
-    const [categoryName, setCategoryName] = useState("");
-    const [categoryID, setCategoryID] = useState("");
+    const [categoryName, setCategoryName] = useState(props.defaultCategoryName);
+    const [categoryID, setCategoryID] = useState(props.defaultCategoryID);
     const [sourceTitle, setSourceTitle] = useState("");
     const [sourceURL, setSourceURL] = useState("");
 
@@ -88,11 +88,40 @@ export default function NewSourcePopup(props) {
         setCategoryID(props.categories[parseInt(event.target.value.substring(0,1))].category_id);
     };
 
+    if (props.defaultCategoryID !== "") {
+        return(<Card className={classes.root} variant="outlined">
+            <CardHeader
+                className={classes.header}
+                title={"Add Source to " + props.defaultCategoryName}
+                //subheader={ shiftInfo.orgName }
+            />
+            <CardContent className={classes.content}>
+                <TextField id="new_source_url"
+                           label="New Source URL"
+                           name="sourceURL"
+                           autoComplete="new_source"
+                           autoFocus
+                           value={sourceURL}
+                           onChange={handleInputChange}
+                />
+                <TextField id="new_source"
+                           label="New Source Title"
+                           name="sourceTitle"
+                           autoComplete="new_source"
+                           autoFocus
+                           value={sourceTitle}
+                           onChange={handleInputChange}
+                />
+                <button onClick={handleSubmit}>Add Source</button>
+            </CardContent>
+        </Card>);
+    }
+
     return (
         <Card className={classes.root} variant="outlined">
             <CardHeader
                 className={classes.header}
-                title="Add Category"
+                title="Add Source"
                 //subheader={ shiftInfo.orgName }
             />
             <CardContent className={classes.content}>

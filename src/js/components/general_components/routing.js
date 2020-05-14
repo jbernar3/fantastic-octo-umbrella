@@ -1,11 +1,11 @@
 import {Route, Switch} from 'react-router-dom';
-import SignUp from "./SignUp";
+import SignUp from "../page_components/SignUp";
 import React, {Component} from "react";
-import HomeContainer from "./Home";
+import HomeContainer from "../page_components/Home";
 import {connect} from "react-redux";
-import SigninContainer from "./Signin";
+import SigninContainer from "../page_components/Signin";
 import NotFoundContainer from "./NotFound";
-import ProfileContainer from "./Profile";
+import ProfileContainer from "../page_components/Profile";
 
 class Routing extends Component {
     render() {

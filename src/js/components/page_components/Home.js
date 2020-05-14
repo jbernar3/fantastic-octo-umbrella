@@ -1,22 +1,21 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {changeDisplayCategory, signinUser, signoutUser, toggleDisplayCategory, updateCategories} from "../../actions";
+import {changeDisplayCategory, signinUser, signoutUser, toggleDisplayCategory, updateCategories} from "../../../actions";
 import TextField from '@material-ui/core/TextField'
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import SideMenuBar from "./SideMenuBar";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import NewCategoryPopup from "./NewCategoryPopup";
-import NewSourcePopup from "./NewSourcePopup";
-import CategoryDisplayPopup from "./CategoryDisplayPopup";
-import MenuBar from "./MenuBar";
-import CategoryDisplay from "./CategoryDisplay";
+import NewCategoryPopup from "../add_popups/NewCategoryPopup";
+import NewSourcePopup from "../add_popups/NewSourcePopup";
+import CategoryDisplayPopup from "../category_components/CategoryDisplayPopup";
+import MenuBar from "../general_components/MenuBar";
+import CategoryDisplay from "../category_components/CategoryDisplay";
 import Grid from "@material-ui/core/Grid";
 import {makeStyles} from "@material-ui/core/styles";
-import SideBar from "./SideBar";
+import SideBar from "../general_components/SideBar";
 
 const classes = makeStyles({
     root: {
@@ -33,7 +32,10 @@ class Home extends Component {
             categorySelect: "",
             categorySelectID: "",
             openAddCategoryDialog: false,
-            openAddSourceDialog: false
+            openAddSourceDialog: false,
+            sideDrawerOpen: false,
+            categoryNameSourceAddingTo: "",
+            categoryIDSourceAddingTo: ""
         };
         this.handleNewCategory = this.handleNewCategory.bind(this);
         this.handleNewSource = this.handleNewSource.bind(this);
@@ -44,13 +46,14 @@ class Home extends Component {
         this.handleCloseNewSourceDialog = this.handleCloseNewSourceDialog.bind(this);
         this.handleCategoryDisplay = this.handleCategoryDisplay.bind(this);
         this.handleCategoryDisplayClose = this.handleCategoryDisplayClose.bind(this);
+        this.toggleDrawerOpen = this.toggleDrawerOpen.bind(this);
     }
 
-    handleOpenDialog(dialogName) {
+    handleOpenDialog(dialogName, categoryName, categoryID) {
         if (dialogName === "newCategory") {
             this.setState({openAddCategoryDialog: true});
         } else if (dialogName === "newSource") {
-            this.setState({openAddSourceDialog: true});
+            this.setState({openAddSourceDialog: true, categoryNameSourceAddingTo: categoryName, categoryIDSourceAddingTo: categoryID});
         }
     }
 
@@ -59,7 +62,7 @@ class Home extends Component {
     }
 
     handleCloseNewSourceDialog() {
-        this.setState({openAddSourceDialog: false});
+        this.setState({openAddSourceDialog: false, categoryNameSourceAddingTo: "", categoryIDSourceAddingTo: ""});
     }
 
     handleInputChange(event) {
@@ -101,6 +104,7 @@ class Home extends Component {
         };
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
+            console.log(xhr.response);
             if (xhr.response === "error") {
                 console.log("handle new source error");
             } else {
@@ -129,6 +133,10 @@ class Home extends Component {
         this.props.closeDisplayCategory();
     }
 
+    toggleDrawerOpen() {
+        this.setState({sideDrawerOpen: !this.state.sideDrawerOpen});
+    }
+
     render() {
         const self = this;
         return(
@@ -137,10 +145,10 @@ class Home extends Component {
                     <NewCategoryPopup handleSubmit={this.handleNewCategory} />
                 </Dialog>
                 <Dialog name={"newSource"} open={this.state.openAddSourceDialog} onClose={this.handleCloseNewSourceDialog} aria-labelledby="form-dialog-title">
-                    <NewSourcePopup categories={this.props.categories} handleSubmit={this.handleNewSource} />
+                    <NewSourcePopup categories={this.props.categories} handleSubmit={this.handleNewSource} defaultCategoryName={this.state.categoryNameSourceAddingTo} defaultCategoryID={this.state.categoryIDSourceAddingTo}/>
                 </Dialog>
-                <MenuBar userName={this.props.firstName} logOut={this.props.logOut} />
-                <SideBar />
+                <MenuBar handleOpenDialog={this.handleOpenDialog} componentIn={"home"} userName={this.props.firstName} logOut={this.props.logOut} toggleDrawerOpen={this.toggleDrawerOpen} />
+                <SideBar toggleDrawerOpen={this.toggleDrawerOpen} drawerOpen={this.state.sideDrawerOpen} logOut={this.props.logOut} categories={this.props.categories}/>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={12}>
                         <Grid container justify="center" spacing={5}>
@@ -148,7 +156,7 @@ class Home extends Component {
                                 return  <Grid key={index} item>
                                     <CategoryDisplay index={index} openClick={self.handleCategoryDisplay} categoryName={category.category_name} sources={category.sources}/>
                                     <CategoryDisplayPopup dialogOpen={self.props.indexDisplayCategory === index}  onClose={self.handleCategoryDisplay}
-                                                          category={category} />
+                                                          category={category} addSource={self.handleNewSource} handleOpenDialog={self.handleOpenDialog}/>
                                 </Grid>})}
                         </Grid>
                     </Grid>
