@@ -9,6 +9,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Dialog from "@material-ui/core/Dialog";
 import AddIcon from '@material-ui/icons/Add';
 
@@ -73,6 +74,18 @@ const useStyles = makeStyles({
 export default function NewSourcePopup(props) {
     const classes = useStyles();
     const [openAdd, setOpenAdd] = React.useState(false);
+    const [sourceURL, setSourceURL] = React.useState("");
+    const [sourceTitle, setSourceTitle] = React.useState("");
+
+    const handleInputChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        if (name === "sourceURL") {
+            setSourceURL(value);
+        } else if (name === "sourceTitle") {
+            setSourceTitle(value);
+        }
+    };
 
     const handleClose = (event) => {
         event.persist();
@@ -81,7 +94,17 @@ export default function NewSourcePopup(props) {
     };
 
     const handleAddBtnClick = () => {
-        props.handleOpenDialog("newSource", props.category.category_name, props.category.category_id)
+        setOpenAdd(true);
+        //props.handleOpenDialog("newSource", props.category.category_name, props.category.category_id)
+    };
+
+    const handleSubmit = () => {
+        if (sourceURL === "") {
+            console.log("error message");
+        } else {
+            setOpenAdd(false);
+            props.addSource(sourceURL, sourceTitle, props.category.category_id);
+        }
     };
 
     const toggleHover = (isEnter) => (event) => {
@@ -93,7 +116,38 @@ export default function NewSourcePopup(props) {
         }
     };
 
-
+    if (openAdd) {
+        return (
+            <Dialog className={classes.dialog} open={props.dialogOpen} onClose={handleClose}>
+                <Card className={classes.popupcard} variant="outlined">
+                    <CardHeader
+                        className={classes.header}
+                        title={<div>Add Source</div>}
+                        subheader={props.category.category_name}
+                    />
+                    <CardContent className={classes.content}>
+                        <TextField id="new_source_url"
+                                   label="New Source URL"
+                                   name="sourceURL"
+                                   autoComplete="new_source"
+                                   autoFocus
+                                   value={sourceURL}
+                                   onChange={handleInputChange}
+                        />
+                        <TextField id="new_source"
+                                   label="New Source Title"
+                                   name="sourceTitle"
+                                   autoComplete="new_source"
+                                   autoFocus
+                                   value={sourceTitle}
+                                   onChange={handleInputChange}
+                        />
+                        <button onClick={handleSubmit}>Add Source</button>
+                    </CardContent>
+                </Card>
+            </Dialog>
+        );
+    }
     return (
         <Dialog className={classes.dialog} open={props.dialogOpen} onClose={handleClose}>
             <Card className={classes.popupcard} variant="outlined">

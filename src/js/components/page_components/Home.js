@@ -100,7 +100,8 @@ class Home extends Component {
             userID: this.props.userID,
             categoryID: categoryID,
             url: sourceURL,
-            sourceTitle: sourceTitle
+            sourceTitle: sourceTitle,
+            sourceNotes: "Fake source notes"
         };
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
@@ -156,7 +157,7 @@ class Home extends Component {
                                 return  <Grid key={index} item>
                                     <CategoryDisplay index={index} openClick={self.handleCategoryDisplay} categoryName={category.category_name} sources={category.sources}/>
                                     <CategoryDisplayPopup dialogOpen={self.props.indexDisplayCategory === index}  onClose={self.handleCategoryDisplay}
-                                                          category={category} addSource={self.handleNewSource} handleOpenDialog={self.handleOpenDialog}/>
+                                                          category={category} addSource={self.handleNewSource} handleOpenDialog={self.handleOpenDialog} />
                                 </Grid>})}
                         </Grid>
                     </Grid>
