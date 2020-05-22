@@ -127,10 +127,10 @@ function SignInSide(props) {
             <div className={classes.root} style={{marginLeft: '60%', marginTop: '20%', alignContent: 'center'}}>
                 <Grid container spacing={4}>
                     <Grid item xs={12}>
-                        <input id="email" name={"email"} onChange={handleChange} value={email} style={{border: "1px #000000", borderRadius: "5px"}} className={classes.paper} />
+                        <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email} style={{border: "1px #000000", borderRadius: "5px"}} className={classes.paper} />
                     </Grid>
                     <Grid item xs={12}>
-                        <input type={"password"} id="password" name={"password"} onChange={handleChange} value={password} style={{border: "1px #000000", borderRadius: "5px"}} className={classes.paper} />
+                        <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password} style={{border: "1px #000000", borderRadius: "5px"}} className={classes.paper} />
                         <br /><br />
                         <div style={{color: "#ffffff", marginLeft: "142px"}}>forgot Password?</div>
                     </Grid>
