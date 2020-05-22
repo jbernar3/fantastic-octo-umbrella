@@ -149,15 +149,15 @@ class Home extends Component {
                     <NewSourcePopup categories={this.props.categories} handleSubmit={this.handleNewSource} defaultCategoryName={this.state.categoryNameSourceAddingTo} defaultCategoryID={this.state.categoryIDSourceAddingTo}/>
                 </Dialog>
                 <MenuBar handleOpenDialog={this.handleOpenDialog} componentIn={"home"} userName={this.props.firstName} logOut={this.props.logOut} toggleDrawerOpen={this.toggleDrawerOpen} />
-                <SideBar toggleDrawerOpen={this.toggleDrawerOpen} drawerOpen={this.state.sideDrawerOpen} logOut={this.props.logOut} categories={this.props.categories}/>
+                <SideBar toggleDrawerOpen={this.toggleDrawerOpen} drawerOpen={this.state.sideDrawerOpen} logOut={this.props.logOut} categories={this.props.categories} changeCategoryDisplay={this.handleCategoryDisplay}/>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={12}>
                         <Grid container justify="center" spacing={5}>
                             {this.props.categories.map(function(category, index) {
                                 return  <Grid key={index} item>
                                     <CategoryDisplay index={index} openClick={self.handleCategoryDisplay} categoryName={category.category_name} sources={category.sources}/>
-                                    <CategoryDisplayPopup dialogOpen={self.props.indexDisplayCategory === index}  onClose={self.handleCategoryDisplay}
-                                                          category={category} addSource={self.handleNewSource} handleOpenDialog={self.handleOpenDialog} />
+                                    <CategoryDisplayPopup dialogOpen={self.props.indexDisplayCategory === index}  changeCategoryDisplay={self.handleCategoryDisplay} userID={self.props.userID}
+                                                          category={category} addSource={self.handleNewSource} handleOpenDialog={self.handleOpenDialog} updateCategories={self.props.updateCategories} />
                                 </Grid>})}
                         </Grid>
                     </Grid>

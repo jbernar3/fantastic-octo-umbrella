@@ -64,6 +64,7 @@ export default function NewSourcePopup(props) {
     const [categoryID, setCategoryID] = useState(props.defaultCategoryID);
     const [sourceTitle, setSourceTitle] = useState("");
     const [sourceURL, setSourceURL] = useState("");
+    const [sourceNotes, setSourceNotes] = useState("");
 
     const handleInputChange = (event) => {
         const name = event.target.name;
@@ -112,6 +113,14 @@ export default function NewSourcePopup(props) {
                            value={sourceTitle}
                            onChange={handleInputChange}
                 />
+                <TextField id="new_source_notes"
+                           label="Notes"
+                           name="sourceNotes"
+                           autoComplete="new_source"
+                           autoFocus
+                           value={sourceNotes}
+                           onChange={handleInputChange}
+                />
                 <button onClick={handleSubmit}>Add Source</button>
             </CardContent>
         </Card>);
@@ -139,6 +148,14 @@ export default function NewSourcePopup(props) {
                            autoComplete="new_source"
                            autoFocus
                            value={sourceTitle}
+                           onChange={handleInputChange}
+                />
+                <TextField id="new_source_notes"
+                           label="Notes"
+                           name="sourceNotes"
+                           autoComplete="new_source"
+                           autoFocus
+                           value={sourceNotes}
                            onChange={handleInputChange}
                 />
                 <Select

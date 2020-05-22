@@ -40,6 +40,12 @@ export default function SideBar(props) {
         setClickedProfile(true);
     };
 
+    const handleClickCategory = (index) => {
+        console.log(index);
+        props.toggleDrawerOpen();
+        props.changeCategoryDisplay(index);
+    };
+
     const list = () => (
         <div
             className={clsx(classes.list)}
@@ -60,7 +66,7 @@ export default function SideBar(props) {
             <Divider />
             <List>
                 {props.categories.map((category, index) => (
-                    <ListItem button key={category.category_name}>
+                    <ListItem button key={index} onClick={() => handleClickCategory(index)}>
                         <ListItemIcon><FolderIcon /></ListItemIcon>
                         <ListItemText primary={category.category_name} />
                     </ListItem>
