@@ -127,7 +127,7 @@ function SignInSide(props) {
     }
     return (
         <div id={"signin-container"}>
-            <div className={classes.root} style={{marginLeft: '60%', marginTop: '20%', alignContent: 'center'}}>
+            <div className={classes.root} style={{marginLeft: '60%', marginTop: '16%', alignContent: 'center'}}>
                 <Grid container spacing={4}>
                     <Grid item xs={12}>
                         <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
