@@ -103,7 +103,10 @@ function SignInSide(props) {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             if (xhr.response === "dne") {
+                console.log("DNE");
                 setErrorMsg("Incorrect username or password.");
+            } else if (xhr.response === "incorrect password") {
+                setErrorMsg("Incorrect password.")
             } else if (xhr.response === "error") {
                 setErrorMsg("Error signing up. Please try again.");
             } else {
@@ -137,7 +140,10 @@ function SignInSide(props) {
                     <Grid item xs={12} style={{marginLeft: "22.85%"}}>
                         <Button onClick={handleSubmit} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
                             Signin
-                        </Button><br />
+                        </Button><br /><br />
+                        <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "-25px"}}>
+                            {"Don't have an account? Sign Up"}
+                        </Link>
                         {errorMsg !== "" ? <div>{errorMsg}</div> : ""}
                     </Grid>
                     {/*<Grid item xs={3}>*/}
