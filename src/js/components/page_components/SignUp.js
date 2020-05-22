@@ -98,9 +98,9 @@ export default function SignUp(props) {
     } else {
         return (
             <div id={"signup-container"}>
-                <div className={classes.root} style={{marginLeft: '60.7%', marginTop: '15%', alignContent: 'center'}}>
+                <div className={classes.root} style={{marginLeft: '59.7%', marginTop: '15%', alignContent: 'center'}}>
                     <Grid container spacing={4}>
-                        <Grid container item xs={12} spacing={1}>
+                        <Grid container item xs={12} style={{marginLeft:'15px'}}>
                             <Grid item xs={5}>
                                 <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
                                        style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
@@ -110,11 +110,11 @@ export default function SignUp(props) {
                                        style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
                             </Grid>
                         </Grid>
-                        <Grid item xs={11}>
+                        <Grid item xs={12}>
                             <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}
                                    style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
                         </Grid>
-                        <Grid item xs={11}>
+                        <Grid item xs={12}>
                             <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
                                    style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
                         {/*    <br /><br />*/}
