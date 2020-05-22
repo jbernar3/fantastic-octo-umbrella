@@ -16,7 +16,7 @@ import { Redirect } from 'react-router-dom';
 import {signinUser} from "../../../actions";
 import {connect} from "react-redux";
 import {spacing} from "@material-ui/system"
-import backgroundImg from "../../../images/signin-background.jpg"
+import backgroundImg from "../../../images/signup-back.jpg"
 
 function Copyright() {
     return (
@@ -130,12 +130,16 @@ function SignInSide(props) {
             <div className={classes.root} style={{marginLeft: '60%', marginTop: '20%', alignContent: 'center'}}>
                 <Grid container spacing={4}>
                     <Grid item xs={12}>
-                        <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email} style={{border: "1px #000000", borderRadius: "5px"}} className={classes.paper} />
+                        <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
+                               style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
                     </Grid>
                     <Grid item xs={12}>
-                        <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password} style={{border: "1px #000000", borderRadius: "5px"}} className={classes.paper} />
+                        <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
+                               style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
                         <br /><br />
-                        <div style={{color: "#ffffff", marginLeft: "142px"}}>forgot Password?</div>
+                        <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "135px"}}>
+                            {"Forgot password?"}
+                        </Link>
                     </Grid>
                     <Grid item xs={12} style={{marginLeft: "22.85%"}}>
                         <Button onClick={handleSubmit} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
@@ -146,18 +150,6 @@ function SignInSide(props) {
                         </Link>
                         {errorMsg !== "" ? <div>{errorMsg}</div> : ""}
                     </Grid>
-                    {/*<Grid item xs={3}>*/}
-                    {/*    <Paper className={classes.paper}>xs=3</Paper>*/}
-                    {/*</Grid>*/}
-                    {/*<Grid item xs={3}>*/}
-                    {/*    <Paper className={classes.paper}>xs=3</Paper>*/}
-                    {/*</Grid>*/}
-                    {/*<Grid item xs={3}>*/}
-                    {/*    <Paper className={classes.paper}>xs=3</Paper>*/}
-                    {/*</Grid>*/}
-                    {/*<Grid item xs={3}>*/}
-                    {/*    <Paper className={classes.paper}>xs=3</Paper>*/}
-                    {/*</Grid>*/}
                 </Grid>
             </div>
         </div>
