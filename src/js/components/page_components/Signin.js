@@ -136,16 +136,21 @@ function SignInSide(props) {
             <div className={classes.root} style={{marginLeft: '60%', marginTop: '16%', alignContent: 'center'}}>
                 <Grid container spacing={4}>
                     <Grid item xs={12}>
-                        <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
-                               style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
+                        {errorMsg !== "" ? <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
+                                                  style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                            <input id="email" className={"google-font"} placeholder="email address" name={"email"} onChange={handleChange} value={email}
+                                   style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
                     </Grid>
                     <Grid item xs={12}>
-                        <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
-                               style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
+                        {errorMsg !== "" ? <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
+                                                  style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                            <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
+                                   style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
+
                         <br /><br />
-                        <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "135px"}}>
-                            {"Forgot password?"}
-                        </Link>
+                        {errorMsg !== "" ? <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "35px"}}>{"Incorrect Username or Password. Forgot password?"}</Link> :
+                            <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "135px"}}>{"Forgot password?"}</Link>}
+
                     </Grid>
                     <Grid item xs={12} style={{marginLeft: "22.85%"}}>
                         <Button onClick={handleSubmit} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
@@ -154,7 +159,6 @@ function SignInSide(props) {
                         <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "-25px"}}>
                             {"Don't have an account? Sign Up"}
                         </Link>
-                        {errorMsg !== "" ? <div>{errorMsg}</div> : ""}
                     </Grid>
                 </Grid>
             </div>
