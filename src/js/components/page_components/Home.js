@@ -53,21 +53,25 @@ class Home extends Component {
     }
 
     handleSetCategories() {
-        const postParameters = {
-            userID: this.props.userID
-        };
+        if (this.props.location.state.categories !== null) {
+            this.setState({categories: this.props.location.state.categories});
+        } else {
+            const postParameters = {
+                userID: this.props.userID
+            };
 
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener('load', () => {
-            if (xhr.response === "error") {
-                console.log("handle get categories error");
-            } else {
-                this.setState({openAddCategoryDialog: false, categories: JSON.parse(xhr.response)});
-            }
-        });
-        xhr.open('POST', 'http://localhost:3000/get_categories', false);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(postParameters));
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                if (xhr.response === "error") {
+                    console.log("handle get categories error");
+                } else {
+                    this.setState({openAddCategoryDialog: false, categories: JSON.parse(xhr.response)});
+                }
+            });
+            xhr.open('POST', 'http://localhost:3000/get_categories', false);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(postParameters));
+        }
     }
 
     handleOpenDialog(dialogName, categoryName, categoryID) {

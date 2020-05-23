@@ -115,6 +115,7 @@ function SignInSide(props) {
                 const user = JSON.parse(xhr.response);
                 console.log(user.categories);
                 props.onSignin(user._id, user.email, user.first_name, user.last_name);
+                setUserCategories(user.categories);
                 setSignedIn(true);
             }
         });
@@ -124,7 +125,11 @@ function SignInSide(props) {
     };
 
     if (signedIn || props.auth) {
-        return (<Redirect to={"home"}/>);
+        return (<Redirect to={{
+            pathname: 'home',
+            state: { categories: userCategories}
+        }}/>);
+
     }
     return (
         <div id={"signin-container"}>
