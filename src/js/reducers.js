@@ -15,7 +15,6 @@ function signin(state = INITIAL_STATE, action) {
                 email: action.email,
                 firstName: action.firstName,
                 lastName: action.lastName,
-                categories: action.categories,
                 indexDisplayCategory: -1
             });
         case SIGNOUT_USER:
@@ -24,7 +23,6 @@ function signin(state = INITIAL_STATE, action) {
                 email: "",
                 firstName: "",
                 lastName: "",
-                categories: null,
                 indexDisplayCategory: -1
             });
         case UPDATE_CATEGORIES:

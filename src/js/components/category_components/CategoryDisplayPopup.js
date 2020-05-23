@@ -139,7 +139,6 @@ export default function NewSourcePopup(props) {
         };
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
-            console.log(xhr.response);
             setOpenSecondAdd(true);
         });
         xhr.open('POST', 'http://localhost:3000/get_scraped_source', false);

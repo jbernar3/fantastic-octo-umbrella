@@ -50,6 +50,13 @@ export default function CategoryDisplay(props) {
         setHover(!isHover);
     };
 
+    const arrayBufferToBase64 = (buffer) => {
+        let binary = '';
+        let bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
     return (
         <Card className={classes.root} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
             <ButtonBase className={classes.cardAction} onClick={handleOpenDialog}>
@@ -62,7 +69,13 @@ export default function CategoryDisplay(props) {
                     </Typography>
                     <Typography variant="body2" component="p">
                         {props.sources.map(function(source, index) {
-                            return <div>{source.source_name} <br /></div>
+                            return <div>
+                                {console.log(source)}
+                                {source.source_name} <br />
+                                {source.source_urlImgFlag ?
+                                    <img src={source.source_urlImg}  alt={"temp source img"}/>
+                                    : <img src={`data:image/png;base64,${arrayBufferToBase64(source.source_img.data.data)}`}  alt={"temp source img"}/>}
+                            </div>
                         })}
                     </Typography>
                 </CardContent>

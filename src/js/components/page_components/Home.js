@@ -27,6 +27,8 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            firstRender: true,
+            categories: [],
             newCategoryField: "",
             newSourceField: "",
             categorySelect: "",
@@ -47,6 +49,25 @@ class Home extends Component {
         this.handleCategoryDisplay = this.handleCategoryDisplay.bind(this);
         this.handleCategoryDisplayClose = this.handleCategoryDisplayClose.bind(this);
         this.toggleDrawerOpen = this.toggleDrawerOpen.bind(this);
+        this.handleSetCategories = this.handleSetCategories.bind(this);
+    }
+
+    handleSetCategories() {
+        const postParameters = {
+            userID: this.props.userID
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', () => {
+            if (xhr.response === "error") {
+                console.log("handle get categories error");
+            } else {
+                this.setState({openAddCategoryDialog: false, categories: JSON.parse(xhr.response)});
+            }
+        });
+        xhr.open('POST', 'http://localhost:3000/get_categories', false);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(postParameters));
     }
 
     handleOpenDialog(dialogName, categoryName, categoryID) {
@@ -86,8 +107,7 @@ class Home extends Component {
             if (xhr.response === "error") {
                 console.log("handle new category error");
             } else {
-                this.props.updateCategories(JSON.parse(xhr.response));
-                this.setState({openAddCategoryDialog: false});
+                this.setState({openAddCategoryDialog: false, categories: JSON.parse(xhr.response)});
             }
         });
         xhr.open('POST', 'http://localhost:3000/new_category', false);
@@ -106,11 +126,14 @@ class Home extends Component {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             console.log(xhr.response);
-            if (xhr.response === "error") {
+            if (xhr.response === "jefferson") {
+                console.log("THIS IS A HELLO WORLD STATEMENT")
+            } else if (xhr.response === "source is already in this category") {
+                console.log(xhr.response);
+            } else if (xhr.response === "error") {
                 console.log("handle new source error");
             } else {
-                this.props.updateCategories(JSON.parse(xhr.response));
-                this.setState({openAddSourceDialog: false});
+                this.setState({openAddSourceDialog: false, categories: JSON.parse(xhr.response)});
             }
         });
         xhr.open('POST', 'http://localhost:3000/new_source', false);
@@ -121,7 +144,7 @@ class Home extends Component {
     handleCategoryChange(event) {
         event.persist();
         this.setState({categorySelect: event.target.value,
-            categorySelectID: this.props.categories[parseInt(event.target.value.substring(0,1))].category_id}, () => {console.log(this.state.categorySelectID)})
+            categorySelectID: this.state.categories[parseInt(event.target.value.substring(0,1))].category_id}, () => {console.log(this.state.categorySelectID)})
     }
 
     handleCategoryDisplay(index) {
@@ -139,6 +162,10 @@ class Home extends Component {
     }
 
     render() {
+        if (this.state.firstRender) {
+            this.handleSetCategories();
+            this.setState({firstRender : false});
+        }
         const self = this;
         return(
             <div className={"main_content"}>
@@ -146,14 +173,14 @@ class Home extends Component {
                     <NewCategoryPopup handleSubmit={this.handleNewCategory} />
                 </Dialog>
                 <Dialog name={"newSource"} open={this.state.openAddSourceDialog} onClose={this.handleCloseNewSourceDialog} aria-labelledby="form-dialog-title">
-                    <NewSourcePopup categories={this.props.categories} handleSubmit={this.handleNewSource} defaultCategoryName={this.state.categoryNameSourceAddingTo} defaultCategoryID={this.state.categoryIDSourceAddingTo}/>
+                    <NewSourcePopup categories={this.state.categories} handleSubmit={this.handleNewSource} defaultCategoryName={this.state.categoryNameSourceAddingTo} defaultCategoryID={this.state.categoryIDSourceAddingTo}/>
                 </Dialog>
                 <MenuBar handleOpenDialog={this.handleOpenDialog} componentIn={"home"} userName={this.props.firstName} logOut={this.props.logOut} toggleDrawerOpen={this.toggleDrawerOpen} />
-                <SideBar toggleDrawerOpen={this.toggleDrawerOpen} drawerOpen={this.state.sideDrawerOpen} logOut={this.props.logOut} categories={this.props.categories} changeCategoryDisplay={this.handleCategoryDisplay}/>
+                <SideBar toggleDrawerOpen={this.toggleDrawerOpen} drawerOpen={this.state.sideDrawerOpen} logOut={this.props.logOut} categories={this.state.categories} changeCategoryDisplay={this.handleCategoryDisplay}/>
                 <Grid container className={classes.root} spacing={2}>
                     <Grid item xs={12}>
                         <Grid container justify="center" spacing={5}>
-                            {this.props.categories.map(function(category, index) {
+                            {this.state.categories.map(function(category, index) {
                                 return  <Grid key={index} item>
                                     <CategoryDisplay index={index} openClick={self.handleCategoryDisplay} categoryName={category.category_name} sources={category.sources}/>
                                     <CategoryDisplayPopup dialogOpen={self.props.indexDisplayCategory === index}  changeCategoryDisplay={self.handleCategoryDisplay} userID={self.props.userID}
@@ -171,7 +198,6 @@ function mapStateToProps(state) {
     return {
         userID: state.signin.userID,
         firstName: state.signin.firstName,
-        categories: state.signin.categories,
         indexDisplayCategory: state.signin.indexDisplayCategory
     }
 }

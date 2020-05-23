@@ -82,6 +82,7 @@ function SignInSide(props) {
     const [password, setPassword] = React.useState("");
     const [signedIn, setSignedIn] = React.useState(false);
     const [errorMsg, setErrorMsg] = React.useState("");
+    const [userCategories, setUserCategories] = React.useState(null);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -113,7 +114,7 @@ function SignInSide(props) {
                 setErrorMsg("");
                 const user = JSON.parse(xhr.response);
                 console.log(user.categories);
-                props.onSignin(user._id, user.email, user.first_name, user.last_name, user.categories);
+                props.onSignin(user._id, user.email, user.first_name, user.last_name);
                 setSignedIn(true);
             }
         });
@@ -237,8 +238,8 @@ class Signin extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onClick: (userID, email, fName, lName, categories) => {
-            dispatch(signinUser(userID, email, fName, lName, categories))
+        onClick: (userID, email, fName, lName) => {
+            dispatch(signinUser(userID, email, fName, lName))
         }
     };
 };
