@@ -99,37 +99,48 @@ export default function SignUp(props) {
         return (
             <div id={"signup-container"}>
                 <div className={classes.root} style={{marginLeft: '59.7%', marginTop: '15%', alignContent: 'center'}}>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={3}>
                         <Grid container item xs={12} style={{marginLeft:'15px'}}>
                             <Grid item xs={5}>
-                                <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
-                                       style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
+                                {errorMsg !== "" ? <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
+                                                          style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                    <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
+                                           style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
                             </Grid>
                             <Grid item xs={5}>
-                                <input id="lastName" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
-                                       style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
+                                {errorMsg !== "" ? <input id="lastName" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
+                                                          style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                    <input id="lastName" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
+                                           style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}
-                                   style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
+                            {errorMsg !== "" ? <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}
+                                                      style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}
+                                       style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
                         </Grid>
                         <Grid item xs={12}>
-                            <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
-                                   style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />
+                            {errorMsg !== "" ? <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
+                                                      style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
+                                       style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
                         {/*    <br /><br />*/}
                         {/*    <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "135px"}}>*/}
                         {/*    {"Forgot password?"}*/}
                         {/*</Link>*/}
                         </Grid>
                         <Grid item xs={11} style={{marginLeft: "20.5%"}}>
+                            {errorMsg !== "" ? <Link href="/#/signin" variant="body2" style={{color: "#ffffff", marginLeft: "-38px"}}>
+                                    {"Email is already registered. Please Sign In"}
+                                </Link> :
+                                <Link href="/#/signin" variant="body2" style={{color: "#ffffff", marginLeft: "-21px"}}>
+                                    {"Already have an account? Sign In"}
+                                </Link>}
+                            <br /><br />
                             <Button onClick={handleSubmit} disabled={fName === "" || lName === "" || email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
                                 sign up
-                            </Button><br /><br />
-                            <Link href="/#/signin" variant="body2" style={{color: "#ffffff", marginLeft: "-25px"}}>
-                                {"Already have an account? Sign In"}
-                            </Link>
-                            {errorMsg !== "" ? <div>{errorMsg}</div> : ""}
+                            </Button>
                         </Grid>
                     </Grid>
                 </div>
