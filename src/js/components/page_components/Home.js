@@ -168,9 +168,9 @@ class Home extends Component {
     render() {
         const self = this;
         if (this.state.firstRender) {
+            self.setState({firstRender : false});
             setTimeout(function cb() {
                 self.handleSetCategories();
-                self.setState({firstRender : false});
             }, 0);
         }
         return(

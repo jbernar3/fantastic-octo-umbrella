@@ -158,7 +158,7 @@ function SignInSide(props) {
 
                     </Grid>
                     <Grid item xs={12} style={{marginLeft: "22.85%"}}>
-                        {loading ? <div>IS LOADING...</div>: ""}
+                        {loading ? <img src={'src/images/temp_loading.gif'} alt={"Loading gif"}/>: ""}
                         <Button onClick={() => {setLoading(true); setTimeout(function cb() {
                             handleSubmit();
                         }, 0)}} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
