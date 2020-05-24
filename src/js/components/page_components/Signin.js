@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import regeneratorRuntime from "regenerator-runtime";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -83,6 +84,7 @@ function SignInSide(props) {
     const [signedIn, setSignedIn] = React.useState(false);
     const [errorMsg, setErrorMsg] = React.useState("");
     const [userCategories, setUserCategories] = React.useState(null);
+    const [loading, setLoading] = React.useState(false);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -95,14 +97,17 @@ function SignInSide(props) {
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = () => {
         const postParameters = {
-            email : email,
-            password : password
+            email: email,
+            password: password
         };
 
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
+            setLoading(false);
+            console.log("SET OFF");
+            console.log(loading);
             if (xhr.response === "dne") {
                 console.log("DNE");
                 setErrorMsg("Incorrect username or password.");
@@ -153,7 +158,10 @@ function SignInSide(props) {
 
                     </Grid>
                     <Grid item xs={12} style={{marginLeft: "22.85%"}}>
-                        <Button onClick={handleSubmit} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
+                        {loading ? <div>IS LOADING...</div>: ""}
+                        <Button onClick={() => {setLoading(true); setTimeout(function cb() {
+                            handleSubmit();
+                        }, 0)}} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
                             Signin
                         </Button><br /><br />
                         <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "-25px"}}>
@@ -163,78 +171,6 @@ function SignInSide(props) {
                 </Grid>
             </div>
         </div>
-        // <Grid container component="main" className={classes.root}>
-        //     <CssBaseline />
-        //     <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        //     <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        //         <div className={classes.paper}>
-        //             <Avatar className={classes.avatar}>
-        //                 <LockOutlinedIcon />
-        //             </Avatar>
-        //             <Typography component="h1" variant="h5">
-        //                 Sign in
-        //             </Typography>
-        //                 <TextField
-        //                     variant="outlined"
-        //                     margin="normal"
-        //                     required
-        //                     fullWidth
-        //                     id="email"
-        //                     label="Email Address"
-        //                     name="email"
-        //                     autoComplete="email"
-        //                     autoFocus
-        //                     value={email}
-        //                     onChange={handleChange}
-        //                 />
-        //                 <TextField
-        //                     variant="outlined"
-        //                     margin="normal"
-        //                     required
-        //                     fullWidth
-        //                     name="password"
-        //                     label="Password"
-        //                     type="password"
-        //                     id="password"
-        //                     autoComplete="current-password"
-        //                     value={password}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errorMsg !== "" ? <div>{errorMsg}</div> : ""}
-        //                 <FormControlLabel
-        //                     control={<Checkbox value="remember" color="primary" />}
-        //                     label="Remember me"
-        //                 />
-        //                 <Button
-        //                     type="submit"
-        //                     fullWidth
-        //                     variant="contained"
-        //                     color="primary"
-        //                     className={classes.submit}
-        //                     disabled={email === "" || password === ""}
-        //                     onClick={handleSubmit}
-        //                 >
-        //                     Sign In
-        //                 </Button>
-        //                 <Grid container>
-        //                     <Grid item xs>
-        //                         <Link href="#" variant="body2">
-        //                             Forgot password?
-        //                         </Link>
-        //                     </Grid>
-        //                     <Grid item>
-        //                         <Link href="/#/signup" variant="body2">
-        //                             {"Don't have an account? Sign Up"}
-        //                         </Link>
-        //                     </Grid>
-        //                 </Grid>
-        //                 <Box mt={5}>
-        //                     <Copyright />
-        //                 </Box>
-        //
-        //         </div>
-        //     </Grid>
-        // </Grid>
     );
 }
 

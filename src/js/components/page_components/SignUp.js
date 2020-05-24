@@ -125,10 +125,6 @@ export default function SignUp(props) {
                                                       style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
                                 <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
                                        style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
-                        {/*    <br /><br />*/}
-                        {/*    <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "135px"}}>*/}
-                        {/*    {"Forgot password?"}*/}
-                        {/*</Link>*/}
                         </Grid>
                         <Grid item xs={11} style={{marginLeft: "20.5%"}}>
                             {errorMsg !== "" ? <Link href="/#/signin" variant="body2" style={{color: "#ffffff", marginLeft: "-38px"}}>

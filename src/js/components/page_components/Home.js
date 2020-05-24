@@ -166,11 +166,13 @@ class Home extends Component {
     }
 
     render() {
-        if (this.state.firstRender) {
-            this.handleSetCategories();
-            this.setState({firstRender : false});
-        }
         const self = this;
+        if (this.state.firstRender) {
+            setTimeout(function cb() {
+                self.handleSetCategories();
+                self.setState({firstRender : false});
+            }, 0);
+        }
         return(
             <div className={"main_content"}>
                 <Dialog name={"newCategory"} open={this.state.openAddCategoryDialog} onClose={this.handleCloseNewCatDialog} aria-labelledby="form-dialog-title">
