@@ -103,11 +103,13 @@ class Home extends Component {
     handleNewCategory(categoryName) {
         const postParameters = {
             userID: this.props.userID,
-            catName: categoryName
+            catName: categoryName,
+            parentID: 0
         };
 
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
+            console.log(xhr.response);
             if (xhr.response === "error") {
                 console.log("handle new category error");
             } else {
@@ -137,7 +139,20 @@ class Home extends Component {
             } else if (xhr.response === "error") {
                 console.log("handle new source error");
             } else {
-                this.setState({openAddSourceDialog: false, categories: JSON.parse(xhr.response)});
+                const newSource = JSON.parse(xhr.response);
+                // TODO: this will not look like this in the final product; will have a more efficient way
+                // This does not work for sub-categories and is not scalable for the web application
+                for (let i=0; i<this.state.categories.length; i++) {
+                    if (this.state.categories[i]._id === categoryID) {
+                        console.log("FOUND THE CATEGORY ID");
+                        const updatedCategories = this.state.categories;
+                        updatedCategories[i].sources.push(newSource);
+                        console.log("THIS IS NEW SOURCE");
+                        console.log(newSource);
+                        this.setState({openAddSourceDialog: false, categories: updatedCategories});
+                        break;
+                    }
+                }
             }
         });
         xhr.open('POST', 'http://localhost:3000/new_source', false);

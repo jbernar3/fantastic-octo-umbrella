@@ -86,7 +86,8 @@ export default function NewSourcePopup(props) {
 
     const handleCategoryChange = (event) => {
         setCategoryName(event.target.value);
-        setCategoryID(props.categories[parseInt(event.target.value.substring(0,1))].category_id);
+        setCategoryID(props.categories[parseInt(event.target.value.substring(0,1))]._id);
+
     };
 
     if (props.defaultCategoryID !== "") {

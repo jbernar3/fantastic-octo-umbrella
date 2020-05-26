@@ -237,8 +237,10 @@ export default function NewSourcePopup(props) {
             <Card className={classes.popupcard} variant="outlined">
                 <CardHeader
                     className={classes.header}
-                    title={<div>{props.category.category_name}<AddIcon onMouseEnter={toggleHover(true)} onMouseLeave={toggleHover(false)}
-                                                             className={classes.addIcon} onClick={handleAddBtnClick} /></div>}
+                    title={<div>{props.category.category_name}
+                    {/*<AddIcon onMouseEnter={toggleHover(true)} onMouseLeave={toggleHover(false)}*/}
+                    {/*                                         className={classes.addIcon} onClick={handleAddBtnClick} />*/}
+                    </div>}
                     subheader="created on"
                     />
                 <CardContent className={classes.content}>

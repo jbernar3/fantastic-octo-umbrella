@@ -69,10 +69,7 @@ export default function CategoryDisplay(props) {
                     </Typography>
                     <Typography variant="body2" component="p">
                         {props.sources.map(function(source, index) {
-                            console.log("LOAD SOURCE");
-                            console.log(index);
                             return <div>
-                                {console.log(source)}
                                 {source.source_name} <br />
                                 {source.source_urlImgFlag ?
                                     <img src={source.source_urlImg}  alt={"temp source img"}/>
