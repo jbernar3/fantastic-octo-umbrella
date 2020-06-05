@@ -23,19 +23,52 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            drawerOpen: false
+            drawerOpen: false,
+            categories: [],
+            firstRender: true
+        };
+
+        this.handleSetCategories = this.handleSetCategories.bind(this);
+    }
+
+    handleSetCategories() {
+        if (this.props.location.state.categories !== null) {
+            this.setState({categories: this.props.location.state.categories});
+        } else {
+            const postParameters = {
+                userID: this.props.userID
+            };
+
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                if (xhr.response === "error") {
+                    console.log("handle get categories error");
+                } else {
+                    this.setState({categories: JSON.parse(xhr.response)});
+                }
+            });
+            xhr.open('POST', 'http://localhost:3000/get_categories', false);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(postParameters));
         }
     }
 
     render() {
+        const self = this;
+        if (this.state.firstRender) {
+            self.setState({firstRender : false});
+            setTimeout(function cb() {
+                self.handleSetCategories();
+            }, 0);
+        }
         return(
             <div>
                 <MenuBar logout={this.props.logout} />
                 <div style={{width: '100%', marginTop: '2%'}}>
                     <div id={"classes_clickable_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>classes</div>
-                    <div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>
+                    {/*<div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>*/}
                 </div>
-                <CategoryDrawer drawerOpen={this.state.drawerOpen}/>
+                <CategoryDrawer categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>
             </div>
         )
     }

@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import FolderIcon from "@material-ui/icons/Folder";
 
 const drawerWidth = 240;
 
@@ -51,7 +52,8 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
         top: 150,
-        borderRadius: 8
+        borderRadius: 8,
+        backgroundColor: '#e7e7e7'
     },
     drawerHeader: {
         display: 'flex',
@@ -110,6 +112,15 @@ export default function CategoryDrawer(props) {
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
                 </div>
+                <Divider />
+                <List>
+                    {props.categories.map((category, index) => (
+                        <ListItem button key={index}>
+                            <ListItemIcon><FolderIcon /></ListItemIcon>
+                            <ListItemText primary={category.category_name} />
+                        </ListItem>
+                    ))}
+                </List>
                 <Divider />
                 <List>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
