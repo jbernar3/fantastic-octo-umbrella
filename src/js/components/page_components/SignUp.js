@@ -37,7 +37,10 @@ const useStyles = makeStyles((theme) => ({
         height: '35px',
         width: '80%',
         //textAlign: 'center',
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 600,
+        fontStyle: 'normal',
     },
 }));
 
@@ -127,15 +130,15 @@ export default function SignUp(props) {
                                        style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
                         </Grid>
                         <Grid item xs={11} style={{marginLeft: "20.5%"}}>
-                            {errorMsg !== "" ? <Link href="/#/signin" variant="body2" style={{color: "#ffffff", marginLeft: "-38px"}}>
-                                    {"Email is already registered. Please Sign In"}
+                            {errorMsg !== "" ? <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>
+                                    <div className={'houshcka_demibold'} style={{marginLeft: "-38px"}}>Email is already registered. Please Sign In</div>
                                 </Link> :
-                                <Link href="/#/signin" variant="body2" style={{color: "#ffffff", marginLeft: "-21px"}}>
-                                    {"Already have an account? Sign In"}
+                                <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>
+                                    <div className={'houshcka_demibold'} style={{marginLeft: "-21px"}}>Already have an account? Sign In</div>
                                 </Link>}
                             <br /><br />
                             <Button onClick={handleSubmit} disabled={fName === "" || lName === "" || email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
-                                sign up
+                                <div className={'houshcka_demibold'}>sign up</div>
                             </Button>
                         </Grid>
                     </Grid>

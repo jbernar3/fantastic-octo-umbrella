@@ -11,10 +11,11 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddIcon from '@material-ui/icons/Add';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import {Redirect} from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '98.75%',
+        width: '100%',
         flexGrow: 1,
     },
     menuButton: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#ffffff'
     },
     appBar: {
-        backgroundColor: '#0c0018',
+        backgroundColor: '#a65cff',
     }
 }));
 
@@ -58,14 +59,16 @@ export default function MenuAppBar(props) {
     const basicMenuBar = ( <div className={classes.root}>
         <div position="static" className={classes.appBar} border={0}>
             <Toolbar>
-                {/*<img src={logo} alt={"Logo"} className={"smallLogo"} onClick={() => history2.push("/")}/>*/}
+                <IconButton>
+                    <img src={"src/images/c-logo.png"} style={{width: '35px', height: '35px'}} alt={"Logo"} className={"smallLogo"} onClick={() => console.log("clicked logo in app bar")}/>
+                </IconButton>
                 <Typography variant="h6" className={classes.title} style={{cursor: 'pointer'}} onClick={handleClickHome}>
-                    Arma
+                    <img src={"src/images/clasifywhite.png"} style={{width: '90px', height: '30px', marginTop: '1%'}} alt={"clasify-white"} />
                 </Typography>
                 {auth && (
                     <div>
                         <Tooltip title={props.userName} aria-label="add">
-                            <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={handleMenu}/>
+                            <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={() => {props.logout()}}/>
                             {/*<Avatar style={{cursor: 'pointer'}} src={auth2.getImage()} onClick={handleMenu}/>*/}
                         </Tooltip>
                     </div>
@@ -79,7 +82,7 @@ export default function MenuAppBar(props) {
             <Toolbar>
                 {/*<img src={logo} alt={"Logo"} className={"smallLogo"} onClick={() => history2.push("/")}/>*/}
                 <Typography variant="h6" className={classes.title} style={{cursor: 'pointer'}} onClick={handleClickHome}>
-                    Arma
+                    Clasify
                 </Typography>
                 {auth && (
                     <div style={{display: 'flex'}}>
@@ -103,11 +106,5 @@ export default function MenuAppBar(props) {
         </div>
     </div>);
 
-    if (clickedHome && props.componentIn === "profile") {
-        return (<React.Fragment><Redirect to={"/home"} />{homeMenuBar}</React.Fragment>);
-    } else if (props.componentIn === "home") {
-        return homeMenuBar;
-    } else {
-        return basicMenuBar;
-    }
+    return basicMenuBar;
 }

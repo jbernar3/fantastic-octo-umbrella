@@ -42,7 +42,10 @@ const useStyles = makeStyles((theme) => ({
         height: '35px',
         width: '80%',
         //textAlign: 'center',
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 600,
+        fontStyle: 'normal',
     },
 }));
 
@@ -143,7 +146,7 @@ function SignInSide(props) {
                     <Grid item xs={12}>
                         {errorMsg !== "" ? <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
                                                   style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
-                            <input id="email" className={"google-font"} placeholder="email address" name={"email"} onChange={handleChange} value={email}
+                            <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
                                    style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
                     </Grid>
                     <Grid item xs={12}>
@@ -154,7 +157,9 @@ function SignInSide(props) {
 
                         <br /><br />
                         {errorMsg !== "" ? <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "35px"}}>{"Incorrect Username or Password. Forgot password?"}</Link> :
-                            <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "135px"}}>{"Forgot password?"}</Link>}
+                            <Link href="/#/signup" variant="body2" style={{color: "#ffffff"}}>
+                                <div className={"houshcka_demibold"} style={{marginLeft: "138px"}}>Forgot password?</div>
+                            </Link>}
 
                     </Grid>
                     <Grid item xs={12} style={{marginLeft: "22.85%"}}>
@@ -162,10 +167,10 @@ function SignInSide(props) {
                         <Button onClick={() => {setLoading(true); setTimeout(function cb() {
                             handleSubmit();
                         }, 0)}} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
-                            Signin
+                            <div className={'houshcka_demibold'}>sign in</div>
                         </Button><br /><br />
-                        <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "-25px"}}>
-                            {"Don't have an account? Sign Up"}
+                        <Link href="/#/signup" variant="body2" style={{color: "#ffffff"}}>
+                            {<div className={'houshcka_demibold'} style={{marginLeft: "-22px"}}>Don't have an account? Sign Up</div>}
                         </Link>
                     </Grid>
                 </Grid>
