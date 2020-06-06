@@ -3,7 +3,7 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     height: 100%;
     float: right;
-    background-color: #C4C4C4;
+    background-color: #d4d4d4;
 }
 
 .main_content {
@@ -37,6 +37,21 @@
     color: #a65cff;
     display: inline-block;
 
+}
+
+.category_name_drawer {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: #a65cff;
+    font-size: 12pt;
+}
+
+.source_title {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 14pt;
 }
 
 .houshcka_demibold {
@@ -90,4 +105,5 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
+    overflow: hidden
 }

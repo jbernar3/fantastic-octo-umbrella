@@ -23,7 +23,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            drawerOpen: false,
+            drawerOpen: true,
             categories: [],
             firstRender: true
         };
@@ -64,7 +64,7 @@ class Home extends Component {
         return(
             <div>
                 <MenuBar logout={this.props.logout} />
-                <div style={{width: '100%', marginTop: '2%'}}>
+                <div style={{width: '100%', marginTop: '1.8vh'}}>
                     <div id={"classes_clickable_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>classes</div>
                     {/*<div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>*/}
                 </div>
