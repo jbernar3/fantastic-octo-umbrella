@@ -9,9 +9,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 275,
+        minWidth: '80vh',
         backgroundColor: '#ececec',
-        marginBottom: '1%'
+        marginBottom: '2%',
+        height: '30vh'
     },
     bullet: {
         display: 'inline-block',
@@ -62,9 +63,12 @@ export default function SourceCard(props) {
                 </Typography>
                 <div className={classes.sourceimg}>
                     {props.source.source_urlImgFlag ?
-                        <img src={props.source.source_urlImg}  alt={"temp source img"} style={{width: '100%', height: '100%', border:'2px solid #a65cff'}}/>
+                        <div style={{position: "relative"}}>
+                            <img src={props.source.source_urlImg}  alt={"temp source img"} style={{width: '90%', position: 'absolute',
+                                clip: 'rect(3.5vh, 40vh, 27vh, 0)', marginTop: '-15%'}}/>
+                        </div>
                         : <img src={`data:image/png;base64,${arrayBufferToBase64(props.source.source_img.data.data)}`}  alt={"temp source img"}
-                               style={{width: '100%', height: '100%', border:'2px solid #a65cff'}}/>}
+                               style={{width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-3.5vh'}}/>}
                 </div>
             </CardContent>
             <CardActions>

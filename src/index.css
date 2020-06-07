@@ -15,7 +15,7 @@
     font-family: houschka-rounded,sans-serif;
     font-weight: 700;
     font-style: normal;
-    font-size: 20pt;
+    font-size: 16pt;
     width: 100px;
     height: 100%;
     margin-left: 2%;
@@ -36,7 +36,6 @@
     cursor: pointer;
     color: #a65cff;
     display: inline-block;
-
 }
 
 .category_name_drawer {
@@ -45,6 +44,17 @@
     font-style: normal;
     color: #a65cff;
     font-size: 12pt;
+}
+
+.category_name_title {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: #a65cff;
+    font-size: 20pt;
+    text-align: center;
+    margin-left: -10vh;
+    width: 100%;
 }
 
 .source_title {
@@ -58,6 +68,29 @@
     font-family: houschka-rounded,sans-serif;
     font-weight: 600;
     font-style: normal;
+}
+
+#add_source_div {
+    cursor: pointer;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #a65cff;
+    float: right;
+    margin-right: 7vh;
+    margin-top: 1vh;
+    display: inline-block;
+}
+
+#new_class_div {
+    cursor: pointer;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #a65cff;
+    display: inline-block;
+    margin-top: 1vh;
+    /*margin-left: 20vh;*/
 }
 
 #signin-container {
@@ -106,4 +139,8 @@ body {
     height: 100%;
     margin: 0;
     overflow: hidden
+}
+
+.thumbY {
+    background: rgba(166, 92, 254, 0.29) !important;
 }

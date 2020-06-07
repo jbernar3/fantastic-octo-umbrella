@@ -121,7 +121,6 @@ function SignInSide(props) {
             } else {
                 setErrorMsg("");
                 const user = JSON.parse(xhr.response);
-                console.log(user.categories);
                 props.onSignin(user._id, user.email, user.first_name, user.last_name);
                 setUserCategories(user.categories);
                 setSignedIn(true);
@@ -145,13 +144,13 @@ function SignInSide(props) {
                 <Grid container spacing={4}>
                     <Grid item xs={12}>
                         {errorMsg !== "" ? <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
-                                                  style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                                  style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ffe43a"}} className={classes.paper} /> :
                             <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
                                    style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
                     </Grid>
                     <Grid item xs={12}>
                         {errorMsg !== "" ? <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
-                                                  style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                                  style={{border: "1px rgba(255,70,74,1)", borderRadius: "5px", outline: "none"}} className={classes.paper} /> :
                             <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
                                    style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
 

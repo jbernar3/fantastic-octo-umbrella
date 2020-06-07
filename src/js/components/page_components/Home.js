@@ -65,7 +65,12 @@ class Home extends Component {
             <div>
                 <MenuBar logout={this.props.logout} />
                 <div style={{width: '100%', marginTop: '1.8vh'}}>
-                    <div id={"classes_clickable_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>classes</div>
+                    <div id={"classes_clickable_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>
+                        <img src={'src/images/menu_icon.png'} alt={'menu icon'} style={{width: '2vh', height: '2vh', marginRight: '1vh', marginLeft: '-1vh'}} />
+                        classes
+                    </div>
+                    <div id={'new_class_div'}>+ Add Class</div>
+                    <div id={'add_source_div'}>+ Add Source</div>
                     {/*<div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>*/}
                 </div>
                 <CategoryDrawer categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>

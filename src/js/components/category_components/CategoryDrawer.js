@@ -20,6 +20,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import FolderIcon from "@material-ui/icons/Folder";
 import Card from "@material-ui/core/Card";
 import SourceCard from "../source_components/SourceCard";
+import Scrollbars from "react-scrollbars-custom";
 
 const drawerWidth = 240;
 
@@ -73,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
         marginLeft: -drawerWidth,
-        marginTop: '3vh',
+        marginTop: '-2.5vh',
     },
     contentShift: {
         transition: theme.transitions.create('margin', {
@@ -88,11 +89,11 @@ export default function CategoryDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [indexCurrCat, setIndexCurrCat] = React.useState(0);
-
+    let scrollbars = null;
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
+
 
             <Drawer
                 className={classes.drawer}
@@ -122,11 +123,18 @@ export default function CategoryDrawer(props) {
                     [classes.contentShift]: props.drawerOpen,
                 })}
             >
-                <div id='source_scroll_div' style={{marginRight: '7vh', height: '80vh', overflowY: 'auto'}}>
+                <div className={'category_name_title'}>{props.categories.length > 0 ? props.categories[indexCurrCat].category_name : "No Categories"}</div>
+                <Scrollbars
+                    style={{ marginLeft: '-10vh', height: '70vh', marginTop: '5vh' }}
+                    id='source_scroll_div'
+                    ref={ref => (scrollbars = ref)}
+                    thumbYProps={{ className: "thumbY" }}
+                    trackXProps={{ className: "trackX" }}
+                >
                     {props.categories.length > 0 ? props.categories[indexCurrCat].sources.map((source, index) => (
                         <SourceCard key={index} source={source} />
                     )) : "No sources"}
-                </div>
+                </Scrollbars>
             </main>
         </div>
     );
