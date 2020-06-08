@@ -141,6 +141,6 @@ body {
     overflow: hidden
 }
 
-.thumbY {
+.thumbY, .trackX {
     background: rgba(166, 92, 254, 0.29) !important;
 }

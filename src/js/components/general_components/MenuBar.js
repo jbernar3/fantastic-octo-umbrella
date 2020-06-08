@@ -12,6 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import {Redirect} from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,9 +68,13 @@ export default function MenuAppBar(props) {
                 </Typography>
                 {auth && (
                     <div>
-                        <Tooltip title={props.userName} aria-label="add">
-                            <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={() => {props.logout()}}/>
+                        <Tooltip title={"My Profile"} aria-label="add">
+                            <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff', marginRight: '2vh'}} onClick={() => {props.logout()}} />
+                            {/*<ExitToAppIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={() => {props.logout()}} />*/}
                             {/*<Avatar style={{cursor: 'pointer'}} src={auth2.getImage()} onClick={handleMenu}/>*/}
+                        </Tooltip>
+                        <Tooltip title={"Logout"}>
+                            <ExitToAppIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={() => {props.logout()}} />
                         </Tooltip>
                     </div>
                 )}

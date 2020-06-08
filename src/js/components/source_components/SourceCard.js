@@ -10,9 +10,13 @@ import CardMedia from "@material-ui/core/CardMedia";
 const useStyles = makeStyles({
     root: {
         minWidth: '80vh',
-        backgroundColor: '#ececec',
         marginBottom: '2%',
-        height: '30vh'
+        height: '30vh',
+        backgroundColor: '#ececec',
+        cursor: 'pointer',
+        '&:hover': {
+            backgroundColor: 'rgba(166, 92, 254, 0.29)'
+        }
     },
     bullet: {
         display: 'inline-block',
