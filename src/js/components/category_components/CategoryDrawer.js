@@ -141,7 +141,7 @@ export default function CategoryDrawer(props) {
                     trackXProps={{ className: "trackX" }}
                 >
                     {props.categories.length > 0 ? props.categories[indexCurrCat].sources.map((source, index) => (
-                        <SourceCard key={index} source={source} />
+                        <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} />
                     )) : "No sources"}
                 </Scrollbars>
             </main>

@@ -30,11 +30,14 @@ const useStyles = makeStyles({
         fontStyle: 'normal',
         width: '67.5%',
         display: 'inline-block',
+        height: '9vh',
+        overflow: 'hidden'
     },
     sourceimg: {
         float: 'right',
         width: '30%',
-        display: 'inline-block',
+        top: '50%'
+        //display: 'inline-block',
     },
     pos: {
         marginBottom: 12,
@@ -52,18 +55,35 @@ export default function SourceCard(props) {
         return window.btoa(binary);
     };
 
+    const moreUpperCaseChar = (str) => {
+        let counter = 0;
+        let sizeStr = str.length;
+        for (let i=0; i<sizeStr; i++) {
+            if (str[i] === str[i].toUpperCase()) {
+                counter += 1;
+            }
+        }
+        return ((sizeStr / 2) <= counter);
+    };
+
     return (
         <Card className={classes.root} style={{borderRadius: 6}}>
             <CardContent>
-                <div className={'source_title'}>
-                    {props.source.source_name}
-                </div>
+                {props.drawerOpen ? <div className={'source_title'}>
+                    {props.source.source_name.length > 55 ? props.source.source_name.substring(0, 55) + "..." : props.source.source_name}
+                </div> :
+                    <div className={'source_title'}>
+                        {props.source.source_name.length > 75 ? props.source.source_name.substring(0, 75) + "..." : props.source.source_name}
+                    </div>}
+
                 <Typography className={classes.description} variant="body2" component="p">
                     On a narrow field surrounded by low-rise apartments, bus stops and a tangled
                     ribbon of highway ramps, the camel scampered past lions, which leapt against their
                     cage. It distracted the acrobats practicing their flips on an aerial hoop and
                     sauntered toward the languid, pregnant tiger, and stalls of horses and African
-                    Watsui bulls.
+                    Watsui bulls.asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                    sdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                    sdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
                 </Typography>
                 <div className={classes.sourceimg}>
                     {props.source.source_urlImgFlag ?

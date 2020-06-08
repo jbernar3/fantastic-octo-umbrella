@@ -111,7 +111,7 @@ export default function SignUp(props) {
                                            className={'short-signup-input'} />}
                             </Grid>
                             <Grid item xs={5}>
-                                {errorMsg !== "" ? <input id="lastName" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
+                                {errorMsg !== "" ? <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
                                                           className={'short-signup-input-error'} /> :
                                     <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
                                             className={'short-signup-input'} />}
