@@ -62,11 +62,11 @@ export default function SignUp(props) {
         } else if (name === "lastName") {
             setLName(value);
         } else if (name === "email") {
-            setErrorMsg("");
             setEmail(value);
         } else if (name === "password") {
             setPassword(value);
         }
+        setErrorMsg("");
     };
 
     const handleSubmit = () => {
@@ -103,31 +103,31 @@ export default function SignUp(props) {
             <div id={"signup-container"}>
                 <div className={classes.root} style={{marginLeft: '59.7%', marginTop: '15%', alignContent: 'center'}}>
                     <Grid container spacing={3}>
-                        <Grid container item xs={12} style={{marginLeft:'15px'}}>
+                        <Grid container item xs={12} style={{marginLeft: '0vh'}}>
                             <Grid item xs={5}>
                                 {errorMsg !== "" ? <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
-                                                          style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                                          className={'short-signup-input-error'} /> :
                                     <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
-                                           style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
+                                           className={'short-signup-input'} />}
                             </Grid>
                             <Grid item xs={5}>
                                 {errorMsg !== "" ? <input id="lastName" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
-                                                          style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
-                                    <input id="lastName" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
-                                           style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
+                                                          className={'short-signup-input-error'} /> :
+                                    <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
+                                            className={'short-signup-input'} />}
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
                             {errorMsg !== "" ? <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}
-                                                      style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                                      className={'signup-input-error'} /> :
                                 <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}
-                                       style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
+                                      className={'signup-input'} />}
                         </Grid>
                         <Grid item xs={12}>
                             {errorMsg !== "" ? <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
-                                                      style={{border: "1px #000000", borderRadius: "5px", outline: "none", backgroundColor: "#ff9594"}} className={classes.paper} /> :
+                                                      className={'signup-input-error'} /> :
                                 <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
-                                       style={{border: "1px #000000", borderRadius: "5px", outline: "none"}} className={classes.paper} />}
+                                       className={'signup-input'} />}
                         </Grid>
                         <Grid item xs={11} style={{marginLeft: "20.5%"}}>
                             {errorMsg !== "" ? <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>
@@ -144,103 +144,6 @@ export default function SignUp(props) {
                     </Grid>
                 </div>
             </div>
-            // <Container component="main" maxWidth="xs">
-            //     <CssBaseline />
-            //     <div className={classes.paper}>
-            //         <Avatar className={classes.avatar}>
-            //             <LockOutlinedIcon />
-            //         </Avatar>
-            //         <Typography component="h1" variant="h5">
-            //             Sign up
-            //         </Typography>
-            //         <form className={classes.form} >
-            //             <Grid container spacing={2}>
-            //                 <Grid item xs={12} sm={6}>
-            //                     <TextField
-            //                         autoComplete="fname"
-            //                         name="firstName"
-            //                         variant="outlined"
-            //                         required
-            //                         fullWidth
-            //                         id="firstName"
-            //                         label="First Name"
-            //                         autoFocus
-            //                         value={fName}
-            //                         onChange={handleChange}
-            //                     />
-            //                 </Grid>
-            //                 <Grid item xs={12} sm={6}>
-            //                     <TextField
-            //                         variant="outlined"
-            //                         required
-            //                         fullWidth
-            //                         id="lastName"
-            //                         label="Last Name"
-            //                         name="lastName"
-            //                         autoComplete="lname"
-            //                         value={lName}
-            //                         onChange={handleChange}
-            //                     />
-            //                 </Grid>
-            //                 <Grid item xs={12}>
-            //                     <TextField
-            //                         variant="outlined"
-            //                         required
-            //                         fullWidth
-            //                         id="email"
-            //                         label="Email Address"
-            //                         name="email"
-            //                         autoComplete="email"
-            //                         value={email}
-            //                         onChange={handleChange}
-            //                         classes={{root : classes.error_textfield}}
-            //                     />
-            //                     {errorMsg !== "" ? <div style={{color: "red"}}>{errorMsg}</div> : ""}
-            //                 </Grid>
-            //                 <Grid item xs={12}>
-            //                     <TextField
-            //                         variant="outlined"
-            //                         required
-            //                         fullWidth
-            //                         name="password"
-            //                         label="Password"
-            //                         type="password"
-            //                         id="password"
-            //                         autoComplete="current-password"
-            //                         value={password}
-            //                         onChange={handleChange}
-            //                     />
-            //                 </Grid>
-            //                 <Grid item xs={12}>
-            //                     <FormControlLabel
-            //                         control={<Checkbox value="allowExtraEmails" color="primary" onChange={(event, newValue) => setWantsPromMsg(newValue)} />}
-            //                         label="I want to receive inspiration, marketing promotions and updates via email."
-            //                     />
-            //                 </Grid>
-            //             </Grid>
-            //             <Button
-            //                 fullWidth
-            //                 variant="contained"
-            //                 color="primary"
-            //                 className={classes.submit}
-            //                 onClick={handleSubmit}
-            //                 disabled={fName === "" || lName === "" || email === "" || password === ""}
-            //             >
-            //                 Sign Up
-            //             </Button>
-            //             <Grid container justify="flex-end">
-            //                 <Grid item>
-            //                     <Link href="#/signin" variant="body2">
-            //                         Already have an account? Sign in
-            //                     </Link>
-            //                 </Grid>
-            //             </Grid>
-            //         </form>
-            //     </div>
-            //     <Box mt={5}>
-            //         <Copyright />
-            //     </Box>
-            // </Container>
         );
     }
 }

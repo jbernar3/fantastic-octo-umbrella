@@ -172,3 +172,64 @@ body {
     font-weight: 600;
     font-style: normal;
 }
+
+
+#lname-signup {
+    float: right;
+}
+
+.short-signup-input {
+    padding: 1vh;
+    height: 35px;
+    width: 27vh;
+    background-color: #ffffff;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    border: 1px #000000;
+    border-radius: 5px;
+    outline: none;
+}
+
+.short-signup-input-error {
+    padding: 1vh;
+    height: 35px;
+    width: 25vh;
+    background-color: #ffffff;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    border-width: .5vh;
+    border-color: #ff1427;
+    border-radius: 5px;
+    border-style: solid;
+    outline: none;
+}
+
+.signup-input {
+    border: 1px #000000;
+    border-radius: 5px;
+    outline: none;
+    padding: 1vh;
+    height: 35px;
+    width: 60vh;
+    background-color: #ffffff;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.signup-input-error {
+    outline: none;
+    border-width: .5vh;
+    border-color: #ff1427;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 1vh;
+    height: 35px;
+    width: 59vh;
+    background-color: #ffffff;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
