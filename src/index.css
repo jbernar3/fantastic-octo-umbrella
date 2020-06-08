@@ -144,3 +144,31 @@ body {
 .thumbY, .trackX {
     background: rgba(166, 92, 254, 0.29) !important;
 }
+
+.signin-error {
+    outline: none;
+    border-width: .5vh;
+    border-color: #ff1427;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 1vh;
+    height: 35px;
+    width: 59vh;
+    background-color: #ffffff;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.signin-input {
+    border: 1px #000000;
+    border-radius: 5px;
+    outline: none;
+    padding: 1vh;
+    height: 35px;
+    width: 59vh;
+    background-color: #ffffff;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
