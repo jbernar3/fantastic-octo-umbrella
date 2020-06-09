@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from "@material-ui/core/CardMedia";
+import {Image} from "@material-ui/icons";
 
 const useStyles = makeStyles({
     root: {
@@ -36,12 +37,19 @@ const useStyles = makeStyles({
     sourceimg: {
         float: 'right',
         width: '30%',
-        top: '50%'
+        top: '50%',
+        //height:  '25%',
         //display: 'inline-block',
     },
     pos: {
         marginBottom: 12,
     },
+    img: {
+        marginLeft: '-10px',
+        marginTop: '-10px',
+        width: '200px',
+        height: '25px',
+    }
 });
 
 export default function SourceCard(props) {
@@ -81,19 +89,18 @@ export default function SourceCard(props) {
                     ribbon of highway ramps, the camel scampered past lions, which leapt against their
                     cage. It distracted the acrobats practicing their flips on an aerial hoop and
                     sauntered toward the languid, pregnant tiger, and stalls of horses and African
-                    Watsui bulls.asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                    sdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                    sdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                    Watsui bulls.
                 </Typography>
-                <div className={classes.sourceimg}>
                     {props.source.source_urlImgFlag ?
-                        <div style={{position: "relative"}}>
-                            <img src={props.source.source_urlImg}  alt={"temp source img"} style={{width: '90%', position: 'absolute',
-                                clip: 'rect(3.5vh, 40vh, 27vh, 0)', marginTop: '-15%'}}/>
+                        <div style={{backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
+                            backgroundPosition: 'center', height: '23vh', width: '27%', backgroundSize: 'cover', marginTop: '-2.5vh', float: 'right',
+                            top: '50%', marginRight: '2.7%'}}>
                         </div>
-                        : <img src={`data:image/png;base64,${arrayBufferToBase64(props.source.source_img.data.data)}`}  alt={"temp source img"}
-                               style={{width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-3.5vh'}}/>}
-                </div>
+                        : <div className={classes.sourceimg}>
+                            <img src={`data:image/png;base64,${arrayBufferToBase64(props.source.source_img.data.data)}`}  alt={"temp source img"}
+                               style={{width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-8%'}}/>
+                        </div>}
+
             </CardContent>
             <CardActions>
                 <Button size="small">Open Source</Button>
