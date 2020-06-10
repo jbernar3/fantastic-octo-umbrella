@@ -299,3 +299,70 @@ body {
     margin: 20% 45% auto;
     width: 10%;
 }
+
+#edit-profile-popup {
+    height: 550px;
+    width: 550px;
+    background-image: url('images/edit-profile-back2.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#edit-profile-input-div {
+    background-color: crimson;
+    margin: 20px auto auto;
+    height: 315px;
+    /*width: 400px;*/
+}
+
+.text-input-profile {
+    width: 180px;
+    height: 40px;
+    outline: none;
+    background-color: rgba(166, 92, 254, 0.19);
+    border-radius: 7px;
+    /*margin-top: 40px;*/
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 13pt;
+    color: #47276d;
+    padding-left: 7px;
+    border: none;
+}
+
+.text-input-profile-description {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 13pt;
+    color: #545454;
+    margin-top: 15px;
+    width: 100px;
+}
+
+#bio-input-profile-description {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 13pt;
+    color: #545454;
+    margin-top: 15px;
+    width: 400px;
+}
+
+#edit-bio-input {
+    width: 415px;
+    height: 200px;
+    outline: none;
+    background-color: rgba(166, 92, 254, 0.19);
+    border-radius: 7px;
+    /*margin-top: 40px;*/
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 13pt;
+    color: #47276d;
+    padding: 7px;
+    border: none;
+}

@@ -6,12 +6,15 @@ import SideBar from "../general_components/SideBar";
 import Button from "@material-ui/core/Button";
 import SourceCard from "../source_components/SourceCard";
 import Scrollbars from "react-scrollbars-custom";
+import NewSourcePopup from "../add_popups/NewSourcePopup";
+import Dialog from "@material-ui/core/Dialog";
+import EditProfilePopup from "../add_popups/EditProfilePopup";
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            editOpen: false,
         };
     }
 
@@ -22,11 +25,11 @@ class Profile extends React.Component {
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
                             fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'left'}}>home</Button>
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
-                            fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'right'}}>edit profile</Button>
+                            fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'right'}} onClick={() => {this.setState({editOpen: true})}}>edit profile</Button>
                         <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} />
                         <div className={'profile-name'}>My Name is Jeff</div>
                         <Scrollbars
-                            style={{ height: '30%', margin: '5vh auto auto', width: '70%' }}
+                            style={{ height: '36%', margin: '5vh auto auto', width: '70%' }}
                             id='source_scroll_div'
                             thumbYProps={{ className: "thumbY" }}
                             trackXProps={{ className: "trackX" }}
@@ -38,6 +41,7 @@ class Profile extends React.Component {
                                 In October 2019, he featured American rapper Lil Tjay on his single "War". In December 2019, he featured American rapper Calboy on his single "100k on a Coupe" and also collaborated with Travis Scott a few weeks later on the song "Gatti", from Scott and his Cactus Jack members' compilation album, JackBoys (2019).[9] "Gatti" became his first Billboard Hot 100 charting song, peaking at 69, a week after the release of JackBoys.[10] In February 2020, he released his second mixtape Meet the Woo 2, containing features from Quavo, A Boogie wit da Hoodie, Fivio Foreign, and Lil Tjay. In the week following his death, his single "Dior" entered the Billboard Hot 100 and peaked at number 30. Pop Smoke's debut studio album is expected to be released on June 12, 2020.
                             </div>
                         </Scrollbars>
+                        <EditProfilePopup editOpen={this.state.editOpen} handleClose={() => {this.setState({editOpen: false})}}/>
                     </div>
                     <div className={'second-half-profile'}>second half</div>
                 </div>);
