@@ -319,14 +319,14 @@ body {
     width: 180px;
     height: 40px;
     outline: none;
-    background-color: rgba(166, 92, 254, 0.19);
+    background-color: rgba(166, 92, 254, 0.09);
     border-radius: 7px;
     /*margin-top: 40px;*/
     font-family: houschka-rounded,sans-serif;
-    font-weight: 400;
+    font-weight: 600;
     font-style: normal;
     font-size: 13pt;
-    color: #47276d;
+    color: #a65cff;
     padding-left: 7px;
     border: none;
 }
@@ -352,17 +352,30 @@ body {
 }
 
 #edit-bio-input {
-    width: 415px;
+    width: 410px;
     height: 200px;
     outline: none;
-    background-color: rgba(166, 92, 254, 0.19);
+    background-color: rgba(166, 92, 254, 0.09);
     border-radius: 7px;
     /*margin-top: 40px;*/
     font-family: houschka-rounded,sans-serif;
-    font-weight: 400;
+    font-weight: 600;
     font-style: normal;
     font-size: 13pt;
-    color: #47276d;
+    color: #a65cff;
     padding: 7px;
     border: none;
+    resize: vertical;
+    overflow: visible;
+}
+
+#update-profile-btn {
+    margin-top: 7px;
+    margin-left: 193px;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 15pt;
+    text-transform: none;
+    color: #a65cff;
 }

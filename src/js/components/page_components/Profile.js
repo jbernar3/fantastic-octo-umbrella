@@ -27,7 +27,7 @@ class Profile extends React.Component {
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
                             fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'right'}} onClick={() => {this.setState({editOpen: true})}}>edit profile</Button>
                         <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} />
-                        <div className={'profile-name'}>My Name is Jeff</div>
+                        <div className={'profile-name'}>Pop Smoke</div>
                         <Scrollbars
                             style={{ height: '36%', margin: '5vh auto auto', width: '70%' }}
                             id='source_scroll_div'
