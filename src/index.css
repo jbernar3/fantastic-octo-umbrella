@@ -9,9 +9,22 @@
 .main_content {
     width: 100%;
     height: 100%;
-    background-image: url("images/profile-background.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+    /*background-image: url("images/profile-draft.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+}
+
+.first-half-profile {
+    float: left;
+    height: 100%;
+    width: 50%;
+}
+
+.second-half-profile {
+    float: left;
+    width: 50%;
+    height: 100%;
+    background-color: #a65cff;
 }
 
 #classes_clickable_div {
@@ -253,6 +266,36 @@ body {
     /*border-top-width: 15px;*/
 }
 
-.source-tube-img-div {
+.home-from-profile {
+    float: left;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    color: #a65cff;
+}
 
+.profile-name {
+    text-align: center;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: #a65cff;
+    font-size: 2vw;
+    margin: 5% auto auto;
+    width: 65%;
+}
+
+.profile-description {
+    margin: 0 auto auto;
+    width: 90%;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    text-align: center;
+    font-size: 1.3vw;
+}
+
+#profile-c-logo {
+    margin: 20% 45% auto;
+    width: 10%;
 }
