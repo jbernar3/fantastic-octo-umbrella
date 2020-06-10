@@ -36,6 +36,7 @@ export default function MenuAppBar(props) {
     const classes = useStyles();
     const [auth, setAuth] = React.useState(true);
     const [clickedHome, setClickedHome] = React.useState(false);
+    const [goToProfile, setGoToProfile] = React.useState(false);
 
     const handleClickHome = () => {
         setClickedHome(true);
@@ -69,7 +70,7 @@ export default function MenuAppBar(props) {
                 {auth && (
                     <div>
                         <Tooltip title={"My Profile"} aria-label="add">
-                            <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff', marginRight: '2vh'}} onClick={() => {props.logout()}} />
+                            <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff', marginRight: '2vh'}} onClick={() => {setGoToProfile(true)}} />
                             {/*<ExitToAppIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={() => {props.logout()}} />*/}
                             {/*<Avatar style={{cursor: 'pointer'}} src={auth2.getImage()} onClick={handleMenu}/>*/}
                         </Tooltip>
@@ -110,6 +111,9 @@ export default function MenuAppBar(props) {
             </Toolbar>
         </div>
     </div>);
-
-    return basicMenuBar;
+    if (goToProfile) {
+        return (<React.Fragment><Redirect to={"/profile"} /></React.Fragment>);
+    } else {
+        return basicMenuBar;
+    }
 }
