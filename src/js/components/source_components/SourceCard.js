@@ -74,6 +74,25 @@ export default function SourceCard(props) {
         return ((sizeStr / 2) <= counter);
     };
 
+    const getSourceImg = (source) => {
+        if (source.source_urlImgFlag) {
+            return (<div style={{backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
+                backgroundPosition: 'center', height: '23vh', width: '27%', backgroundSize: 'cover', marginTop: '-2.5vh', float: 'right',
+                top: '50%', marginRight: '2.7%'}}>
+            </div>);
+        } else if (source.source_img === undefined) {
+            return (<div className={classes.sourceimg}>
+                <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={{width: '50%', height: '50%', marginTop: '-4%', marginLeft: '20%'}} />
+            </div>);
+        } else {
+            console.log(source);
+            return (<div className={classes.sourceimg}>
+                <img src={`data:image/png;base64,${arrayBufferToBase64(props.source.source_img.data.data)}`}  alt={"temp source img"}
+                     style={{width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-8%'}}/>
+            </div>);
+        }
+    };
+
     return (
         <Card className={classes.root} style={{borderRadius: 6}}>
             <CardContent>
@@ -91,15 +110,7 @@ export default function SourceCard(props) {
                     sauntered toward the languid, pregnant tiger, and stalls of horses and African
                     Watsui bulls.
                 </Typography>
-                    {props.source.source_urlImgFlag ?
-                        <div style={{backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
-                            backgroundPosition: 'center', height: '23vh', width: '27%', backgroundSize: 'cover', marginTop: '-2.5vh', float: 'right',
-                            top: '50%', marginRight: '2.7%'}}>
-                        </div>
-                        : <div className={classes.sourceimg}>
-                            <img src={`data:image/png;base64,${arrayBufferToBase64(props.source.source_img.data.data)}`}  alt={"temp source img"}
-                               style={{width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-8%'}}/>
-                        </div>}
+                {getSourceImg(props.source)}
 
             </CardContent>
             <CardActions>
