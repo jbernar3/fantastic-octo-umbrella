@@ -54,8 +54,9 @@ export default function MenuAppBar(props) {
         props.handleOpenDialog("newSource", "", "");
     };
 
-    const handleAddClicked = () => {
-
+    const handleGoToProfile = () => {
+        props.resetFirstRender();
+        setGoToProfile(true);
     };
 
     const basicMenuBar = ( <div className={classes.root}>
@@ -70,7 +71,7 @@ export default function MenuAppBar(props) {
                 {auth && (
                     <div>
                         <Tooltip title={"My Profile"} aria-label="add">
-                            <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff', marginRight: '2vh'}} onClick={() => {setGoToProfile(true)}} />
+                            <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff', marginRight: '2vh'}} onClick={handleGoToProfile} />
                             {/*<ExitToAppIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={() => {props.logout()}} />*/}
                             {/*<Avatar style={{cursor: 'pointer'}} src={auth2.getImage()} onClick={handleMenu}/>*/}
                         </Tooltip>

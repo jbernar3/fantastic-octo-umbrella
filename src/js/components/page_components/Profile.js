@@ -9,23 +9,30 @@ import Scrollbars from "react-scrollbars-custom";
 import NewSourcePopup from "../add_popups/NewSourcePopup";
 import Dialog from "@material-ui/core/Dialog";
 import EditProfilePopup from "../add_popups/EditProfilePopup";
+import Redirect from "react-router-dom/es/Redirect";
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             editOpen: false,
+            goHome: false
         };
     }
 
 
     render() {
+        if (this.state.goHome) {
+            return (<Redirect to={'/home'} />);
+        }
         return ( <div className={"main_content"}>
                     <div className={"first-half-profile"}>
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
-                            fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'left'}}>home</Button>
+                            fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'left', marginLeft: '2%'}} onClick={() => {this.setState({goHome: true})}}>
+                            <img src={'src/images/homeicon.png'} alt={'home icon'} style={{width: '1vw', height: '1vw', marginTop: '-.18vw', marginRight: '.1vw'}} />home
+                        </Button>
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
-                            fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'right'}} onClick={() => {this.setState({editOpen: true})}}>edit profile</Button>
+                            fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'right', marginRight: '2%'}} onClick={() => {this.setState({editOpen: true})}}>edit profile</Button>
                         <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} />
                         <div className={'profile-name'}>Pop Smoke</div>
                         <Scrollbars

@@ -32,7 +32,7 @@ class Home extends Component {
     }
 
     handleSetCategories() {
-        if (this.props.location.state.categories !== null) {
+        if (this.props.location.state !== undefined && this.props.location.state.categories !== null) {
             this.setState({categories: this.props.location.state.categories});
         } else {
             const postParameters = {
@@ -63,7 +63,7 @@ class Home extends Component {
         }
         return(
             <div>
-                <MenuBar logout={this.props.logout} />
+                <MenuBar logout={this.props.logout} resetFirstRender={() => this.setState({firstRender: true})}/>
                 <div style={{width: '100%', marginTop: '1.8vh'}}>
                     <div id={"classes_clickable_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>
                         <img src={'src/images/menu_icon.png'} alt={'menu icon'} style={{width: '2vh', height: '2vh', marginRight: '1vh', marginLeft: '-1vh'}} />

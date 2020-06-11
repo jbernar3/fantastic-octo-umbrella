@@ -9,16 +9,56 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Scrollbars from "react-scrollbars-custom";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Zoom ref={ref} {...props} />;
 });
 
+const useStyles = makeStyles(theme => ({
+    textInput: {
+        outline: 'none',
+        borderRadius: '7px',
+        backgroundColor: 'rgba(166, 92, 254, 0.09)',
+        borderStyle: 'solid'
+    },
+    outlinedRoot: {
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 600,
+        fontStyle: 'normal',
+        fontSize: '13pt',
+        color: '#a65cff',
+        paddingTop: '3px',
+        paddingBottom: '3px',
+        '&:hover $notchedOutline': {
+            borderColor: '#a65cff',
+            borderWidth: '1px'
+        },
+        '&$focused $notchedOutline': {
+            borderColor: '#a65cff',
+            borderWidth: '3px',
+        },
+    },
+    notchedOutline: {},
+    focused: {},
+}));
+
 export default function EditProfilePopup(props) {
-    const [open, setOpen] = React.useState(false);
     const [updatedFName, setFName] = React.useState("Pop");
     const [updatedLName, setLName] = React.useState("Smoke");
-    const [updatedBio, setBio] = React.useState("a;slkdfj;alskdjf;laksd");
+    const [updatedBio, setBio] = React.useState("Bashar Barakah Jackson (July 20, 1999 – February 19, 2020),[4][2] known professionally as Pop Smoke,\n" +
+        "                                was an American rapper and songwriter. He was signed to Victor Victor Worldwide and Republic Records.\n" +
+        "                                Pop Smoke rose to popularity for leading the Brooklyn drill sound.[6] In April 2019, he released the song \"Welcome to the Party\",[7] the lead single of his debut mixtape Meet the Woo, which was released in July 2019. \"Welcome to the Party\" was made into two remixes featuring American rapper Nicki Minaj and British rapper Skepta in August 2019.[8]\n" +
+        "\n" +
+        "                                In October 2019, he featured American rapper Lil Tjay on his single \"War\". In December 2019, he featured American rapper Calboy on his single \"100k on a Coupe\" and also collaborated with Travis Scott a few weeks later on the song \"Gatti\", from Scott and his Cactus Jack member");
+    const classes = useStyles();
+    const InputProps = {
+        classes: {
+            root: classes.outlinedRoot,
+            notchedOutline: classes.notchedOutline,
+            focused: classes.focused
+        },
+    };
 
     const handleInputChange = (event) => {
         const eventName = event.target.name;
@@ -33,11 +73,6 @@ export default function EditProfilePopup(props) {
         }
     };
 
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     return (
         <div>
             <Dialog
@@ -48,28 +83,15 @@ export default function EditProfilePopup(props) {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                {/*<DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>*/}
-                {/*<DialogContent>*/}
-                {/*    <DialogContentText id="alert-dialog-slide-description">*/}
-                {/*        Let Google help apps determine location. This means sending anonymous location data to*/}
-                {/*        Google, even when no apps are running.*/}
-                {/*    </DialogContentText>*/}
-                {/*</DialogContent>*/}
-                {/*<DialogActions>*/}
-                {/*    <Button onClick={handleClose} color="primary">*/}
-                {/*        Disagree*/}
-                {/*    </Button>*/}
-                {/*    <Button onClick={handleClose} color="primary">*/}
-                {/*        Agree*/}
-                {/*    </Button>*/}
-                {/*</DialogActions>*/}
                 <div id={'edit-profile-popup'}>
                     <img src={'src/images/c-logo.png'} alt={'profile icon'} style={{margin: '70px 240px auto', width: '70px'}}/>
                     <div id={'edit-profile-inputs-div'}>
                         <div className={'text-input-profile-description'} style={{float: 'left', marginLeft: '65px'}}>first name</div>
-                        <div className={'text-input-profile-description'} style={{float: 'right', marginRight: '150px'}}>last name</div>
-                        <input name={'fName'} onChange={handleInputChange} className={'text-input-profile'} style={{float: 'left', marginLeft: '63px'}} value={updatedFName} />
-                        <input name={'lName'} onChange={handleInputChange} className={'text-input-profile'} style={{float: 'right', marginRight: '63px'}} value={updatedLName}/>
+                        <div className={'text-input-profile-description'} style={{float: 'right', marginRight: '141px'}}>last name</div>
+                        <TextField name={'fName'} className={classes.textInput} InputProps={InputProps} value={updatedFName} onChange={handleInputChange}
+                                   style={{float: 'left', marginLeft: '63px', width: '180px'}} variant={'outlined'} />
+                        <TextField name={'lName'} className={classes.textInput} InputProps={InputProps} value={updatedLName} onChange={handleInputChange}
+                                   style={{float: 'right', marginRight: '63px', width: '180px'}} variant={'outlined'} />
                         {/*<div className={'text-input-profile-description'} style={{float: 'left', marginLeft: '65px'}}>email address</div>*/}
                         {/*<div className={'text-input-profile-description'} style={{float: 'right', marginRight: '150px'}}>password</div>*/}
                         {/*<input className={'text-input-profile'} style={{float: 'left', marginLeft: '63px'}} />*/}
@@ -85,17 +107,13 @@ export default function EditProfilePopup(props) {
 
                     </div>
                     <Scrollbars
-                        style={{ width: '450px', height: '220px', marginLeft: '63px', marginTop: '124px' }}
+                        style={{ width: '450px', height: '213px', marginLeft: '63px', marginTop: '145px' }}
                         //id='source_scroll_div'
                         thumbYProps={{ className: "thumbY" }}
                         trackXProps={{ className: "trackX" }}
                     >
-
-                        {/*<textarea id={'edit-bio-input'} onChange={handleInputChange} name={'bio'} value={updatedBio} style={{float: 'left', cols: '40', rows: '5'}} />*/}
-                        <TextField name={'bio'} value={updatedBio} variant={'outlined'} multiline onChange={handleInputChange}
-                                   style={{outline: 'none', borderRadius: '7px', backgroundColor: 'rgba(166, 92, 254, 0.09)',
-                                       border: 'none', width: '430px', fontFamily: 'houschka-rounded,sans-serif',
-                                       fontWeight: 600, fontStyle: 'normal', fontSize: '13pt', color: '#a65cff'}}/>
+                        <TextField className={classes.textInput} InputProps={InputProps} name={'bio'} value={updatedBio} variant={'outlined'} multiline onChange={handleInputChange}
+                                   style={{ width: '425px'}} />
                     </Scrollbars>
                     <Button id={'update-profile-btn'}>Update Profile</Button>
                 </div>
