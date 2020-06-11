@@ -23,7 +23,10 @@ class Profile extends React.Component {
 
     render() {
         if (this.state.goHome) {
-            return (<Redirect to={'/home'} />);
+            return (<Redirect to={{
+                pathname: '/home',
+                state: { categories: this.props.location.state.categories }
+            }} />);
         }
         return ( <div className={"main_content"}>
                     <div className={"first-half-profile"}>

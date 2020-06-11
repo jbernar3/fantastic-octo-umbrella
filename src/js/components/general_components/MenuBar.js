@@ -55,7 +55,6 @@ export default function MenuAppBar(props) {
     };
 
     const handleGoToProfile = () => {
-        props.resetFirstRender();
         setGoToProfile(true);
     };
 
@@ -113,7 +112,10 @@ export default function MenuAppBar(props) {
         </div>
     </div>);
     if (goToProfile) {
-        return (<React.Fragment><Redirect to={"/profile"} /></React.Fragment>);
+        return (<Redirect to={{
+            pathname: 'profile',
+            state: { categories: props.categories }
+        }} />);
     } else {
         return basicMenuBar;
     }

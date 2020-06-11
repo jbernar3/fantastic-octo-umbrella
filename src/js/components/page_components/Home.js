@@ -63,7 +63,7 @@ class Home extends Component {
         }
         return(
             <div>
-                <MenuBar logout={this.props.logout} resetFirstRender={() => this.setState({firstRender: true})}/>
+                <MenuBar logout={this.props.logout} categories={this.state.categories} />
                 <div style={{width: '100%', marginTop: '1.8vh'}}>
                     <div id={"classes_clickable_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>
                         <img src={'src/images/menu_icon.png'} alt={'menu icon'} style={{width: '2vh', height: '2vh', marginRight: '1vh', marginLeft: '-1vh'}} />

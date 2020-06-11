@@ -134,7 +134,7 @@ function SignInSide(props) {
     if (signedIn || props.auth) {
         return (<Redirect to={{
             pathname: 'home',
-            state: { categories: userCategories}
+            state: { categories: userCategories }
         }}/>);
 
     }
