@@ -19,17 +19,39 @@ const useStyles = makeStyles(theme => ({
     textInput: {
         outline: 'none',
         borderRadius: '7px',
-        backgroundColor: 'rgba(166, 92, 254, 0.09)',
+        backgroundColor: 'rgba(167,93,255,0.15)',
         borderStyle: 'solid'
     },
     outlinedRoot: {
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 500,
+        fontStyle: 'normal',
+        fontSize: '13pt',
+        color: '#a65cff',
+        paddingTop: '2px',
+        paddingBottom: '2px',
+        borderColor: '#ffffff',
+        borderWidth: '1px',
+        '&:hover $notchedOutline': {
+            borderColor: '#a65cff',
+            borderWidth: '1px'
+        },
+        '&$focused $notchedOutline': {
+            borderColor: '#a65cff',
+            borderWidth: '3px',
+        },
+    },
+    outlinedRootShort: {
         fontFamily: 'houschka-rounded,sans-serif',
         fontWeight: 600,
         fontStyle: 'normal',
         fontSize: '13pt',
         color: '#a65cff',
-        paddingTop: '3px',
-        paddingBottom: '3px',
+        paddingTop: '2px',
+        paddingBottom: '2px',
+        borderColor: '#ffffff',
+        borderWidth: '1px',
+        height: '50px',
         '&:hover $notchedOutline': {
             borderColor: '#a65cff',
             borderWidth: '1px'
@@ -60,6 +82,14 @@ export default function EditProfilePopup(props) {
         },
     };
 
+    const InputPropsShort = {
+        classes: {
+            root: classes.outlinedRootShort,
+            notchedOutline: classes.notchedOutline,
+            focused: classes.focused
+        }
+    };
+
     const handleInputChange = (event) => {
         const eventName = event.target.name;
         console.log(event.target.name);
@@ -88,10 +118,10 @@ export default function EditProfilePopup(props) {
                     <div id={'edit-profile-inputs-div'}>
                         <div className={'text-input-profile-description'} style={{float: 'left', marginLeft: '65px'}}>first name</div>
                         <div className={'text-input-profile-description'} style={{float: 'right', marginRight: '141px'}}>last name</div>
-                        <TextField name={'fName'} className={classes.textInput} InputProps={InputProps} value={updatedFName} onChange={handleInputChange}
-                                   style={{float: 'left', marginLeft: '63px', width: '180px'}} variant={'outlined'} />
-                        <TextField name={'lName'} className={classes.textInput} InputProps={InputProps} value={updatedLName} onChange={handleInputChange}
-                                   style={{float: 'right', marginRight: '63px', width: '180px'}} variant={'outlined'} />
+                        <TextField name={'fName'} className={classes.textInput} InputProps={InputPropsShort} value={updatedFName} onChange={handleInputChange}
+                                   style={{float: 'left', marginLeft: '63px', width: '180px', height: '50px'}} variant={'outlined'} />
+                        <TextField name={'lName'} className={classes.textInput} InputProps={InputPropsShort} value={updatedLName} onChange={handleInputChange}
+                                   style={{float: 'right', marginRight: '63px', width: '180px', height: '50px'}} variant={'outlined'} />
                         {/*<div className={'text-input-profile-description'} style={{float: 'left', marginLeft: '65px'}}>email address</div>*/}
                         {/*<div className={'text-input-profile-description'} style={{float: 'right', marginRight: '150px'}}>password</div>*/}
                         {/*<input className={'text-input-profile'} style={{float: 'left', marginLeft: '63px'}} />*/}
@@ -107,7 +137,7 @@ export default function EditProfilePopup(props) {
 
                     </div>
                     <Scrollbars
-                        style={{ width: '450px', height: '213px', marginLeft: '63px', marginTop: '145px' }}
+                        style={{ width: '450px', height: '213px', marginLeft: '63px', marginTop: '130px' }}
                         //id='source_scroll_div'
                         thumbYProps={{ className: "thumbY" }}
                         trackXProps={{ className: "trackX" }}
