@@ -76,19 +76,32 @@ export default function SourceCard(props) {
 
     const getSourceImg = (source) => {
         if (source.source_urlImgFlag) {
-            return (<div style={{backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
+            let styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
                 backgroundPosition: 'center', height: '23vh', width: '27%', backgroundSize: 'cover', marginTop: '-2.5vh', float: 'right',
-                top: '50%', marginRight: '2.7%'}}>
+                top: '50%', marginRight: '2.7%'};
+            if (!props.drawerOpen) {
+                styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
+                    backgroundPosition: 'center', height: '23vh', width: '21.2%', backgroundSize: 'cover', marginTop: '-2.5vh', float: 'right',
+                    top: '50%', marginRight: '5%'}
+            }
+            return (<div style={styleImg}>
             </div>);
         } else if (source.source_img === undefined) {
+            let styleGif = {width: '50%', height: '50%', marginTop: '-4%', marginLeft: '20%'};
+            if (!props.drawerOpen) {
+                styleGif = {width: '50%', height: '50%', marginTop: '-8.3%', marginLeft: '23%'};
+            }
             return (<div className={classes.sourceimg}>
-                <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={{width: '50%', height: '50%', marginTop: '-4%', marginLeft: '20%'}} />
+                <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={styleGif} />
             </div>);
         } else {
-            console.log(source);
+            let styleImg = {width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-8%'};
+            if (!props.drawerOpen) {
+                styleImg = {width: '70%', height: '70%', border:'2px solid #a65cff', marginTop: '-6%', marginLeft: '12%'};
+            }
             return (<div className={classes.sourceimg}>
                 <img src={`data:image/png;base64,${arrayBufferToBase64(props.source.source_img.data.data)}`}  alt={"temp source img"}
-                     style={{width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-8%'}}/>
+                     style={styleImg}/>
             </div>);
         }
     };
