@@ -430,3 +430,13 @@ body {
     text-align: center;
     margin-top: 3%;
 }
+
+#add-category-div {
+    height: 40vh;
+    width: 30vw;
+}
+
+#add-source-div {
+    height: 40vh;
+    width: 30vw;
+}

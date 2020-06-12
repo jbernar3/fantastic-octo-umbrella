@@ -17,6 +17,7 @@ import Grid from "@material-ui/core/Grid";
 import {makeStyles} from "@material-ui/core/styles";
 import SideBar from "../general_components/SideBar";
 import CategoryDrawer from "../category_components/CategoryDrawer";
+import AddCategoryPopup from "../add_popups/AddCategoryPopup";
 
 
 class Home extends Component {
@@ -25,7 +26,8 @@ class Home extends Component {
         this.state = {
             drawerOpen: true,
             categories: [],
-            firstRender: true
+            firstRender: true,
+            addCatOpen: false
         };
 
         this.handleSetCategories = this.handleSetCategories.bind(this);
@@ -69,7 +71,8 @@ class Home extends Component {
                         <img src={'src/images/menu_icon.png'} alt={'menu icon'} style={{width: '2vh', height: '2vh', marginRight: '1vh', marginLeft: '-1vh'}} />
                         classes
                     </div>
-                    <div id={'new_class_div'}>+ Add Class</div>
+                    <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
+                    <AddCategoryPopup popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}/>
                     <div id={'add_source_div'}>+ Add Source</div>
                     {/*<div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>*/}
                 </div>
