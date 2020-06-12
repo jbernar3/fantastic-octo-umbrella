@@ -10,6 +10,15 @@ import NewSourcePopup from "../add_popups/NewSourcePopup";
 import Dialog from "@material-ui/core/Dialog";
 import EditProfilePopup from "../add_popups/EditProfilePopup";
 import Redirect from "react-router-dom/es/Redirect";
+import {makeStyles} from "@material-ui/core/styles";
+
+const changeBtnStyle = {
+    color: 'white',
+    fontFamily: 'houschka-rounded,sans-serif',
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontSize: '1vw'
+};
 
 class Profile extends React.Component {
     constructor(props) {
@@ -28,11 +37,16 @@ class Profile extends React.Component {
                 state: { categories: this.props.location.state.categories }
             }} />);
         }
+        const numCategories = this.props.location.state.categories.length;
+        let numSources = 0;
+        for (let i=0; i<numCategories; i++) {
+            numSources += this.props.location.state.categories[i].sources.length;
+        }
         return ( <div className={"main_content"}>
                     <div className={"first-half-profile"}>
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
                             fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'left', marginLeft: '2%'}} onClick={() => {this.setState({goHome: true})}}>
-                            <img src={'src/images/homeicon.png'} alt={'home icon'} style={{width: '1vw', height: '1vw', marginTop: '-.18vw', marginRight: '.1vw'}} />home
+                            <img src={'src/images/homeicon.png'} alt={'home icon'} style={{width: '2vw', height: '2vw', marginTop: '-.5vw', marginRight: '.5vw'}} />home
                         </Button>
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
                             fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'right', marginRight: '2%'}} onClick={() => {this.setState({editOpen: true})}}>edit profile</Button>
@@ -53,7 +67,17 @@ class Profile extends React.Component {
                         </Scrollbars>
                         <EditProfilePopup editOpen={this.state.editOpen} handleClose={() => {this.setState({editOpen: false})}}/>
                     </div>
-                    <div className={'second-half-profile'}>second half</div>
+                    <div className={'second-half-profile'}>
+                        <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} />
+                        <div id={'profile-display-name'}>Display Name</div>
+                        <div id={'profile-email'}>pop_smoke@woo.com</div>
+                        <div id={'profile-div-change-btns'}>
+                            <Button style={changeBtnStyle}>change email</Button>
+                            <Button style={changeBtnStyle}>change password</Button>
+                        </div>
+                        <div id={'num-classes-div'}>classes {numCategories}</div>
+                        <div id={'num-sources-div'}>sources {numSources}</div>
+                    </div>
                 </div>);
     }
 }

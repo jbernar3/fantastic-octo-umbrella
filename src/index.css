@@ -380,3 +380,53 @@ body {
     text-transform: none;
     color: #a65cff;
 }
+
+#profile-display-name {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20pt;
+    color: white;
+    margin: 10% auto auto;
+    text-align: center;
+}
+
+#profile-email {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 13pt;
+    color: white;
+    margin: 1% auto auto;
+    text-align: center;
+}
+
+#num-classes-div {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 2.5vw;
+    width: 8vw;
+    color: white;
+    float: left;
+    margin: 26% 7% auto;
+    text-align: center;
+}
+
+#num-sources-div {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 2.5vw;
+    width: 8vw;
+    color: white;
+    float: right;
+    margin-top: 26%;
+    margin-right: 7%;
+    text-align: center;
+}
+
+#profile-div-change-btns {
+    text-align: center;
+    margin-top: 3%;
+}
