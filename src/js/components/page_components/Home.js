@@ -31,6 +31,13 @@ class Home extends Component {
         };
 
         this.handleSetCategories = this.handleSetCategories.bind(this);
+        this.addNewCategory = this.addNewCategory.bind(this);
+    }
+
+    addNewCategory(category) {
+        this.setState({addCatOpen: false});
+        this.state.categories.push(category);
+        console.log(category);
     }
 
     handleSetCategories() {
@@ -72,8 +79,9 @@ class Home extends Component {
                         classes
                     </div>
                     <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
-                    <AddCategoryPopup popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}/>
                     <div id={'add_source_div'}>+ Add Source</div>
+                    <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
+                                      categories={this.state.categories} addNewCategory={this.addNewCategory} />
                     {/*<div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>*/}
                 </div>
                 <CategoryDrawer categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>

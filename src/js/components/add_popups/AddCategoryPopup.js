@@ -67,6 +67,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function AddCategoryPopup(props) {
     const [catName, setCatName] = React.useState("");
+    const [parentID, setParentID] = React.useState(-1);
+    const [errorMsg, setErrorMsg] = React.useState("");
     const classes = useStyles();
     const InputProps = {
         classes: {
@@ -87,7 +89,34 @@ export default function AddCategoryPopup(props) {
     const handleInputChange = (event) => {
         const eventName = event.target.name;
         const eventValue = event.target.value;
+        if (eventName === 'cat_name') {
+            if (eventValue.length <= 20) {
+                setCatName(eventValue);
+            }
+        } else if (eventName === 'parent_cat_select') {
+            setParentID(eventValue);
+        }
+    };
 
+    const handleSubmit = () => {
+        const postParameters = {
+            userID: props.userID,
+            catName: catName,
+            parentID: parentID
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', () => {
+            console.log(xhr.response);
+            if (xhr.response.startsWith("ERROR:")) {
+                setErrorMsg(xhr.response.substring(6));
+            } else {
+                props.addNewCategory(JSON.parse(xhr.response));
+            }
+        });
+        xhr.open('POST', 'http://localhost:3000/new_category', false);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(postParameters));
     };
 
     return (
@@ -101,7 +130,14 @@ export default function AddCategoryPopup(props) {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <div id={'add-category-div'}>
-
+                    <input name={'cat_name'} value={catName} onChange={handleInputChange} />
+                    <select name={'parent_cat_select'} onChange={handleInputChange}>
+                        <option id={-1} value={-1}>no parent</option>
+                        {props.categories.map((category, index) => {
+                            return (<option id={index} value={category._id}>{category.category_name}</option>);
+                        })}
+                    </select>
+                    <Button id={'submit_new_class'} onClick={handleSubmit}>Create</Button>
                 </div>
             </Dialog>
         </div>
