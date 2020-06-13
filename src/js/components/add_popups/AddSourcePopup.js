@@ -177,6 +177,7 @@ export default function AddSourcePopup(props) {
                 onClose={props.handleClose}
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
+                maxWidth={false}
             >
                 <div id={'add-source-div'}>
                     <input name={'url'} value={sourceUrl} onChange={handleInputChange} />

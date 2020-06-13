@@ -441,11 +441,17 @@ body {
 }
 
 #add-category-div {
-    height: 40vh;
-    width: 30vw;
+    height: 500px;
+    width: 500px;
+    background-image: url('images/add-category-back.png');
+    background-size: cover;
+    background-position: center;
 }
 
 #add-source-div {
-    height: 40vh;
-    width: 30vw;
+    height: 470px;
+    width: 800px;
+    background-image: url('images/add-source-back.png');
+    background-size: cover;
+    background-position: center;
 }
