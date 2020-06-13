@@ -68,6 +68,9 @@ const useStyles = makeStyles(theme => ({
 export default function AddSourcePopup(props) {
     const [sourceTitle, setSourceTitle] = React.useState("");
     const [sourceUrl, setSourceUrl] = React.useState("");
+    const [sourceNotes, setSourceNotes] = React.useState("");
+    const [categoryID, setCategoryID] = React.useState(-1);
+    const [errorMsg, setErrorMsg] = React.useState("");
     const classes = useStyles();
     const InputProps = {
         classes: {
@@ -88,7 +91,45 @@ export default function AddSourcePopup(props) {
     const handleInputChange = (event) => {
         const eventName = event.target.name;
         const eventValue = event.target.value;
+        if (eventName === 'url') {
+            setSourceUrl(eventValue);
+        } else if (eventName === 'title') {
+            setSourceTitle(eventValue);
+        } else if (eventName === 'notes') {
+            setSourceNotes(eventValue);
+        } else if (eventName === 'category-select') {
+            setCategoryID(eventValue);
+        }
+    };
 
+    const handleSubmit = () => {
+        if (sourceUrl === "") {
+            setErrorMsg("url is empty");
+        } else {
+            if (categoryID === -1 && props.categories[0] !== undefined) {
+                setCategoryID(props.categories[0]._id);
+            }
+            const postParameters = {
+                userID: props.userID,
+                categoryID: categoryID,
+                url: sourceUrl,
+                sourceTitle: sourceTitle,
+                sourceNotes: sourceNotes
+            };
+
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                if (xhr.response.startsWith("ERROR:")) {
+                    setErrorMsg(xhr.response.substring(6));
+                } else {
+                    console.log(xhr.response);
+                    props.addNewSource(JSON.parse(xhr.response), categoryID);
+                }
+            });
+            xhr.open('POST', 'http://localhost:3000/new_source', false);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(postParameters));
+        }
     };
 
     return (
@@ -102,7 +143,16 @@ export default function AddSourcePopup(props) {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <div id={'add-source-div'}>
-
+                    <input name={'url'} value={sourceUrl} onChange={handleInputChange} />
+                    <input name={'title'} value={sourceTitle} onChange={handleInputChange} />
+                    <div id={'suggested-title'}>use suggested title</div>
+                    <input name={'notes'} value={sourceNotes} onChange={handleInputChange} />
+                    <select name={'category-select'} onChange={handleInputChange}>
+                        {props.categories.map((category, index) => {
+                            return (<option id={index} value={category._id}>{category.category_name}</option>)
+                        })}
+                    </select>
+                    <Button id={'submit-new-source'} onClick={handleSubmit}>Add Source</Button>
                 </div>
             </Dialog>
         </div>

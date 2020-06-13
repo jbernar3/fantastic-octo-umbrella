@@ -95,6 +95,7 @@ export default function SourceCard(props) {
                 <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={styleGif} />
             </div>);
         } else {
+            console.log(props.source);
             let styleImg = {width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-8%'};
             if (!props.drawerOpen) {
                 styleImg = {width: '70%', height: '70%', border:'2px solid #a65cff', marginTop: '-6%', marginLeft: '12%'};

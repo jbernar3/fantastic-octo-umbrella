@@ -18,6 +18,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import SideBar from "../general_components/SideBar";
 import CategoryDrawer from "../category_components/CategoryDrawer";
 import AddCategoryPopup from "../add_popups/AddCategoryPopup";
+import AddSourcePopup from "../add_popups/AddSourcePopup";
 
 
 class Home extends Component {
@@ -27,17 +28,28 @@ class Home extends Component {
             drawerOpen: true,
             categories: [],
             firstRender: true,
-            addCatOpen: false
+            addCatOpen: false,
+            addSourceOpen: false
         };
 
         this.handleSetCategories = this.handleSetCategories.bind(this);
         this.addNewCategory = this.addNewCategory.bind(this);
+        this.addNewSource = this.addNewSource.bind(this);
     }
 
     addNewCategory(category) {
         this.setState({addCatOpen: false});
         this.state.categories.push(category);
-        console.log(category);
+    }
+
+    addNewSource(source, categoryID) {
+        this.setState({addSourceOpen: false});
+        for (let i=0; i<this.state.categories.length; i++) {
+            if (this.state.categories[i]._id === categoryID) {
+                this.state.categories[i].sources.push(source);
+                break;
+            }
+        }
     }
 
     handleSetCategories() {
@@ -79,9 +91,11 @@ class Home extends Component {
                         classes
                     </div>
                     <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
-                    <div id={'add_source_div'}>+ Add Source</div>
+                    <div id={'add_source_div'} onClick={() => this.setState({addSourceOpen: true})}>+ Add Source</div>
                     <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
                                       categories={this.state.categories} addNewCategory={this.addNewCategory} />
+                    <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
+                                      categories={this.state.categories} addNewSource={this.addNewSource} />
                     {/*<div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>*/}
                 </div>
                 <CategoryDrawer categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>
