@@ -102,16 +102,45 @@ export default function AddSourcePopup(props) {
         }
     };
 
+    const resetInputs = () => {
+        setSourceTitle("");
+        setSourceUrl("");
+        setSourceNotes("");
+        setCategoryID(-1);
+    };
+
+    const handleGetImage = (categoryID, sourceID, url) => {
+        const postParameters = {
+            userID: props.userID,
+            categoryID: categoryID,
+            url: url,
+            sourceID: sourceID
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', () => {
+            if (xhr.response.startsWith("ERROR:")) {
+                setErrorMsg(xhr.response.substring(6));
+            } else {
+                props.setSourceImg(JSON.parse(xhr.response), categoryID, sourceID);
+            }
+        });
+        xhr.open('POST', 'http://localhost:3000/get_source_img', false);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(postParameters));
+    };
+
     const handleSubmit = () => {
         if (sourceUrl === "") {
             setErrorMsg("url is empty");
         } else {
+            let categoryIDSubmit = categoryID;
             if (categoryID === -1 && props.categories[0] !== undefined) {
-                setCategoryID(props.categories[0]._id);
+                categoryIDSubmit = props.categories[0]._id;
             }
             const postParameters = {
                 userID: props.userID,
-                categoryID: categoryID,
+                categoryID: categoryIDSubmit,
                 url: sourceUrl,
                 sourceTitle: sourceTitle,
                 sourceNotes: sourceNotes
@@ -122,8 +151,12 @@ export default function AddSourcePopup(props) {
                 if (xhr.response.startsWith("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else {
-                    console.log(xhr.response);
-                    props.addNewSource(JSON.parse(xhr.response), categoryID);
+                    const newSource = JSON.parse(xhr.response);
+                    props.addNewSource(newSource, categoryIDSubmit);
+                    resetInputs();
+                    setTimeout(function cb() {
+                        handleGetImage(categoryIDSubmit, newSource._id, sourceUrl);
+                    }, 0);
                 }
             });
             xhr.open('POST', 'http://localhost:3000/new_source', false);

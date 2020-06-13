@@ -35,6 +35,7 @@ class Home extends Component {
         this.handleSetCategories = this.handleSetCategories.bind(this);
         this.addNewCategory = this.addNewCategory.bind(this);
         this.addNewSource = this.addNewSource.bind(this);
+        this.setSourceImg = this.setSourceImg.bind(this);
     }
 
     addNewCategory(category) {
@@ -50,6 +51,29 @@ class Home extends Component {
                 break;
             }
         }
+    }
+
+    setSourceImg(img, categoryID, sourceID) {
+        this.setState(state => {
+            const updatedCategories = state.categories.map((category, i) => {
+                if (category._id.toString() === categoryID) {
+                    const copyCategory = category;
+                    copyCategory.sources = category.sources.map((source, j) => {
+                        if (source._id.toString() === sourceID) {
+                            const copySource = source;
+                            copySource.img = img;
+                            return copySource;
+                        } else {
+                            return source;
+                        }
+                    });
+                    return copyCategory;
+                } else {
+                    return category;
+                }
+            });
+            return {categories: updatedCategories};
+        });
     }
 
     handleSetCategories() {
@@ -95,7 +119,7 @@ class Home extends Component {
                     <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
                                       categories={this.state.categories} addNewCategory={this.addNewCategory} />
                     <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
-                                      categories={this.state.categories} addNewSource={this.addNewSource} />
+                                      categories={this.state.categories} addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} />
                     {/*<div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>*/}
                 </div>
                 <CategoryDrawer categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>
