@@ -10,9 +10,10 @@ import Scrollbars from "react-scrollbars-custom";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Slide from "@material-ui/core/Slide";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Zoom ref={ref} {...props} />;
+    return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const useStyles = makeStyles(theme => ({

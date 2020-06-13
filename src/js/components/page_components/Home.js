@@ -5,6 +5,7 @@ import MenuBar from "../general_components/MenuBar";
 import CategoryDrawer from "../category_components/CategoryDrawer";
 import AddCategoryPopup from "../add_popups/AddCategoryPopup";
 import AddSourcePopup from "../add_popups/AddSourcePopup";
+import Button from "@material-ui/core/Button";
 
 
 class Home extends Component {
@@ -98,6 +99,13 @@ class Home extends Component {
                         <img src={'src/images/menu_icon.png'} alt={'menu icon'} style={{width: '2vh', height: '2vh', marginRight: '1vh', marginLeft: '-1vh'}} />
                         classes
                     </div>
+                    {/*<Button style={{*/}
+                    {/*    fontFamily: 'houschka-rounded,sans-serif',*/}
+                    {/*    fontWeight: 400,*/}
+                    {/*    fontStyle: 'normal',*/}
+                    {/*    color: '#a65cff',*/}
+                    {/*    marginTop: '1vh',*/}
+                    {/*    textTransform: 'none'}} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</Button>*/}
                     <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
                     <div id={'add_source_div'} onClick={() => this.setState({addSourceOpen: true})}>+ Add Source</div>
                     <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}

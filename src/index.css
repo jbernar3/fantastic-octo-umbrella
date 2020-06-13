@@ -101,6 +101,11 @@
     display: inline-block;
 }
 
+#add_source_div:hover {
+    font-weight: 600;
+
+}
+
 #new_class_div {
     cursor: pointer;
     font-family: houschka-rounded,sans-serif;
@@ -110,6 +115,10 @@
     display: inline-block;
     margin-top: 1vh;
     /*margin-left: 20vh;*/
+}
+
+#new_class_div:hover {
+    font-weight: 600;
 }
 
 #signin-container {
