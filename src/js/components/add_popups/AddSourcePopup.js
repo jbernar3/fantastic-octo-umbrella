@@ -147,18 +147,18 @@ export default function AddSourcePopup(props) {
             };
 
             const xhr = new XMLHttpRequest();
-            xhr.addEventListener('load', () => {
+            xhr.addEventListener('load', async () => {
                 console.log(postParameters);
                 console.log(xhr.response);
                 if (xhr.response.startsWith("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else {
                     const newSource = JSON.parse(xhr.response);
-                    props.addNewSource(newSource, categoryIDSubmit);
-                    resetInputs();
+                    await props.addNewSource(newSource, categoryIDSubmit);
+                    await resetInputs();
                     setTimeout(function cb() {
                         handleGetImage(categoryIDSubmit, newSource._id, sourceUrl);
-                    }, 0);
+                    }, 2000);
                 }
             });
             xhr.open('POST', 'http://localhost:3000/new_source', false);

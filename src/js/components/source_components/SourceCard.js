@@ -76,7 +76,7 @@ export default function SourceCard(props) {
     };
 
     useEffect(
-        () => { console.log("IN USE EFFECT FOR SOURCE CARD"); setSource(props.source); },
+        () => { setSource(props.source); },
         [props.source]);
 
     const getSourceImg = (source) => {
@@ -100,16 +100,16 @@ export default function SourceCard(props) {
                 <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={styleGif} />
             </div>);
         } else {
-            console.log(props.source);
             let styleImg = {width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-8%'};
             if (!props.drawerOpen) {
                 styleImg = {width: '70%', height: '70%', border:'2px solid #a65cff', marginTop: '-6%', marginLeft: '12%'};
             }
             return (<div className={classes.sourceimg}>
-                <img src={`data:image/png;base64,${arrayBufferToBase64(props.source.source_img.data.data)}`}  alt={"temp source img"}
+                <img src={`data:image/png;base64,${arrayBufferToBase64(source.source_img.data.data)}`}  alt={"temp source img"}
                      style={styleImg}/>
             </div>);
         }
+        console.log(source);
     };
 
     return (

@@ -113,23 +113,30 @@ export default function CategoryDrawer(props) {
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
                 </div>
-                <List>
-                    {categories.map(function (category, index) {
-                        if (index === indexCurrCat) {
-                            return (<ListItem button key={index} name={index.toString()} style={{backgroundColor: 'rgba(166, 92, 254, 0.29)'}}
-                                              onClick={() => {setIndexCurrCat(index); document.getElementById('source_scroll_div').scrollTop =0}}>
-                                <ListItemIcon><FolderIcon /></ListItemIcon>
-                                <div className={'category_name_drawer'}>{category.category_name}</div>
-                            </ListItem>)
-                        } else {
-                            return (<ListItem button key={index} name={index.toString()}
-                                              onClick={() => {setIndexCurrCat(index); document.getElementById('source_scroll_div').scrollTop =0}}>
-                                <ListItemIcon><FolderIcon /></ListItemIcon>
-                                <div className={'category_name_drawer'}>{category.category_name}</div>
-                            </ListItem>)
-                        }
-                    }.bind(this))}
-                </List>
+                <Scrollbars
+                    style={{width: drawerWidth, height: '73%' }}
+                    //id='source_scroll_div'
+                    thumbYProps={{ className: "thumbY" }}
+                    trackXProps={{ className: "trackX" }}
+                >
+                    <List>
+                        {categories.map(function (category, index) {
+                            if (index === indexCurrCat) {
+                                return (<ListItem button key={index} name={index.toString()} style={{backgroundColor: 'rgba(166, 92, 254, 0.29)'}}
+                                                  onClick={() => {setIndexCurrCat(index); document.getElementById('source_scroll_div').scrollTop =0}}>
+                                    <ListItemIcon><FolderIcon /></ListItemIcon>
+                                    <div className={'category_name_drawer'}>{category.category_name}</div>
+                                </ListItem>)
+                            } else {
+                                return (<ListItem button key={index} name={index.toString()}
+                                                  onClick={() => {setIndexCurrCat(index); document.getElementById('source_scroll_div').scrollTop =0}}>
+                                    <ListItemIcon><FolderIcon /></ListItemIcon>
+                                    <div className={'category_name_drawer'}>{category.category_name}</div>
+                                </ListItem>)
+                            }
+                        }.bind(this))}
+                    </List>
+                </Scrollbars>
             </Drawer>
             <main
                 className={clsx(classes.content, {

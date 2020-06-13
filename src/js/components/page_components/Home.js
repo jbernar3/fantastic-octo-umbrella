@@ -1,21 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {changeDisplayCategory, signinUser, signoutUser, toggleDisplayCategory, updateCategories} from "../../../actions";
-import TextField from '@material-ui/core/TextField'
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import NewCategoryPopup from "../add_popups/NewCategoryPopup";
-import NewSourcePopup from "../add_popups/NewSourcePopup";
-import CategoryDisplayPopup from "../category_components/CategoryDisplayPopup";
+import {changeDisplayCategory, signoutUser, updateCategories} from "../../../actions";
 import MenuBar from "../general_components/MenuBar";
-import CategoryDisplay from "../category_components/CategoryDisplay";
-import Grid from "@material-ui/core/Grid";
-import {makeStyles} from "@material-ui/core/styles";
-import SideBar from "../general_components/SideBar";
 import CategoryDrawer from "../category_components/CategoryDrawer";
 import AddCategoryPopup from "../add_popups/AddCategoryPopup";
 import AddSourcePopup from "../add_popups/AddSourcePopup";
@@ -54,34 +40,24 @@ class Home extends Component {
     }
 
     setSourceImg(img, categoryID, sourceID) {
-        console.log("CategoryID" + categoryID);
-        console.log("SourceID" + sourceID);
-        // this.setState(state => {
-            const updatedCategories = this.state.categories.map((category, i) => {
-                if (category._id.toString() === categoryID) {
-                    console.log("FOUND CATEGORY");
-                    const copyCategory = category;
-                    copyCategory.sources = category.sources.map((source, j) => {
-                        if (source._id.toString() === sourceID) {
-                            console.log("FOUND SOURCE");
-                            const copySource = source;
-                            copySource.source_img = img;
-                            console.log("THIS IS COPY SOURCE");
-                            console.log(copySource);
-                            return copySource;
-                        } else {
-                            return source;
-                        }
-                    });
-                    return copyCategory;
-                } else {
-                    return category;
-                }
-            });
-            console.log("THIS IS UPDATED CATEGORIES");
-            console.log(updatedCategories);
-            this.setState({categories: updatedCategories});
-        // });
+        const updatedCategories = this.state.categories.map((category, i) => {
+            if (category._id.toString() === categoryID) {
+                const copyCategory = category;
+                copyCategory.sources = category.sources.map((source, j) => {
+                    if (source._id.toString() === sourceID) {
+                        const copySource = source;
+                        copySource.source_img = img;
+                        return copySource;
+                    } else {
+                        return source;
+                    }
+                });
+                return copyCategory;
+            } else {
+                return category;
+            }
+        });
+        this.setState({categories: updatedCategories});
     }
 
     handleSetCategories() {
