@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -89,12 +89,16 @@ export default function CategoryDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [indexCurrCat, setIndexCurrCat] = React.useState(0);
+    const [categories, setCategories] = React.useState(props.categories);
     let scrollbars = null;
+
+    useEffect(() => {
+        console.log("IN USE EFFECT FOR CATEGORY DRAWER");
+        setCategories(props.categories);
+    }, [props.categories]);
 
     return (
         <div className={classes.root}>
-
-
             <Drawer
                 className={classes.drawer}
                 variant="persistent"
@@ -110,7 +114,7 @@ export default function CategoryDrawer(props) {
                     </IconButton>
                 </div>
                 <List>
-                    {props.categories.map(function (category, index) {
+                    {categories.map(function (category, index) {
                         if (index === indexCurrCat) {
                             return (<ListItem button key={index} name={index.toString()} style={{backgroundColor: 'rgba(166, 92, 254, 0.29)'}}
                                               onClick={() => {setIndexCurrCat(index); document.getElementById('source_scroll_div').scrollTop =0}}>
@@ -140,7 +144,7 @@ export default function CategoryDrawer(props) {
                     thumbYProps={{ className: "thumbY" }}
                     trackXProps={{ className: "trackX" }}
                 >
-                    {props.categories.length > 0 ? props.categories[indexCurrCat].sources.map((source, index) => (
+                    {categories.length > 0 ? props.categories[indexCurrCat].sources.map((source, index) => (
                         <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} />
                     )) : "No sources"}
                 </Scrollbars>

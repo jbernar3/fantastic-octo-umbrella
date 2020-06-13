@@ -54,14 +54,20 @@ class Home extends Component {
     }
 
     setSourceImg(img, categoryID, sourceID) {
-        this.setState(state => {
-            const updatedCategories = state.categories.map((category, i) => {
+        console.log("CategoryID" + categoryID);
+        console.log("SourceID" + sourceID);
+        // this.setState(state => {
+            const updatedCategories = this.state.categories.map((category, i) => {
                 if (category._id.toString() === categoryID) {
+                    console.log("FOUND CATEGORY");
                     const copyCategory = category;
                     copyCategory.sources = category.sources.map((source, j) => {
                         if (source._id.toString() === sourceID) {
+                            console.log("FOUND SOURCE");
                             const copySource = source;
-                            copySource.img = img;
+                            copySource.source_img = img;
+                            console.log("THIS IS COPY SOURCE");
+                            console.log(copySource);
                             return copySource;
                         } else {
                             return source;
@@ -72,8 +78,10 @@ class Home extends Component {
                     return category;
                 }
             });
-            return {categories: updatedCategories};
-        });
+            console.log("THIS IS UPDATED CATEGORIES");
+            console.log(updatedCategories);
+            this.setState({categories: updatedCategories});
+        // });
     }
 
     handleSetCategories() {
@@ -120,7 +128,6 @@ class Home extends Component {
                                       categories={this.state.categories} addNewCategory={this.addNewCategory} />
                     <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
                                       categories={this.state.categories} addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} />
-                    {/*<div id={"add_class_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>+ add class</div>*/}
                 </div>
                 <CategoryDrawer categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>
             </div>

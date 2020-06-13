@@ -148,6 +148,8 @@ export default function AddSourcePopup(props) {
 
             const xhr = new XMLHttpRequest();
             xhr.addEventListener('load', () => {
+                console.log(postParameters);
+                console.log(xhr.response);
                 if (xhr.response.startsWith("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else {

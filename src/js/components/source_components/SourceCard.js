@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -55,6 +55,7 @@ const useStyles = makeStyles({
 export default function SourceCard(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
+    const [source, setSource] = React.useState(props.source);
 
     const arrayBufferToBase64 = (buffer) => {
         let binary = '';
@@ -73,6 +74,10 @@ export default function SourceCard(props) {
         }
         return ((sizeStr / 2) <= counter);
     };
+
+    useEffect(
+        () => { console.log("IN USE EFFECT FOR SOURCE CARD"); setSource(props.source); },
+        [props.source]);
 
     const getSourceImg = (source) => {
         if (source.source_urlImgFlag) {
@@ -111,10 +116,10 @@ export default function SourceCard(props) {
         <Card className={classes.root} style={{borderRadius: 6}}>
             <CardContent>
                 {props.drawerOpen ? <div className={'source_title'}>
-                    {props.source.source_name.length > 55 ? props.source.source_name.substring(0, 55) + "..." : props.source.source_name}
+                    {source.source_name.length > 55 ? source.source_name.substring(0, 55) + "..." : source.source_name}
                 </div> :
                     <div className={'source_title'}>
-                        {props.source.source_name.length > 75 ? props.source.source_name.substring(0, 75) + "..." : props.source.source_name}
+                        {source.source_name.length > 75 ? source.source_name.substring(0, 75) + "..." : source.source_name}
                     </div>}
 
                 <Typography className={classes.description} variant="body2" component="p">
@@ -124,7 +129,7 @@ export default function SourceCard(props) {
                     sauntered toward the languid, pregnant tiger, and stalls of horses and African
                     Watsui bulls.
                 </Typography>
-                {getSourceImg(props.source)}
+                {getSourceImg(source)}
 
             </CardContent>
             <CardActions>
