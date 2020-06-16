@@ -75,6 +75,14 @@ export default function SourceCard(props) {
         return ((sizeStr / 2) <= counter);
     };
 
+    const handleClick = (event, name) => {
+        if (name === 'open-button') {
+            window.open('http://google.com','_blank');
+            event.stopPropagation();
+        }
+        console.log(name);
+    };
+
     useEffect(
         () => { setSource(props.source); },
         [props.source]);
@@ -112,7 +120,7 @@ export default function SourceCard(props) {
     };
 
     return (
-        <Card className={classes.root} style={{borderRadius: 6}}>
+        <Card name={'source-card'} className={classes.root} style={{borderRadius: 6}} onClick={(event) => handleClick(event, 'source-card')}>
             <CardContent>
                 {props.drawerOpen ? <div className={'source_title'}>
                     {source.source_name.length > 55 ? source.source_name.substring(0, 55) + "..." : source.source_name}
@@ -132,7 +140,8 @@ export default function SourceCard(props) {
 
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => {window.open('http://google.com','_blank')}}>Open Source</Button>
+                {/*<Button size="small" onClick={() => {window.open('http://google.com','_blank')}}>Open Source</Button>*/}
+                <Button size="small" onClick={(event) => handleClick(event,'open-button')}>Open Source</Button>
             </CardActions>
         </Card>
     );
