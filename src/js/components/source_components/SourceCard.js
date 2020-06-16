@@ -109,7 +109,6 @@ export default function SourceCard(props) {
                      style={styleImg}/>
             </div>);
         }
-        console.log(source);
     };
 
     return (
@@ -133,7 +132,7 @@ export default function SourceCard(props) {
 
             </CardContent>
             <CardActions>
-                <Button size="small">Open Source</Button>
+                <Button size="small" onClick={() => {window.open('http://google.com','_blank')}}>Open Source</Button>
             </CardActions>
         </Card>
     );

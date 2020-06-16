@@ -93,6 +93,37 @@ export default function CategoryDrawer(props) {
         setCategories(props.categories);
     }, [props.categories]);
 
+    if (categories === undefined) {
+        return (
+            <div className={classes.root}>
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="left"
+                    open={props.drawerOpen}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <div className={classes.drawerHeader}>
+                        <IconButton onClick={() => console.log("yay i clicked an unnecessary button")}>
+                            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        </IconButton>
+                    </div>
+                    <List/>
+                </Drawer>
+                <main
+                    className={clsx(classes.content, {
+                        [classes.contentShift]: props.drawerOpen,
+                    })}
+                >
+                    <div className={'category_name_title'}>Loading Categories</div>
+                    <img src={'src/images/loadingclasifygif.gif'} alt={'c loading gif'} style={{width: '10vw', marginLeft: '26.4vw', marginTop: '5vw'}} />
+                </main>
+            </div>
+        );
+    }
+
     return (
         <div className={classes.root}>
             <Drawer

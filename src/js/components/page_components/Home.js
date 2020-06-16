@@ -13,7 +13,7 @@ class Home extends Component {
         super(props);
         this.state = {
             drawerOpen: true,
-            categories: [],
+            categories: undefined,
             firstRender: true,
             addCatOpen: false,
             addSourceOpen: false,
@@ -95,7 +95,7 @@ class Home extends Component {
             self.setState({firstRender : false});
             setTimeout(function cb() {
                 self.handleSetCategories();
-            }, 0);
+            }, 500);
         }
         return(
             <div>
@@ -114,10 +114,12 @@ class Home extends Component {
                     {/*    textTransform: 'none'}} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</Button>*/}
                     <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
                     <div id={'add_source_div'} onClick={() => this.setState({addSourceOpen: true})}>+ Add Source</div>
-                    <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
-                                      categories={this.state.categories} addNewCategory={this.addNewCategory} currCatIndex={this.state.indexCurrCat} />
-                    <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
-                                      categories={this.state.categories} addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} currCatIndex={this.state.indexCurrCat} />
+                    {this.state.categories !== undefined ? <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
+                                                                             categories={this.state.categories} addNewCategory={this.addNewCategory} currCatIndex={this.state.indexCurrCat} />
+                    : ""}
+                    {this.state.categories !== undefined ? <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
+                                                                           categories={this.state.categories} addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} currCatIndex={this.state.indexCurrCat} />
+                        : ""}
                 </div>
                 <CategoryDrawer setCurrCatIndex={this.setCurrCatIndex} categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>
             </div>
