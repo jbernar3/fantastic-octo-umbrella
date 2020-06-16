@@ -83,8 +83,10 @@ const useStyles = makeStyles(theme => ({
 export default function AddSourcePopup(props) {
     const [sourceTitle, setSourceTitle] = React.useState("");
     const [sourceUrl, setSourceUrl] = React.useState("");
+    const [prevUrlChecked, setPrevUrlChecked] = React.useState("");
     const [sourceNotes, setSourceNotes] = React.useState("");
     const [categoryID, setCategoryID] = React.useState(-1);
+    const [suggestedTitle, setSuggestedTitle] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState("");
     const classes = useStyles();
     const InputProps = {
@@ -108,6 +110,7 @@ export default function AddSourcePopup(props) {
         const eventValue = event.target.value;
         if (eventName === 'url') {
             setSourceUrl(eventValue);
+            setSuggestedTitle('');
         } else if (eventName === 'title') {
             setSourceTitle(eventValue);
         } else if (eventName === 'notes') {
@@ -194,6 +197,27 @@ export default function AddSourcePopup(props) {
         }
     };
 
+    const handleSuggestedTitle = () => {
+        if (sourceUrl.length > 4 && sourceUrl !== prevUrlChecked) {
+            console.log("About to send request");
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                setSuggestedTitle(xhr.response);
+                setPrevUrlChecked(sourceUrl);
+            });
+            xhr.open('POST', 'http://localhost:3000/get_suggested_title', true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({ url: sourceUrl}));
+        }
+    };
+
+    const handleUseSuggestedTitle = () => {
+        if (suggestedTitle !== "") {
+            setSourceTitle(suggestedTitle);
+            setSuggestedTitle("");
+        }
+    };
+
     return (
         <div>
             <Dialog
@@ -208,13 +232,15 @@ export default function AddSourcePopup(props) {
                 <div id={'add-source-div'}>
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '10vw', marginLeft: '4.2vw', width: '32.4vw'}}>website url</div>
                     <div style={{marginTop: '.8vw', width: '32.6vw'}}>
-                        <input name={'url'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceUrl} onChange={handleInputChange} />
+                        <input name={'url'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceUrl} onChange={handleInputChange} onMouseLeave={handleSuggestedTitle} />
                     </div>
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '2vw', marginLeft: '4.2vw', width: '32.4vw'}}>source title</div>
                     <div style={{marginTop: '.8vw', width: '32.6vw'}}>
-                        <input name={'title'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceTitle} onChange={handleInputChange} on />
+                        <input name={'title'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceTitle} onChange={handleInputChange} />
                     </div>
-                    <div id={'suggested-title'} className={'houshcka_demibold'}>use suggested title</div>
+                    <div id={'suggested-title'} className={'houshcka_demibold'} onClick={handleUseSuggestedTitle}>
+                        {suggestedTitle !== "" ? "use suggested title: " + suggestedTitle : ""}
+                    </div>
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', float: 'right', width: '34.6vw', marginTop: '-16.2vw'}}>notes</div>
                     <Scrollbars
                         style={{float: 'right', width: '32vw', marginTop: '-13.8vw', height: '23vw', marginRight: '2.7vw'}}

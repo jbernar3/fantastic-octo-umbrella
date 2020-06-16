@@ -542,6 +542,11 @@ body {
     margin-top: .6vw;
     margin-left: 4.2vw;
     width: 32.4vw;
+    cursor: pointer;
+}
+
+#suggested-title:hover {
+    text-decoration: underline;
 }
 
 #new-notes-textarea {
