@@ -452,6 +452,7 @@ body {
     background-image: url('images/add-category-back.png');
     background-size: cover;
     background-position: center;
+    overflow: hidden;
 }
 
 #add-source-div {
@@ -473,7 +474,6 @@ body {
     font-size: 15pt;
     color: #a65cff;
     margin-left: 75px;
-    height: 45px;
     padding-left: 5px;
 }
 
@@ -488,33 +488,52 @@ body {
     font-size: 1.2vw;
     color: #a65cff;
     margin-left: 4vw;
-    height: 3.5vw;
     padding-left: .5vw;
     width: 30vw;
 }
 
 #new-cat-name {
     width: 350px;
+    height: 45px;
 }
 
 #parent-cat-select {
     width: 354px;
     overflow-y: auto;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    margin-top: 1px;
 }
 #parent-cat-select:active, #parent-cat-select:hover {
+    outline: none
+}
+
+#cat-select {
+    width: 30vw;
+    overflow-y: auto;
+    margin-top: .8vw;
+    min-height: 3.5vw;
+}
+
+#cat-select:active, #cat-select:hover {
     outline: none
 }
 
 .select-options {
     background-color: #ececec;
     outline: none;
-    border-radius: 7px;
     border: none;
     font-family: houschka-rounded,sans-serif;
     font-weight: 500;
     font-style: normal;
     font-size: 12pt;
     color: black;
+    cursor: pointer;
+}
+
+.select-options:hover {
+    background-color: rgba(166, 92, 254, 0.09);
+    font-weight: 600;
 }
 
 #suggested-title {
