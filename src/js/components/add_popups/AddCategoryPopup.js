@@ -11,6 +11,9 @@ import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="right" ref={ref} {...props} />;
@@ -64,11 +67,46 @@ const useStyles = makeStyles(theme => ({
     },
     notchedOutline: {},
     focused: {},
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+    selectInput: {
+        backgroundColor: 'rgba(166, 92, 254, 0.09)',
+        outline: 'none',
+        borderRadius: '7px',
+        border: 'none',
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 500,
+        fontStyle: 'normal',
+        fontSize: '15pt',
+        color: '#a65cff',
+        marginLeft: '68px',
+        paddingLeft: '5px',
+        width: '354px'
+    },
+    submitButton: {
+        backgroundColor: 'rgba(166, 92, 254, 0.09)',
+        borderRadius: '7px',
+        border: 'none',
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 700,
+        fontStyle: 'normal',
+        fontSize: '13pt',
+        color: '#a65cff',
+        textTransform: 'none',
+        marginTop: '35px',
+        marginLeft: '212px'
+    }
 }));
 
 export default function AddCategoryPopup(props) {
     const [catName, setCatName] = React.useState("");
     const [parentID, setParentID] = React.useState(-1);
+    const [parentName, setParentName] = React.useState("no parent");
     const [errorMsg, setErrorMsg] = React.useState("");
     const classes = useStyles();
     const InputProps = {
@@ -94,10 +132,14 @@ export default function AddCategoryPopup(props) {
             if (eventValue.length <= 20) {
                 setCatName(eventValue);
             }
-        } else if (eventName === 'parent_cat_select') {
+        } else {
+            console.log(eventName);
+            console.log(eventValue);
             setParentID(eventValue);
+            setParentName(eventName);
         }
     };
+
 
     const handleSubmit = () => {
         const postParameters = {
@@ -131,14 +173,45 @@ export default function AddCategoryPopup(props) {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <div id={'add-category-div'}>
-                    <input name={'cat_name'} value={catName} onChange={handleInputChange} />
-                    <select name={'parent_cat_select'} onChange={handleInputChange}>
-                        <option id={-1} value={-1}>no parent</option>
-                        {props.categories.map((category, index) => {
-                            return (<option id={index} value={category._id}>{category.category_name}</option>);
-                        })}
-                    </select>
-                    <Button id={'submit_new_class'} onClick={handleSubmit}>Create</Button>
+                    <div className={'houshcka_medium'} style={{fontSize: '13pt', marginTop: '170px', marginLeft: '77px'}}>name of class</div>
+                    <div style={{marginTop: '6px'}}>
+                        <input id={'new-cat-name'} className={'new-cat-inputs'} name={'cat_name'} value={catName} onChange={handleInputChange} />
+                    </div>
+                    <div className={'houshcka_medium'} style={{fontSize: '13pt', marginTop: '20px', marginLeft: '77px'}}>parent class</div>
+                    <FormControl className={classes.formControl}>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={parentName}
+                            name={'parent_cat_select'}
+                            variant={'outlined'}
+                            onChange={handleInputChange}
+                            className={classes.selectInput}
+                        >
+                            <Scrollbars
+                                style={{ width: '340px', height: '100px' }}
+                                //id='source_scroll_div'
+                                thumbYProps={{ className: "thumbY" }}
+                                trackXProps={{ className: "trackX" }}
+                            >
+                                <MenuItem id={-1} className={'select-options'} value={-1}>no parent</MenuItem>
+                                {props.categories.map((category, index) => {
+                                    return (<MenuItem className={'select-options'} name={category.category_name} value={category._id}>
+                                        {category.category_name}
+                                    </MenuItem>);
+                                })}
+                            </Scrollbars>
+                        </Select>
+                    </FormControl>
+                    {/*<div style={{marginTop: '6px', height: '100px'}}>*/}
+                    {/*    <select id={'parent-cat-select'} className={'new-cat-inputs'} name={'parent_cat_select'} onChange={handleInputChange}>*/}
+                    {/*        <option id={-1} className={'select-options'} value={-1}>no parent</option>*/}
+                    {/*        {props.categories.map((category, index) => {*/}
+                    {/*            return (<option className={'select-options'} key={index} value={category._id}>{category.category_name}</option>);*/}
+                    {/*        })}*/}
+                    {/*    </select>*/}
+                    {/*</div>*/}
+                    <Button id={'submit_new_class'} className={classes.submitButton} onClick={handleSubmit}>create</Button>
                 </div>
             </Dialog>
         </div>

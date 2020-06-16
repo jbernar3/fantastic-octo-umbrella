@@ -86,8 +86,7 @@ function mapStateToProps(state) {
     return {
         userID: state.signin.userID,
         firstName: state.signin.firstName,
-        lastName: state.signin.lastName,
-        numCategories: state.signin.categories.length,
+        lastName: state.signin.lastName
     }
 }
 

@@ -64,6 +64,20 @@ const useStyles = makeStyles(theme => ({
     },
     notchedOutline: {},
     focused: {},
+    submitButton: {
+        backgroundColor: 'rgba(166, 92, 254, 0.09)',
+        borderRadius: '7px',
+        border: 'none',
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 700,
+        fontStyle: 'normal',
+        fontSize: '1.2vw',
+        color: '#a65cff',
+        textTransform: 'none',
+        float: 'right',
+        marginTop: '10vw',
+        marginRight: '-19.5vw'
+    }
 }));
 
 export default function AddSourcePopup(props) {
@@ -168,6 +182,11 @@ export default function AddSourcePopup(props) {
         }
     };
 
+    const handleOnInput = (event) => {
+        event.target.style.height = "";
+        event.target.style.height = event.target.scrollHeight + "px";
+    };
+
     return (
         <div>
             <Dialog
@@ -180,16 +199,30 @@ export default function AddSourcePopup(props) {
                 maxWidth={false}
             >
                 <div id={'add-source-div'}>
-                    <input name={'url'} value={sourceUrl} onChange={handleInputChange} />
-                    <input name={'title'} value={sourceTitle} onChange={handleInputChange} />
-                    <div id={'suggested-title'}>use suggested title</div>
-                    <input name={'notes'} value={sourceNotes} onChange={handleInputChange} />
+                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '10vw', marginLeft: '4.2vw', width: '32.4vw'}}>website url</div>
+                    <div style={{marginTop: '.8vw', width: '32.6vw'}}>
+                        <input name={'url'} className={'new-source-inputs'} value={sourceUrl} onChange={handleInputChange} />
+                    </div>
+                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '2vw', marginLeft: '4.2vw', width: '32.4vw'}}>source title</div>
+                    <div style={{marginTop: '.8vw', width: '32.6vw'}}>
+                        <input name={'title'} className={'new-source-inputs'} value={sourceTitle} onChange={handleInputChange} />
+                    </div>
+                    <div id={'suggested-title'} className={'houshcka_demibold'}>use suggested title</div>
+                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', float: 'right', width: '34.6vw', marginTop: '-16.2vw'}}>notes</div>
+                    <Scrollbars
+                        style={{float: 'right', width: '32vw', marginTop: '-13.8vw', height: '23vw', marginRight: '2.7vw'}}
+                        //id='source_scroll_div'
+                        thumbYProps={{ className: "thumbY" }}
+                        trackXProps={{ className: "trackX" }}
+                    >
+                        <textarea id={'new-notes-textarea'} name={'notes'} value={sourceNotes} onChange={handleInputChange} onInput={handleOnInput} />
+                    </Scrollbars>
                     <select name={'category-select'} onChange={handleInputChange}>
                         {props.categories.map((category, index) => {
                             return (<option id={index} value={category._id}>{category.category_name}</option>)
                         })}
                     </select>
-                    <Button id={'submit-new-source'} onClick={handleSubmit}>Add Source</Button>
+                    <Button className={classes.submitButton} onClick={handleSubmit}>add source</Button>
                 </div>
             </Dialog>
         </div>

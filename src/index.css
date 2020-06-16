@@ -89,6 +89,12 @@
     font-style: normal;
 }
 
+.houshcka_medium {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
 #add_source_div {
     cursor: pointer;
     font-family: houschka-rounded,sans-serif;
@@ -449,9 +455,89 @@ body {
 }
 
 #add-source-div {
-    height: 470px;
-    width: 800px;
+    height: 43vw;
+    width: 73.2vw;
     background-image: url('images/add-source-back.png');
     background-size: cover;
     background-position: center;
 }
+
+.new-cat-inputs {
+    background-color: rgba(166, 92, 254, 0.09);
+    outline: none;
+    border-radius: 7px;
+    border: none;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 15pt;
+    color: #a65cff;
+    margin-left: 75px;
+    height: 45px;
+    padding-left: 5px;
+}
+
+.new-source-inputs {
+    background-color: rgba(166, 92, 254, 0.09);
+    outline: none;
+    border-radius: 7px;
+    border: none;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.2vw;
+    color: #a65cff;
+    margin-left: 4vw;
+    height: 3.5vw;
+    padding-left: .5vw;
+    width: 30vw;
+}
+
+#new-cat-name {
+    width: 350px;
+}
+
+#parent-cat-select {
+    width: 354px;
+    overflow-y: auto;
+}
+#parent-cat-select:active, #parent-cat-select:hover {
+    outline: none
+}
+
+.select-options {
+    background-color: #ececec;
+    outline: none;
+    border-radius: 7px;
+    border: none;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 12pt;
+    color: black;
+}
+
+#suggested-title {
+    font-size: 1vw;
+    color: #a65cff;
+    margin-top: .6vw;
+    margin-left: 4.2vw;
+    width: 32.4vw;
+}
+
+#new-notes-textarea {
+    background-color: rgba(166, 92, 254, 0.09);
+    border: none;
+    border-radius: 7px;
+    outline: none;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.2vw;
+    color: #a65cff;
+    width: 30vw;
+    min-height: 20vw;
+    padding: .5vw;
+    resize: none;
+}
+
