@@ -16,13 +16,19 @@ class Home extends Component {
             categories: [],
             firstRender: true,
             addCatOpen: false,
-            addSourceOpen: false
+            addSourceOpen: false,
+            indexCurrCat: 0
         };
 
         this.handleSetCategories = this.handleSetCategories.bind(this);
         this.addNewCategory = this.addNewCategory.bind(this);
         this.addNewSource = this.addNewSource.bind(this);
         this.setSourceImg = this.setSourceImg.bind(this);
+        this.setCurrCatIndex = this.setCurrCatIndex.bind(this);
+    }
+
+    setCurrCatIndex(index) {
+        this.setState({indexCurrCat: index});
     }
 
     addNewCategory(category) {
@@ -109,11 +115,11 @@ class Home extends Component {
                     <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
                     <div id={'add_source_div'} onClick={() => this.setState({addSourceOpen: true})}>+ Add Source</div>
                     <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
-                                      categories={this.state.categories} addNewCategory={this.addNewCategory} />
+                                      categories={this.state.categories} addNewCategory={this.addNewCategory} currCatIndex={this.state.indexCurrCat} />
                     <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
-                                      categories={this.state.categories} addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} />
+                                      categories={this.state.categories} addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} currCatIndex={this.state.indexCurrCat} />
                 </div>
-                <CategoryDrawer categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>
+                <CategoryDrawer setCurrCatIndex={this.setCurrCatIndex} categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>
             </div>
         )
     }

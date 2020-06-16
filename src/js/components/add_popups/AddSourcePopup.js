@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
         color: '#a65cff',
         textTransform: 'none',
         float: 'right',
-        marginTop: '6vw',
+        marginTop: '10vw',
         marginRight: '-19.5vw'
     }
 }));
@@ -89,6 +89,7 @@ export default function AddSourcePopup(props) {
     const [suggestedTitle, setSuggestedTitle] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState("");
     const classes = useStyles();
+
     const InputProps = {
         classes: {
             root: classes.outlinedRoot,
@@ -154,8 +155,8 @@ export default function AddSourcePopup(props) {
             setErrorMsg("url is empty");
         } else {
             let categoryIDSubmit = categoryID;
-            if (categoryID === -1 && props.categories[0] !== undefined) {
-                categoryIDSubmit = props.categories[0]._id;
+            if (categoryID === -1 && props.categories[props.currCatIndex] !== undefined) {
+                categoryIDSubmit = props.categories[props.currCatIndex]._id;
             }
             const postParameters = {
                 userID: props.userID,
@@ -224,13 +225,13 @@ export default function AddSourcePopup(props) {
                 open={props.popupOpen}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={props.handleClose}
+                onClose={() => {props.handleClose(); resetInputs();}}
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
                 maxWidth={false}
             >
                 <div id={'add-source-div'}>
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '10vw', marginLeft: '4.2vw', width: '32.4vw'}}>website url</div>
+                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '9vw', marginLeft: '4.2vw', width: '32.4vw'}}>website url</div>
                     <div style={{marginTop: '.8vw', width: '32.6vw'}}>
                         <input name={'url'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceUrl} onChange={handleInputChange} onMouseLeave={handleSuggestedTitle} />
                     </div>
@@ -241,9 +242,9 @@ export default function AddSourcePopup(props) {
                     <div id={'suggested-title'} className={'houshcka_demibold'} onClick={handleUseSuggestedTitle}>
                         {suggestedTitle !== "" ? "use suggested title: " + suggestedTitle : ""}
                     </div>
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', float: 'right', width: '34.6vw', marginTop: '-16.2vw'}}>notes</div>
+                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', float: 'right', width: '34.6vw', marginTop: '-14.7vw'}}>notes</div>
                     <Scrollbars
-                        style={{float: 'right', width: '32vw', marginTop: '-13.8vw', height: '23vw', marginRight: '2.7vw'}}
+                        style={{float: 'right', width: '32vw', marginTop: '-12.3vw', height: '25vw', marginRight: '2.7vw'}}
                         //id='source_scroll_div'
                         thumbYProps={{ className: "thumbY" }}
                         trackXProps={{ className: "trackX" }}
@@ -253,7 +254,11 @@ export default function AddSourcePopup(props) {
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginLeft: '4.2vw', marginTop: '2vw'}}>class</div>
                     <select id={'cat-select'} className={'new-source-inputs'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} name={'parent_cat_select'} onChange={handleInputChange}>
                         {props.categories.map((category, index) => {
-                            return (<option id={index} className={'select-options'} value={category._id}>{category.category_name}</option>)
+                            if (props.currCatIndex === index) {
+                                return (<option id={index} selected={'selected'} className={'select-options'} value={category._id}>{category.category_name}</option>);
+                            } else {
+                                return (<option id={index} className={'select-options'} value={category._id}>{category.category_name}</option>);
+                            }
                         })}
                     </select>
                     <Button className={classes.submitButton} onClick={handleSubmit}>add source</Button>

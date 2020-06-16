@@ -185,31 +185,6 @@ export default function AddCategoryPopup(props) {
                         <input id={'new-cat-name'} className={'new-cat-inputs'} name={'cat_name'} value={catName} onChange={handleInputChange} />
                     </div>
                     <div className={'houshcka_medium'} style={{fontSize: '13pt', marginTop: '20px', marginLeft: '77px'}}>parent class</div>
-                    {/*<FormControl className={classes.formControl}>*/}
-                    {/*    <Select*/}
-                    {/*        labelId="demo-simple-select-label"*/}
-                    {/*        id="demo-simple-select"*/}
-                    {/*        value={parentName}*/}
-                    {/*        name={'parent_cat_select'}*/}
-                    {/*        variant={'outlined'}*/}
-                    {/*        onChange={handleInputChange}*/}
-                    {/*        className={classes.selectInput}*/}
-                    {/*    >*/}
-                    {/*        <Scrollbars*/}
-                    {/*            style={{ width: '340px', height: '100px' }}*/}
-                    {/*            //id='source_scroll_div'*/}
-                    {/*            thumbYProps={{ className: "thumbY" }}*/}
-                    {/*            trackXProps={{ className: "trackX" }}*/}
-                    {/*        >*/}
-                    {/*            <MenuItem id={-1} className={'select-options'} value={-1}>no parent</MenuItem>*/}
-                    {/*            {props.categories.map((category, index) => {*/}
-                    {/*                return (<MenuItem className={'select-options'} name={category.category_name} value={category._id}>*/}
-                    {/*                    {category.category_name}*/}
-                    {/*                </MenuItem>);*/}
-                    {/*            })}*/}
-                    {/*        </Scrollbars>*/}
-                    {/*    </Select>*/}
-                    {/*</FormControl>*/}
                     <select id={'parent-cat-select'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} className={'new-cat-inputs'} name={'parent_cat_select'} onChange={handleInputChange}>
                         <option id={-1} className={'select-options'} value={-1}>no parent</option>
                         {props.categories.map((category, index) => {
