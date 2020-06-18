@@ -451,8 +451,8 @@ body {
 }
 
 #add-category-div {
-    height: 500px;
-    width: 500px;
+    height: 37vw;
+    width: 37vw;
     background-image: url('images/add-category-back.png');
     background-size: cover;
     background-position: center;
@@ -475,9 +475,9 @@ body {
     font-family: houschka-rounded,sans-serif;
     font-weight: 600;
     font-style: normal;
-    font-size: 14pt;
+    font-size: 1.2vw;
     color: #854acc;
-    margin-left: 75px;
+    margin-left: 4.8vw;
     padding-left: 5px;
 }
 
@@ -497,19 +497,26 @@ body {
 }
 
 #new-cat-name {
-    width: 350px;
-    height: 45px;
+    width: 27.24vw;
+    height: 3vw;
 }
 
 #parent-cat-select {
-    width: 354px;
+    width: 27.9vw;
     overflow-y: auto;
-    padding-top: 11px;
-    padding-bottom: 11px;
-    margin-top: 1px;
+    padding-top: .8vw;
+    padding-bottom: 1vw;
+    margin-top: .5vw;
+    cursor: pointer;
 }
-#parent-cat-select:active, #parent-cat-select:hover {
-    outline: none
+#parent-cat-select:hover {
+    outline: none;
+    background-color: white;
+}
+
+#parent-cat-select:active {
+    outline: none;
+    background-color: white;
 }
 
 #cat-select {
@@ -530,7 +537,7 @@ body {
     font-family: houschka-rounded,sans-serif;
     font-weight: 500;
     font-style: normal;
-    font-size: 12pt;
+    font-size: 1.2vw;
     color: black;
     cursor: pointer;
 }

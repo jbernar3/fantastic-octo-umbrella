@@ -95,11 +95,13 @@ const useStyles = makeStyles(theme => ({
         fontFamily: 'houschka-rounded,sans-serif',
         fontWeight: 700,
         fontStyle: 'normal',
-        fontSize: '13pt',
+        fontSize: '1.3vw',
         color: '#a65cff',
         textTransform: 'none',
-        marginTop: '35px',
-        marginLeft: '212px'
+        marginTop: '4vw',
+        marginLeft: '14.9vw',
+        paddingLeft: '1.8vw',
+        paddingRight: '1.8vw'
     }
 }));
 
@@ -180,11 +182,11 @@ export default function AddCategoryPopup(props) {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <div id={'add-category-div'}>
-                    <div className={'houshcka_medium'} style={{fontSize: '13pt', marginTop: '170px', marginLeft: '77px'}}>name of class</div>
-                    <div style={{marginTop: '6px'}}>
+                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '10vw', marginLeft: '5vw'}}>name of class</div>
+                    <div style={{marginTop: '.5vw'}}>
                         <input id={'new-cat-name'} className={'new-cat-inputs'} name={'cat_name'} value={catName} onChange={handleInputChange} />
                     </div>
-                    <div className={'houshcka_medium'} style={{fontSize: '13pt', marginTop: '20px', marginLeft: '77px'}}>parent class</div>
+                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '3vw', marginLeft: '5vw'}}>parent class</div>
                     <select id={'parent-cat-select'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} className={'new-cat-inputs'} name={'parent_cat_select'} onChange={handleInputChange}>
                         <option id={-1} className={'select-options'} value={-1}>no parent</option>
                         {props.categories.map((category, index) => {
