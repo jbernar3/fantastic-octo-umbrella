@@ -41,6 +41,10 @@
     float: left;
 }
 
+#classes_clickable_div:hover {
+    color: #b780ff;
+}
+
 #add_class_div {
     font-family: houschka-rounded,sans-serif;
     font-weight: 500;
@@ -464,21 +468,21 @@ body {
 }
 
 .new-cat-inputs {
-    background-color: rgba(166, 92, 254, 0.09);
+    background-color: rgba(167, 93, 255, 0.15);
     outline: none;
     border-radius: 7px;
     border: none;
     font-family: houschka-rounded,sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-style: normal;
-    font-size: 15pt;
-    color: #a65cff;
+    font-size: 14pt;
+    color: #854acc;
     margin-left: 75px;
     padding-left: 5px;
 }
 
 .new-source-inputs {
-    background-color: rgba(166, 92, 254, 0.09);
+    background-color: rgba(167, 93, 255, 0.15);
     outline: none;
     border-radius: 7px;
     border: none;
@@ -486,7 +490,7 @@ body {
     font-weight: 500;
     font-style: normal;
     font-size: 1.2vw;
-    color: #a65cff;
+    color: #854acc;
     margin-left: 4vw;
     padding-left: .5vw;
     width: 30vw;
@@ -509,7 +513,7 @@ body {
 }
 
 #cat-select {
-    width: 30vw;
+    width: 30.6vw;
     overflow-y: auto;
     margin-top: .8vw;
     min-height: 3.5vw;

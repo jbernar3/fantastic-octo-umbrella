@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
         color: '#a65cff',
         textTransform: 'none',
         float: 'right',
-        marginTop: '10vw',
+        marginTop: '7.53vw',
         marginRight: '-19.5vw'
     }
 }));
@@ -198,9 +198,9 @@ export default function AddSourcePopup(props) {
         }
     };
 
-    const handleSuggestedTitle = () => {
+    const handleSuggestedTitle = async () => {
         if (sourceUrl.length > 4 && sourceUrl !== prevUrlChecked) {
-            console.log("About to send request");
+            await setSuggestedTitle('loading...');
             const xhr = new XMLHttpRequest();
             xhr.addEventListener('load', () => {
                 setSuggestedTitle(xhr.response);
@@ -240,11 +240,11 @@ export default function AddSourcePopup(props) {
                         <input name={'title'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceTitle} onChange={handleInputChange} />
                     </div>
                     <div id={'suggested-title'} className={'houshcka_demibold'} onClick={handleUseSuggestedTitle}>
-                        {suggestedTitle !== "" ? "use suggested title: " + suggestedTitle : ""}
+                        {suggestedTitle !== "use suggested title: " ? "use suggested title: " + suggestedTitle : ""}
                     </div>
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', float: 'right', width: '34.6vw', marginTop: '-14.7vw'}}>notes</div>
+                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', float: 'right', width: '34.6vw', marginTop: '-16.17vw'}}>notes</div>
                     <Scrollbars
-                        style={{float: 'right', width: '32vw', marginTop: '-12.3vw', height: '25vw', marginRight: '2.7vw'}}
+                        style={{float: 'right', width: '32vw', marginTop: '-13.77vw', height: '25vw', marginRight: '2.7vw'}}
                         //id='source_scroll_div'
                         thumbYProps={{ className: "thumbY" }}
                         trackXProps={{ className: "trackX" }}

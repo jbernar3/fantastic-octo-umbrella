@@ -29,6 +29,7 @@ const useStyles = makeStyles({
         fontFamily: 'houschka-rounded,sans-serif',
         fontWeight: 300,
         fontStyle: 'normal',
+        fontSize: '1vw',
         width: '67.5%',
         display: 'inline-block',
         height: '9vh',
