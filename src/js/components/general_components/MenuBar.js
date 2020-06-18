@@ -15,6 +15,8 @@ import IconButton from "@material-ui/core/IconButton";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Popper from "@material-ui/core/Popper";
 import Fade from "@material-ui/core/Fade";
+import Slide from "@material-ui/core/Slide";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,6 +32,18 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
         backgroundColor: '#a65cff',
+    },
+    popperButtons: {
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 600,
+        fontStyle: 'normal',
+        fontSize: '1.2vw',
+        textTransform: 'none',
+        color: 'white',
+        marginLeft: '.8vw',
+        marginTop: '-3px',
+        maxWidth: '2vw',
+        paddingLeft: '0vw'
     }
 }));
 
@@ -65,7 +79,7 @@ export default function MenuAppBar(props) {
         setOpenPopper(!openPopper);
     };
 
-    const basicMenuBar = (<React.Fragment>
+    const basicMenuBar = (
         <div className={classes.root}>
             <div position="static" className={classes.appBar} border={0}>
                 <Toolbar>
@@ -79,8 +93,6 @@ export default function MenuAppBar(props) {
                         <div>
                             <Tooltip title={"My Profile"} aria-label="add">
                                 <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff', marginRight: '2vh'}} onClick={handleGoToProfile} />
-                                {/*<ExitToAppIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={() => {props.logout()}} />*/}
-                                {/*<Avatar style={{cursor: 'pointer'}} src={auth2.getImage()} onClick={handleMenu}/>*/}
                             </Tooltip>
                             <Tooltip title={"Logout"}>
                                 <ExitToAppIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={handleClickLogout} />
@@ -88,16 +100,20 @@ export default function MenuAppBar(props) {
                         </div>
                     )}
                 </Toolbar>
+                <Popper id={'logout-popper'} open={openPopper} placement={'bottom-end'} transition>
+                    {({ TransitionProps }) => (
+                        <Slide direction="left" {...TransitionProps} timeout={350}>
+                            <div id={'logout-popper-div'}>
+                                <div style={{float: 'left', marginLeft: '24vw', marginTop: '1px'}}>Are you sure you want to logout?</div>
+                                <div className={'logout-popper-response'} style={{marginRight: '1.1vw'}} onClick={() => setOpenPopper(false)}>no</div>
+                                <div className={'logout-popper-response'} style={{marginRight: '.8vw'}} onClick={() => props.logout()}>yes</div>
+                            </div>
+                        </Slide>
+                    )}
+                </Popper>
             </div>
         </div>
-        <Popper id={'logout-popper'} open={openPopper} placement={'bottom-end'} transition>
-            {({ TransitionProps }) => (
-                <Fade {...TransitionProps} timeout={350}>
-                    <div style={{float:'right', width: '60px'}}>The content of the Popper.</div>
-                </Fade>
-            )}
-        </Popper>
-    </React.Fragment>);
+    );
 
     const homeMenuBar = (<React.Fragment>
         <div className={classes.root}>
