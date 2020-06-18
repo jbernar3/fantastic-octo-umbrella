@@ -404,7 +404,7 @@ body {
     font-family: houschka-rounded,sans-serif;
     font-weight: 600;
     font-style: normal;
-    font-size: 20pt;
+    font-size: 2vw;
     color: white;
     margin: 10% auto auto;
     text-align: center;
@@ -414,7 +414,7 @@ body {
     font-family: houschka-rounded,sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 13pt;
+    font-size: 1.5vw;
     color: white;
     margin: 1% auto auto;
     text-align: center;
@@ -447,7 +447,8 @@ body {
 
 #profile-div-change-btns {
     text-align: center;
-    margin-top: 3%;
+    width: 12vw;
+    margin: 5vw auto auto;
 }
 
 #add-category-div {
@@ -502,19 +503,14 @@ body {
 }
 
 #parent-cat-select {
-    width: 27.9vw;
+    width: 27.8vw;
     overflow-y: auto;
     padding-top: .8vw;
-    padding-bottom: 1vw;
+    padding-bottom: .8vw;
     margin-top: .5vw;
     cursor: pointer;
 }
-#parent-cat-select:hover {
-    outline: none;
-    background-color: white;
-}
-
-#parent-cat-select:active {
+#parent-cat-select:hover, #parent-cat-select:active {
     outline: none;
     background-color: white;
 }
@@ -524,10 +520,12 @@ body {
     overflow-y: auto;
     margin-top: .8vw;
     min-height: 3.5vw;
+    cursor: pointer;
 }
 
 #cat-select:active, #cat-select:hover {
-    outline: none
+    outline: none;
+    background-color: white;
 }
 
 .select-options {

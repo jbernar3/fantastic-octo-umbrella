@@ -80,6 +80,8 @@ class Home extends Component {
                 if (xhr.response === "error") {
                     console.log("handle get categories error");
                 } else {
+                    console.log("THIS IS GET CATEGORIES RESPONSE");
+                    console.log(JSON.parse(xhr.response));
                     this.setState({categories: JSON.parse(xhr.response)});
                 }
             });

@@ -17,7 +17,8 @@ const changeBtnStyle = {
     fontFamily: 'houschka-rounded,sans-serif',
     fontWeight: 600,
     fontStyle: 'normal',
-    fontSize: '1vw'
+    fontSize: '1.2vw',
+    textTransform: 'none'
 };
 
 class Profile extends React.Component {
@@ -68,7 +69,7 @@ class Profile extends React.Component {
                         <EditProfilePopup editOpen={this.state.editOpen} handleClose={() => {this.setState({editOpen: false})}}/>
                     </div>
                     <div className={'second-half-profile'}>
-                        <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} />
+                        <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} style={{marginTop: '5vw'}} />
                         <div id={'profile-display-name'}>Display Name</div>
                         <div id={'profile-email'}>pop_smoke@woo.com</div>
                         <div id={'profile-div-change-btns'}>

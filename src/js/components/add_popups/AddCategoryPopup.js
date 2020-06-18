@@ -11,6 +11,7 @@ import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
+import CloseIcon from '@material-ui/icons/Close';
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -182,6 +183,7 @@ export default function AddCategoryPopup(props) {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <div id={'add-category-div'}>
+                    <CloseIcon onClick={() => props.handleClose()} style={{fill: '#a65cff', width: '2vw', float: 'right', marginTop:  '1vw', marginRight: '1vw', cursor: 'pointer'}} />
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '10vw', marginLeft: '5vw'}}>name of class</div>
                     <div style={{marginTop: '.5vw'}}>
                         <input id={'new-cat-name'} className={'new-cat-inputs'} name={'cat_name'} value={catName} onChange={handleInputChange} />

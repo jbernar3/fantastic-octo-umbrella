@@ -11,6 +11,7 @@ import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
+import CloseIcon from "@material-ui/icons/Close";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
@@ -75,7 +76,7 @@ const useStyles = makeStyles(theme => ({
         color: '#a65cff',
         textTransform: 'none',
         float: 'right',
-        marginTop: '7.53vw',
+        marginTop: '7.8vw',
         marginRight: '-19.5vw'
     }
 }));
@@ -231,6 +232,7 @@ export default function AddSourcePopup(props) {
                 maxWidth={false}
             >
                 <div id={'add-source-div'}>
+                    <CloseIcon onClick={() => {props.handleClose(); resetInputs();}} style={{fill: '#a65cff', width: '2.4vw', float: 'right', marginTop:  '1.3vw', marginRight: '1.3vw', cursor: 'pointer'}} />
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '9vw', marginLeft: '4.2vw', width: '32.4vw'}}>website url</div>
                     <div style={{marginTop: '.8vw', width: '32.6vw'}}>
                         <input name={'url'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceUrl} onChange={handleInputChange} onMouseLeave={handleSuggestedTitle} />
