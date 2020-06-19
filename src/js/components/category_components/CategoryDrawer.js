@@ -153,7 +153,7 @@ export default function CategoryDrawer(props) {
                                                   onClick={() => {setIndexCurrCat(index);
                                                   document.getElementById('source_scroll_div').scrollTop =0;
                                                   props.setCurrCatIndex(index)}}>
-                                    <ListItemIcon><FolderIcon /></ListItemIcon>
+                                    <ListItemIcon><img alt={'folder-icon'} src={'src/images/parent-category-icon.png'} style={{width: 28}} /></ListItemIcon>
                                     <div className={'category_name_drawer'}>{category.category_name}</div>
                                 </ListItem>)
                             } else {
@@ -161,7 +161,7 @@ export default function CategoryDrawer(props) {
                                                   onClick={() => {setIndexCurrCat(index);
                                                   document.getElementById('source_scroll_div').scrollTop =0;
                                                   props.setCurrCatIndex(index);}}>
-                                    <ListItemIcon><FolderIcon /></ListItemIcon>
+                                    <ListItemIcon><img alt={'folder-icon'} src={'src/images/parent-category-icon.png'} style={{width: 28}} /></ListItemIcon>
                                     <div className={'category_name_drawer'}>{category.category_name}</div>
                                 </ListItem>)
                             }

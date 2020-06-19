@@ -78,7 +78,7 @@ export default function SourceCard(props) {
 
     const handleClick = (event, name) => {
         if (name === 'open-button') {
-            window.open('http://google.com','_blank');
+            window.open(source.url,'_blank');
             event.stopPropagation();
         }
         console.log(name);
