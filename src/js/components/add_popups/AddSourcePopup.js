@@ -88,6 +88,7 @@ export default function AddSourcePopup(props) {
     const [sourceNotes, setSourceNotes] = React.useState("");
     const [categoryID, setCategoryID] = React.useState(-1);
     const [suggestedTitle, setSuggestedTitle] = React.useState("");
+    const [suggestedTitleParam, setSuggestedTitleParam] = React.useState("");
     const [errorMsg, setErrorMsg] = React.useState("");
     const classes = useStyles();
 
@@ -112,6 +113,7 @@ export default function AddSourcePopup(props) {
         const eventValue = event.target.value;
         if (eventName === 'url') {
             setSourceUrl(eventValue);
+            setSuggestedTitleParam('');
             setSuggestedTitle('');
         } else if (eventName === 'title') {
             setSourceTitle(eventValue);
@@ -128,6 +130,8 @@ export default function AddSourcePopup(props) {
         setSourceUrl("");
         setSourceNotes("");
         setCategoryID(-1);
+        setSuggestedTitle("");
+        setSuggestedTitleParam("");
     };
 
     const handleGetImage = (categoryID, globalSourceID, sourceID) => {
@@ -163,7 +167,8 @@ export default function AddSourcePopup(props) {
                 categoryID: categoryIDSubmit,
                 url: sourceUrl,
                 sourceTitle: sourceTitle,
-                sourceNotes: sourceNotes
+                sourceNotes: sourceNotes,
+                suggestedTitle: suggestedTitleParam
             };
 
             const xhr = new XMLHttpRequest();
@@ -205,8 +210,11 @@ export default function AddSourcePopup(props) {
             await setSuggestedTitle('loading...');
             const xhr = new XMLHttpRequest();
             xhr.addEventListener('load', () => {
-                setSuggestedTitle(xhr.response);
-                setPrevUrlChecked(sourceUrl);
+                if (props.popupOpen) {
+                    setSuggestedTitle(xhr.response);
+                    setPrevUrlChecked(sourceUrl);
+                    setSuggestedTitleParam(xhr.response);
+                }
             });
             xhr.open('POST', 'http://localhost:3000/get_suggested_title', true);
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -227,6 +235,7 @@ export default function AddSourcePopup(props) {
                 open={props.popupOpen}
                 TransitionComponent={Transition}
                 keepMounted
+                onOpen={() => resetInputs()}
                 onClose={() => {props.handleClose(); resetInputs();}}
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
