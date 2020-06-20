@@ -608,3 +608,8 @@ body {
     color: #b780ff;
 }
 
+#suggested-title-loading {
+    width: 20vw;
+    margin-left: 4vw;
+}
+

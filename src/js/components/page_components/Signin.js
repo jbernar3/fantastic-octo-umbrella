@@ -121,7 +121,7 @@ function SignInSide(props) {
             } else {
                 setErrorMsg("");
                 const user = JSON.parse(xhr.response);
-                props.onSignin(user._id, user.email, user.first_name, user.last_name);
+                props.onSignin(user._id, user.email, user.first_name, user.last_name, user.bio);
                 setUserCategories(user.categories);
                 setSignedIn(true);
             }

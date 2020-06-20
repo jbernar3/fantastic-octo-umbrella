@@ -89,6 +89,7 @@ export default function AddSourcePopup(props) {
     const [categoryID, setCategoryID] = React.useState(-1);
     const [suggestedTitle, setSuggestedTitle] = React.useState("");
     const [suggestedTitleParam, setSuggestedTitleParam] = React.useState("");
+    const [loadingSuggestedTitle, setLoadingSuggestedTitle] = React.useState(false);
     const [errorMsg, setErrorMsg] = React.useState("");
     const classes = useStyles();
 
@@ -115,6 +116,7 @@ export default function AddSourcePopup(props) {
             setSourceUrl(eventValue);
             setSuggestedTitleParam('');
             setSuggestedTitle('');
+            setPrevUrlChecked('');
         } else if (eventName === 'title') {
             setSourceTitle(eventValue);
         } else if (eventName === 'notes') {
@@ -207,10 +209,11 @@ export default function AddSourcePopup(props) {
 
     const handleSuggestedTitle = async () => {
         if (sourceUrl.length > 4 && sourceUrl !== prevUrlChecked) {
-            await setSuggestedTitle('loading...');
+            await setLoadingSuggestedTitle(true);
             const xhr = new XMLHttpRequest();
-            xhr.addEventListener('load', () => {
+            xhr.addEventListener('load', async () => {
                 if (props.popupOpen) {
+                    await setLoadingSuggestedTitle(false);
                     setSuggestedTitle(xhr.response);
                     setPrevUrlChecked(sourceUrl);
                     setSuggestedTitleParam(xhr.response);
@@ -251,9 +254,10 @@ export default function AddSourcePopup(props) {
                     <div style={{marginTop: '.8vw', width: '32.6vw'}}>
                         <input name={'title'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceTitle} onChange={handleInputChange} />
                     </div>
-                    <div id={'suggested-title'} className={'houshcka_demibold'} onClick={handleUseSuggestedTitle}>
+                    {loadingSuggestedTitle ? <img id={'suggested-title-loading'} src={'src/images/loadingroll.gif'} alt={'loading roll gif'} /> :
+                        <div id={'suggested-title'} className={'houshcka_demibold'} onClick={handleUseSuggestedTitle}>
                         {suggestedTitle !== "use suggested title: " ? "use suggested title: " + suggestedTitle : ""}
-                    </div>
+                    </div>}
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', float: 'right', width: '34.6vw', marginTop: '-16.17vw'}}>notes</div>
                     <Scrollbars
                         style={{float: 'right', width: '32vw', marginTop: '-13.77vw', height: '25vw', marginRight: '2.7vw'}}

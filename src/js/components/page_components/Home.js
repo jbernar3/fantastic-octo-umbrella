@@ -133,7 +133,7 @@ function mapStateToProps(state) {
     return {
         userID: state.signin.userID,
         firstName: state.signin.firstName,
-        indexDisplayCategory: state.signin.indexDisplayCategory
+        lastName: state.signin.lastName,
     }
 }
 

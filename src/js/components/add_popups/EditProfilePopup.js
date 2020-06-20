@@ -66,13 +66,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function EditProfilePopup(props) {
-    const [updatedFName, setFName] = React.useState("Pop");
-    const [updatedLName, setLName] = React.useState("Smoke");
-    const [updatedBio, setBio] = React.useState("Bashar Barakah Jackson (July 20, 1999 – February 19, 2020),[4][2] known professionally as Pop Smoke,\n" +
-        "                                was an American rapper and songwriter. He was signed to Victor Victor Worldwide and Republic Records.\n" +
-        "                                Pop Smoke rose to popularity for leading the Brooklyn drill sound.[6] In April 2019, he released the song \"Welcome to the Party\",[7] the lead single of his debut mixtape Meet the Woo, which was released in July 2019. \"Welcome to the Party\" was made into two remixes featuring American rapper Nicki Minaj and British rapper Skepta in August 2019.[8]\n" +
-        "\n" +
-        "                                In October 2019, he featured American rapper Lil Tjay on his single \"War\". In December 2019, he featured American rapper Calboy on his single \"100k on a Coupe\" and also collaborated with Travis Scott a few weeks later on the song \"Gatti\", from Scott and his Cactus Jack member");
+    const [updatedFName, setFName] = React.useState(props.firstName);
+    const [updatedLName, setLName] = React.useState(props.lastName);
+    const [updatedBio, setBio] = React.useState(props.bio);
     const classes = useStyles();
     const InputProps = {
         classes: {
@@ -101,6 +97,28 @@ export default function EditProfilePopup(props) {
         } else if (eventName === "bio") {
             setBio(eventValue);
         }
+    };
+
+    const handleSubmit = () => {
+        const postParameters = {
+            userID: props.userID,
+            firstName: updatedFName,
+            lastName: updatedLName,
+            bio: updatedBio
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', () => {
+            if (xhr.response.includes("ERROR:")) {
+                console.log("handle edit profile error");
+            } else if (xhr.response === "success") {
+                props.handleClose();
+                props.editProfile(updatedFName, updatedLName, updatedBio);
+            }
+        });
+        xhr.open('POST', 'http://localhost:3000/edit_profile', false);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(postParameters));
     };
 
     return (
@@ -145,7 +163,7 @@ export default function EditProfilePopup(props) {
                         <TextField className={classes.textInput} InputProps={InputProps} name={'bio'} value={updatedBio} variant={'outlined'} multiline onChange={handleInputChange}
                                    style={{ width: '425px'}} />
                     </Scrollbars>
-                    <Button id={'update-profile-btn'}>Update Profile</Button>
+                    <Button id={'update-profile-btn'} onClick={handleSubmit}>Update Profile</Button>
                 </div>
             </Dialog>
         </div>
