@@ -265,7 +265,7 @@ export default function AddSourcePopup(props) {
                         thumbYProps={{ className: "thumbY" }}
                         trackXProps={{ className: "trackX" }}
                     >
-                        <textarea id={'new-notes-textarea'} name={'notes'} value={sourceNotes} onChange={handleInputChange} onInput={handleOnInput} />
+                        <textarea id={'source-notes-textarea'} className={'scrollable-textarea'} name={'notes'} value={sourceNotes} onChange={handleInputChange} onInput={handleOnInput} />
                     </Scrollbars>
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginLeft: '4.2vw', marginTop: '2vw'}}>class</div>
                     <select id={'cat-select'} className={'new-source-inputs'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} name={'parent_cat_select'} onChange={handleInputChange}>

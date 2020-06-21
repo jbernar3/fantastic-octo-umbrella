@@ -14,7 +14,8 @@ export const INITIAL_STATE = {
     email: "",
     firstName: "",
     lastName: "",
-    bio: ""
+    bio: "",
+    username: ""
 };
 
 
@@ -22,8 +23,8 @@ export const INITIAL_STATE = {
  * action creators
  */
 
-export function signinUser(userID, email, firstName, lastName, bio) {
-    return { type: SIGNIN_USER, userID, email, firstName, lastName, bio}
+export function signinUser(userID, email, firstName, lastName, bio, username) {
+    return { type: SIGNIN_USER, userID, email, firstName, lastName, bio, username}
 }
 
 export function signoutUser() {

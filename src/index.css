@@ -320,11 +320,24 @@ body {
 }
 
 #edit-profile-popup {
-    height: 550px;
-    width: 550px;
+    height: 42vw;
+    width: 42vw;
     background-image: url('images/edit-profile-back2.png');
     background-size: cover;
     background-position: center;
+}
+
+#new-fname {
+    width: 14.2vw;
+    height: 3.2vw;
+    margin-left: 4.5vw;
+}
+
+#new-lname {
+    width: 14.2vw;
+    height: 3.2vw;
+    float: right;
+    margin-right: 4.5vw;
 }
 
 #edit-profile-input-div {
@@ -354,20 +367,22 @@ body {
     font-family: houschka-rounded,sans-serif;
     font-weight: 500;
     font-style: normal;
-    font-size: 13pt;
+    font-size: 1.4vw;
     color: #545454;
-    margin-top: 15px;
-    width: 100px;
+    margin-top: 1vw;
+    width: 10vw;
 }
 
 #bio-input-profile-description {
     font-family: houschka-rounded,sans-serif;
     font-weight: 500;
     font-style: normal;
-    font-size: 13pt;
+    font-size: 1.4vw;
     color: #545454;
-    margin-top: 15px;
-    width: 400px;
+    margin-top: 1.2vw;
+    width: 15vw;
+    float: left;
+    margin-left: 4.6vw;
 }
 
 #edit-bio-input {
@@ -389,13 +404,13 @@ body {
 }
 
 #update-profile-btn {
-    padding-top: 3px;
-    margin-top: 6px;
-    margin-left: 193px;
+    /*padding-top: 3px; */
+    margin-top: 0;
+    margin-left: 15.5vw;
     font-family: houschka-rounded,sans-serif;
     font-weight: 600;
     font-style: normal;
-    font-size: 15pt;
+    font-size: 1.5vw;
     text-transform: none;
     color: #a65cff;
 }
@@ -478,7 +493,6 @@ body {
     font-style: normal;
     font-size: 1.2vw;
     color: #854acc;
-    margin-left: 4.8vw;
     padding-left: 5px;
 }
 
@@ -500,6 +514,7 @@ body {
 #new-cat-name {
     width: 27.24vw;
     height: 3vw;
+    margin-left: 4.8vw;
 }
 
 #parent-cat-select {
@@ -509,6 +524,7 @@ body {
     padding-bottom: .8vw;
     margin-top: .5vw;
     cursor: pointer;
+    margin-left: 4.8vw;
 }
 #parent-cat-select:hover, #parent-cat-select:active {
     outline: none;
@@ -558,8 +574,18 @@ body {
     text-decoration: underline;
 }
 
-#new-notes-textarea {
-    background-color: rgba(166, 92, 254, 0.09);
+#source-notes-textarea {
+    width: 30vw;
+    min-height: 22vw;
+}
+
+#bio-textarea {
+    width: 32vw;
+    min-height: 11.3vw;
+}
+
+.scrollable-textarea {
+    background-color: rgba(167, 93, 255, 0.15);
     border: none;
     border-radius: 7px;
     outline: none;
@@ -568,8 +594,6 @@ body {
     font-style: normal;
     font-size: 1.2vw;
     color: #a65cff;
-    width: 30vw;
-    min-height: 22vw;
     padding: .5vw;
     resize: none;
 }

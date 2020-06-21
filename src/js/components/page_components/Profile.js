@@ -68,8 +68,8 @@ class Profile extends React.Component {
                     </div>
                     <div className={'second-half-profile'}>
                         <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} style={{marginTop: '5vw'}} />
-                        <div id={'profile-display-name'}>Display Name</div>
-                        <div id={'profile-email'}>pop_smoke@woo.com</div>
+                        <div id={'profile-display-name'}>{this.props.username}</div>
+                        <div id={'profile-email'}>{this.props.email}</div>
                         <div id={'profile-div-change-btns'}>
                             <Button style={changeBtnStyle}>change email</Button>
                             <Button style={changeBtnStyle}>change password</Button>
@@ -82,11 +82,15 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state) {
+    console.log("IN MAP STATE PROPS");
+    console.log(state.signin.username);
     return {
         userID: state.signin.userID,
+        email: state.signin.email,
         firstName: state.signin.firstName,
         lastName: state.signin.lastName,
-        bio: state.signin.bio
+        bio: state.signin.bio,
+        username: state.signin.username
     }
 }
 
