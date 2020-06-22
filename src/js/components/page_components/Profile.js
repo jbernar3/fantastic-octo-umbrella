@@ -11,6 +11,7 @@ import Dialog from "@material-ui/core/Dialog";
 import EditProfilePopup from "../add_popups/EditProfilePopup";
 import Redirect from "react-router-dom/es/Redirect";
 import {makeStyles} from "@material-ui/core/styles";
+import ChangePasswordPopup from "../add_popups/ChangePasswordPopup";
 
 const changeBtnStyle = {
     color: 'white',
@@ -26,7 +27,8 @@ class Profile extends React.Component {
         super(props);
         this.state = {
             editOpen: false,
-            goHome: false
+            goHome: false,
+            changePwdOpen: false
         };
     }
 
@@ -72,10 +74,12 @@ class Profile extends React.Component {
                         <div id={'profile-email'}>{this.props.email}</div>
                         <div id={'profile-div-change-btns'}>
                             <Button style={changeBtnStyle}>change email</Button>
-                            <Button style={changeBtnStyle}>change password</Button>
+                            <Button onClick={() => this.setState({changePwdOpen: true})} style={changeBtnStyle}>change password</Button>
                         </div>
                         <div id={'num-classes-div'}>classes {numCategories}</div>
                         <div id={'num-sources-div'}>sources {numSources}</div>
+                        <ChangePasswordPopup userID={this.props.userID} changePwdOpen={this.state.changePwdOpen}
+                                             handleClose={() => {this.setState({changePwdOpen: false})}} />
                     </div>
                 </div>);
     }

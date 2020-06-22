@@ -87,6 +87,12 @@
     overflow: hidden;
 }
 
+.houshcka_bold {
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
 .houshcka_demibold {
     font-family: houschka-rounded,sans-serif;
     font-weight: 600;
@@ -635,5 +641,42 @@ body {
 #suggested-title-loading {
     width: 20vw;
     margin-left: 4vw;
+}
+
+#change-password-popup {
+    height: 42vw;
+    width: 42vw;
+    background-image: url('images/change-password.png');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.change-pwd-input {
+    width: 27.2vw;
+    height: 3.4vw;
+    margin-left: 7.4vw;
+}
+
+.show-hide-div {
+    float: right;
+    margin-right: 7.6vw;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1vw;
+    color: #a65cff;
+    cursor:pointer;
+    margin-top: .5vw;
+}
+
+.show-hide-div:hover {
+    text-decoration: underline;
+}
+
+#change-pwd-error-div {
+    text-align: center;
+    color: #ff1427;
+    margin-top:  2.5vw;
 }
 
