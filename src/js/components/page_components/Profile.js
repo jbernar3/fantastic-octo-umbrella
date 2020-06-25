@@ -86,8 +86,6 @@ class Profile extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log("IN MAP STATE PROPS");
-    console.log(state.signin.username);
     return {
         userID: state.signin.userID,
         email: state.signin.email,

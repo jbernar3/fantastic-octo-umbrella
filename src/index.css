@@ -680,3 +680,12 @@ body {
     margin-top:  2.5vw;
 }
 
+#verified-password-change {
+    height: 42vw;
+    width: 42vw;
+    background-image: url('images/verified-password-change.png');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+

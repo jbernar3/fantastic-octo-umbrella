@@ -81,13 +81,10 @@ export default function SignUp(props) {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             console.log(xhr.response);
-            if (xhr.response === "user exists") {
-                setErrorMsg("Email address already registered. Please sign in.");
-            } else if (xhr.response === "error") {
-                setErrorMsg("Error signing up. Please try again.");
-            } else {
+            if (xhr.response.substring(0, 5) === "ERROR:") {
+                setErrorMsg(xhr.response.substring(6));
+            } else if (xhr.response === "success") {
                 setErrorMsg("");
-                console.log(JSON.parse(xhr.response)._id);
                 setSignedUp(true);
             }
         });

@@ -121,8 +121,6 @@ function SignInSide(props) {
             } else {
                 setErrorMsg("");
                 const user = JSON.parse(xhr.response);
-                console.log("THIS IS USERNAME");
-                console.log(user.username);
                 props.onSignin(user._id, user.email, user.first_name, user.last_name, user.bio, user.username);
                 setUserCategories(user.categories);
                 setSignedIn(true);
