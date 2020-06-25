@@ -16,87 +16,44 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Zoom ref={ref} {...props} />;
 });
 
-// const useStyles = makeStyles(theme => ({
-//     textInput: {
-//         outline: 'none',
-//         borderRadius: '7px',
-//         backgroundColor: 'rgba(167,93,255,0.15)',
-//         borderStyle: 'solid'
-//     },
-//     outlinedRoot: {
-//         fontFamily: 'houschka-rounded,sans-serif',
-//         fontWeight: 500,
-//         fontStyle: 'normal',
-//         fontSize: '13pt',
-//         color: '#a65cff',
-//         paddingTop: '2px',
-//         paddingBottom: '2px',
-//         borderColor: '#ffffff',
-//         borderWidth: '1px',
-//         '&:hover $notchedOutline': {
-//             borderColor: '#a65cff',
-//             borderWidth: '1px'
-//         },
-//         '&$focused $notchedOutline': {
-//             borderColor: '#a65cff',
-//             borderWidth: '3px',
-//         },
-//     },
-//     outlinedRootShort: {
-//         fontFamily: 'houschka-rounded,sans-serif',
-//         fontWeight: 600,
-//         fontStyle: 'normal',
-//         fontSize: '13pt',
-//         color: '#a65cff',
-//         paddingTop: '2px',
-//         paddingBottom: '2px',
-//         borderColor: '#ffffff',
-//         borderWidth: '1px',
-//         height: '50px',
-//         '&:hover $notchedOutline': {
-//             borderColor: '#a65cff',
-//             borderWidth: '1px'
-//         },
-//         '&$focused $notchedOutline': {
-//             borderColor: '#a65cff',
-//             borderWidth: '3px',
-//         },
-//     },
-//     notchedOutline: {},
-//     focused: {},
-// }));
-
-const doneBtnStyle = {
-    backgroundColor: 'rgba(166, 92, 254, 0.09)',
-    borderRadius: '7px',
-    border: 'none',
-    fontFamily: 'houschka-rounded,sans-serif',
-    fontWeight: 700,
-    fontStyle: 'normal',
-    fontSize: '1.2vw',
-    color: '#a65cff',
-    textTransform: 'none',
-    marginTop: '36vw',
-    marginLeft: '17.5vw',
-    paddingLeft: '1.8vw',
-    paddingRight: '1.8vw'
-};
-
-const submitBtnStyle = {
-    backgroundColor: 'rgba(166, 92, 254, 0.09)',
-    borderRadius: '7px',
-    border: 'none',
-    fontFamily: 'houschka-rounded,sans-serif',
-    fontWeight: 700,
-    fontStyle: 'normal',
-    fontSize: '1.2vw',
-    color: '#a65cff',
-    textTransform: 'none',
-    marginTop: '2.5vw',
-    marginLeft: '14.35vw',
-    paddingLeft: '1.8vw',
-    paddingRight: '1.8vw'
-};
+const useStyles = makeStyles(theme => ({
+    doneBtnStyle: {
+        backgroundColor: 'rgba(166, 92, 254, 0.09)',
+        borderRadius: '7px',
+        border: 'none',
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 700,
+        fontStyle: 'normal',
+        fontSize: '1.2vw',
+        color: '#a65cff',
+        textTransform: 'none',
+        marginTop: '36vw',
+        marginLeft: '17.5vw',
+        paddingLeft: '1.8vw',
+        paddingRight: '1.8vw',
+        '&:hover': {
+            backgroundColor: 'rgba(166,92,254,0.2)'
+        }
+    },
+    submitBtnStyle: {
+        backgroundColor: 'rgba(166, 92, 254, 0.09)',
+        borderRadius: '7px',
+        border: 'none',
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 700,
+        fontStyle: 'normal',
+        fontSize: '1.2vw',
+        color: '#a65cff',
+        textTransform: 'none',
+        marginTop: '2.5vw',
+        marginLeft: '14.35vw',
+        paddingLeft: '1.8vw',
+        paddingRight: '1.8vw',
+        '&:hover': {
+            backgroundColor: 'rgba(166,92,254,0.2)'
+        }
+    }
+}));
 
 const closeIconStyle = {
     fill: '#a65cff',
@@ -116,6 +73,7 @@ export default function ChangePasswordPopup(props) {
     const [showConfirmPwd, setShowConfirmPwd] = React.useState(false);
     const [errorMsg, setErrorMsg] = React.useState("");
     const [showVerifConfirm, setShowVerifConfirm] = React.useState(false);
+    const classes = useStyles();
 
     const handleInputChange = (event) => {
         const eventName = event.target.name;
@@ -156,7 +114,6 @@ export default function ChangePasswordPopup(props) {
                 if (xhr.response.includes("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else if (xhr.response === "success") {
-                    // handleClose();
                     setShowVerifConfirm(true);
                 }
             });
@@ -184,7 +141,7 @@ export default function ChangePasswordPopup(props) {
             >
                 {showVerifConfirm ?
                     (<div id={'verified-password-change'}>
-                        <Button onClick={handleClose} style={doneBtnStyle}>done</Button>
+                        <Button onClick={handleClose} className={classes.doneBtnStyle}>done</Button>
                     </div>) : (<div id={'change-password-popup'}>
                         <CloseIcon onClick={handleClose} style={closeIconStyle} />
                         <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '12vw', marginLeft: '7.5vw'}}>
@@ -218,7 +175,7 @@ export default function ChangePasswordPopup(props) {
                             }
                         </div>
                         {errorMsg !== "" ? <div id={'change-pwd-error-div'} className={'houshcka_demibold'}>{errorMsg}</div> :
-                            <Button onClick={handleSubmit} style={submitBtnStyle}>change password</Button>}
+                            <Button onClick={handleSubmit} className={classes.submitBtnStyle}>change password</Button>}
                     </div>)}
             </Dialog>
         </div>

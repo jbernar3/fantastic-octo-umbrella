@@ -7,6 +7,7 @@ export const SIGNOUT_USER = 'SIGNOUT_USER';
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const CHANGE_DISPLAY_CATEGORY = 'CHANGE_DISPLAY_CATEGORY';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+export const UPDATE_EMAIL = 'UPDATE_EMAIL';
 
 export const INITIAL_STATE = {
     type: SIGNIN_USER,
@@ -41,4 +42,8 @@ export function changeDisplayCategory(index) {
 
 export function editProfile(firstName, lastName, bio) {
     return {type: EDIT_PROFILE, firstName, lastName, bio}
+}
+
+export function updateEmail(email) {
+    return {type: UPDATE_EMAIL, email}
 }
