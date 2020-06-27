@@ -755,4 +755,54 @@ body {
     font-size: 1.2vw;
 }
 
+#forgot-password-popup {
+    height: 31vw;
+    width: 55vw;
+    background-image: url('images/forgot-password.png');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+#forgot-pwd-email-div {
+    margin-left: 14vw;
+    margin-top: 14vw;
+}
+
+#email-input-forgot-pwd {
+    background-color: rgba(167, 93, 255, 0.15);
+    outline: none;
+    border-radius: 7px;
+    border: none;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 1.5vw;
+    height: 3.5vw;
+    width: 27vw;
+    color: #854acc;
+    padding-left: 5px;
+    margin:  0 auto;
+    display: block;
+}
+
+#forgot-pwd-err {
+    color: #ff1427;
+    text-align: center;
+    font-size: 1.2vw;
+    margin-top: 3.8vw;
+}
+
+#confirm-div-forgot-pwd {
+    float: right;
+    width: 55vw;
+    text-align: center;
+    margin-top: 13vw;
+    font-size: 1.5vw;
+}
+
+#email-confirm-div-forgot-pwd {
+    color: #a65cff;
+}
+
 

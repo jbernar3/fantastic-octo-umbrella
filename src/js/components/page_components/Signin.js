@@ -21,6 +21,7 @@ import backgroundImg from "../../../images/signup-back.jpg"
 import VerificationCodePopup from "../add_popups/VerificationCodePopup";
 import Dialog from "@material-ui/core/Dialog";
 import Zoom from "@material-ui/core/Zoom";
+import ForgotPwdPopup from "../add_popups/ForgotPwdPopup";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Zoom ref={ref} {...props} />;
@@ -98,6 +99,7 @@ function SignInSide(props) {
     const [showVerification, setShowVerification] = React.useState(false);
     const [verifyEmail, setVerifyEmail] = React.useState("");
     const [userNeedVerify, setUserNeedVerify] = React.useState(null);
+    const [showForgotPwd, setShowForgotPwd] = React.useState(false);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -182,8 +184,8 @@ function SignInSide(props) {
 
                         <br /><br />
                         {errorMsg !== "" ? <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "35px"}}>{"Incorrect Username or Password. Forgot password?"}</Link> :
-                            <Link href="/#/signup" variant="body2" style={{color: "#ffffff"}}>
-                                <div className={"houshcka_demibold"} style={{marginLeft: "138px"}}>Forgot password?</div>
+                            <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff"}}>
+                                <div className={"houshcka_demibold"} style={{marginLeft: "138px", cursor: 'pointer'}}>Forgot password?</div>
                             </Link>}
 
                     </Grid>
@@ -210,6 +212,17 @@ function SignInSide(props) {
                 maxWidth={false}
             >
                 <VerificationCodePopup userID={userNeedVerify === null ? null : userNeedVerify._id} email={verifyEmail} handleClose={handleClose} onSuccess={() => handleSignin(userNeedVerify)} />
+            </Dialog>
+            <Dialog
+                open={showForgotPwd}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => setShowForgotPwd(false)}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+                maxWidth={false}
+            >
+                <ForgotPwdPopup handleClose={() => setShowForgotPwd(false)} />
             </Dialog>
         </div>
     );
