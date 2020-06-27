@@ -714,9 +714,45 @@ body {
 #verify-code-popup {
     height: 42vw;
     width: 42vw;
-    background-image: url('images/change-email-popup.png');
+    background-image: url('images/verify-popup.png');
     background-size: cover;
     background-position: center;
     overflow: hidden;
 }
+
+#code-input {
+    background-color: rgba(167, 93, 255, 0.15);
+    outline: none;
+    border-radius: 7px;
+    border: none;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 1.8vw;
+    height: 4vw;
+    width: 10vw;
+    color: #854acc;
+    padding-left: 5px;
+    margin:  5vw auto;
+    display: block;
+    text-align: center;
+}
+
+#message-verification-div {
+    color: black;
+    text-align: center;
+    margin-top: 12vw;
+}
+
+#email-verification-div {
+    color: #a65cff;
+    text-align: center;
+}
+
+#verification-err-div {
+    color: #ff1427;
+    text-align: center;
+    font-size: 1.2vw;
+}
+
 

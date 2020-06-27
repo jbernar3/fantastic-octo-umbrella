@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
+import Dialog from "@material-ui/core/Dialog";
+import VerificationCodePopup from "../add_popups/VerificationCodePopup";
+import Zoom from "@material-ui/core/Zoom";
+import {signinUser} from "../../../actions";
+import {connect} from "react-redux";
 
 function Copyright() {
     return (
@@ -44,7 +49,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignUp(props) {
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Zoom ref={ref} {...props} />;
+});
+
+function SignUp(props) {
     const classes = useStyles();
     const [fName, setFName] = React.useState("");
     const [lName, setLName] = React.useState("");
@@ -53,6 +62,9 @@ export default function SignUp(props) {
     const [wantsPromMsg, setWantsPromMsg] = React.useState(false);
     const [signedUp, setSignedUp] = React.useState(false);
     const [errorMsg, setErrorMsg] = React.useState("");
+    const [showVerification, setShowVerification] = React.useState(false);
+    const [verifyEmail, setVerifyEmail] = React.useState("");
+    const [userNeedVerify, setUserNeedVerify] = React.useState(null);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -83,9 +95,11 @@ export default function SignUp(props) {
             console.log(xhr.response);
             if (xhr.response.substring(0, 5) === "ERROR:") {
                 setErrorMsg(xhr.response.substring(6));
-            } else if (xhr.response === "success") {
+            } else {
                 setErrorMsg("");
-                setSignedUp(true);
+                setVerifyEmail(email);
+                setShowVerification(true);
+                setUserNeedVerify(JSON.parse(xhr.response));
             }
         });
         xhr.open('POST', 'http://localhost:3000/signup', false);
@@ -93,11 +107,36 @@ export default function SignUp(props) {
         xhr.send(JSON.stringify(postParameters));
     };
 
+    const onSuccess = () => {
+        setSignedUp(true);
+        if (userNeedVerify !== null) {
+            props.onSignin(userNeedVerify._id, userNeedVerify.email, userNeedVerify.first_name,
+                userNeedVerify.last_name, userNeedVerify.bio, userNeedVerify.username);
+        }
+    };
+
+    const handleClose = () => {
+        setShowVerification(false);
+        setVerifyEmail("");
+    };
+
     if (signedUp) {
-        return (<Redirect to={"signin"} />)
+        return (<Redirect to={"home"} />)
     } else {
         return (
             <div id={"signup-container"}>
+                <Dialog
+                    open={showVerification}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                    maxWidth={false}
+                >
+                    {userNeedVerify !== null ? <VerificationCodePopup userID={userNeedVerify._id} email={verifyEmail} handleClose={handleClose} onSuccess={onSuccess} /> :
+                    ""}
+                </Dialog>
                 <div className={classes.root} style={{marginLeft: '59.7%', marginTop: '15%', alignContent: 'center'}}>
                     <Grid container spacing={3}>
                         <Grid container item xs={12} style={{marginLeft: '0vh'}}>
@@ -144,3 +183,30 @@ export default function SignUp(props) {
         );
     }
 }
+
+class SignupContainer extends Component {
+
+    render() {
+        return (<SignUp onSignin={this.props.onClick} auth={this.props.auth}/>)
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onClick: (userID, email, fName, lName, bio, username) => {
+            dispatch(signinUser(userID, email, fName, lName, bio, username))
+        }
+    };
+};
+
+function mapStateToProps(state) {
+    return {
+        auth: state.signin.email !== "",
+    }
+}
+
+
+const SignupBody = connect(mapStateToProps, mapDispatchToProps)(SignupContainer);
+
+export default SignupBody
+

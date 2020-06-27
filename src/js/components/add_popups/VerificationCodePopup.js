@@ -1,20 +1,7 @@
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Zoom from '@material-ui/core/Zoom';
 import React from "react";
-import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
-import Scrollbars from "react-scrollbars-custom";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import CloseIcon from "@material-ui/icons/Close";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Zoom ref={ref} {...props} />;
-});
 
 const useStyles = makeStyles(theme => ({
     submitBtnStyle: {
@@ -27,10 +14,10 @@ const useStyles = makeStyles(theme => ({
         fontSize: '1.2vw',
         color: '#a65cff',
         textTransform: 'none',
-        marginTop: '0',
-        marginLeft: '15.6vw',
+        margin: '5vw auto',
         paddingLeft: '1.8vw',
         paddingRight: '1.8vw',
+        display: 'block',
         '&:hover': {
             backgroundColor: 'rgba(166,92,254,0.2)'
         }
@@ -79,7 +66,7 @@ export default function VerificationCodePopup(props) {
                 if (xhr.response.includes("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else {
-                    setErrorMsg("success");
+                    resetInputs();
                     props.onSuccess(xhr.response)
                 }
             });
@@ -97,9 +84,11 @@ export default function VerificationCodePopup(props) {
     return (
         <div id={'verify-code-popup'}>
             <CloseIcon onClick={handleClose} style={closeIconStyle} />
-            <input name={'verify_code'} value={verifyCode} onChange={handleInputChange} style={{marginTop: '10vw'}} />
-            {errorMsg === "" ? <Button onClick={handleSubmit} className={classes.submitStyleBtn}>Submit</Button> :
-            <div>{errorMsg}</div>}
+            <div id={'message-verification-div'} className={'houshcka_demibold'}>Please enter the six-digit code sent to:</div>
+            <div id={'email-verification-div'} className={'houshcka_demibold'}>{props.email}.</div>
+            <input name={'verify_code'} id={'code-input'} value={verifyCode} onChange={handleInputChange} />
+            {errorMsg === "" ? <Button onClick={handleSubmit} className={classes.submitBtnStyle}>submit</Button> :
+            <div id={'verification-err-div'} className={'houshcka_demibold'}>{errorMsg}</div>}
         </div>
     );
 }

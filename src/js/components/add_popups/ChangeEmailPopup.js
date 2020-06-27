@@ -112,6 +112,11 @@ export default function ChangeEmailPopup(props) {
         resetInputs();
     };
 
+    const onSuccess = (email) => {
+        props.updateEmail(email);
+        handleClose();
+    };
+
     return (
         <div>
             <Dialog
@@ -123,7 +128,7 @@ export default function ChangeEmailPopup(props) {
                 aria-describedby="alert-dialog-slide-description"
                 maxWidth={false}
             >
-                {showVerifyCode ? <VerificationCodePopup userID={props.userID} handleClose={handleClose} onSuccess={(email) => props.updateEmail(email)} /> :
+                {showVerifyCode ? <VerificationCodePopup userID={props.userID} email={newEmail} handleClose={handleClose} onSuccess={onSuccess} /> :
                     <div id={'change-email-popup'}>
                         <CloseIcon onClick={handleClose} style={closeIconStyle} />
                         <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '14.5vw', marginLeft: '7.5vw'}}>

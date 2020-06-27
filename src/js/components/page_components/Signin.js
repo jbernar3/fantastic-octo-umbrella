@@ -18,6 +18,13 @@ import {signinUser} from "../../../actions";
 import {connect} from "react-redux";
 import {spacing} from "@material-ui/system"
 import backgroundImg from "../../../images/signup-back.jpg"
+import VerificationCodePopup from "../add_popups/VerificationCodePopup";
+import Dialog from "@material-ui/core/Dialog";
+import Zoom from "@material-ui/core/Zoom";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Zoom ref={ref} {...props} />;
+});
 
 function Copyright() {
     return (
@@ -88,6 +95,9 @@ function SignInSide(props) {
     const [errorMsg, setErrorMsg] = React.useState("");
     const [userCategories, setUserCategories] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
+    const [showVerification, setShowVerification] = React.useState(false);
+    const [verifyEmail, setVerifyEmail] = React.useState("");
+    const [userNeedVerify, setUserNeedVerify] = React.useState(null);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -100,6 +110,12 @@ function SignInSide(props) {
         }
     };
 
+    const handleClose = () => {
+        setShowVerification(false);
+        setUserNeedVerify(null);
+        setVerifyEmail("");
+    };
+
     const handleSubmit = () => {
         const postParameters = {
             email: email,
@@ -109,8 +125,6 @@ function SignInSide(props) {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             setLoading(false);
-            console.log("SET OFF");
-            console.log(loading);
             if (xhr.response === "dne") {
                 console.log("DNE");
                 setErrorMsg("Incorrect username or password.");
@@ -121,9 +135,15 @@ function SignInSide(props) {
             } else {
                 setErrorMsg("");
                 const user = JSON.parse(xhr.response);
-                props.onSignin(user._id, user.email, user.first_name, user.last_name, user.bio, user.username);
-                setUserCategories(user.categories);
-                setSignedIn(true);
+                console.log("This is user.");
+                console.log(user);
+                if (user.needsVerification) {
+                    setVerifyEmail(user.email);
+                    setShowVerification(true);
+                    setUserNeedVerify(user);
+                } else {
+                    handleSignin(user);
+                }
             }
         });
         xhr.open('POST', 'http://localhost:3000/signin', false);
@@ -131,10 +151,16 @@ function SignInSide(props) {
         xhr.send(JSON.stringify(postParameters));
     };
 
+    const handleSignin = (user) => {
+        props.onSignin(user._id, user.email, user.first_name, user.last_name, user.bio, user.username);
+        // setUserCategories(user.categories);
+        setSignedIn(true);
+    };
+
     if (signedIn || props.auth) {
         return (<Redirect to={{
             pathname: 'home',
-            state: { categories: userCategories }
+            // state: { categories: userCategories }
         }}/>);
 
     }
@@ -174,6 +200,17 @@ function SignInSide(props) {
                     </Grid>
                 </Grid>
             </div>
+            <Dialog
+                open={showVerification}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+                maxWidth={false}
+            >
+                <VerificationCodePopup userID={userNeedVerify === null ? null : userNeedVerify._id} email={verifyEmail} handleClose={handleClose} onSuccess={() => handleSignin(userNeedVerify)} />
+            </Dialog>
         </div>
     );
 }
