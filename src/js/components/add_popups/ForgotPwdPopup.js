@@ -84,7 +84,7 @@ export default function ForgotPwdPopup(props) {
                 </div> : <div>
                 <div id={'forgot-pwd-email-div'} className={'text-input-profile-description'}>email</div>
                 <input id={'email-input-forgot-pwd'} name={'email'} value={email} onChange={handleInputChange} />
-                {errMsg === "" ? <Button onClick={() => setShowConfirmation(true)} className={classes.submitBtnStyle}>done</Button> :
+                {errMsg === "" ? <Button onClick={handleSubmit} className={classes.submitBtnStyle}>done</Button> :
                     <div id={'forgot-pwd-err'} className={'houshcka_demibold'}>{errMsg}</div>}
                 </div>}
         </div>

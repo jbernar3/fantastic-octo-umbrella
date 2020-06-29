@@ -310,6 +310,11 @@ body {
     width: 65%;
 }
 
+#message-verification-div {
+    text-align: center;
+    font-size: 1.3vw;
+}
+
 .profile-description {
     margin: 0 auto auto;
     width: 90%;
@@ -371,9 +376,9 @@ body {
 
 .text-input-profile-description {
     font-family: houschka-rounded,sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-style: normal;
-    font-size: 1.4vw;
+    font-size: 1.2vw;
     color: #545454;
     margin-top: 1vw;
     width: 10vw;
@@ -381,9 +386,9 @@ body {
 
 #bio-input-profile-description {
     font-family: houschka-rounded,sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-style: normal;
-    font-size: 1.4vw;
+    font-size: 1.2vw;
     color: #545454;
     margin-top: 1.2vw;
     width: 15vw;
@@ -425,7 +430,7 @@ body {
     font-family: houschka-rounded,sans-serif;
     font-weight: 600;
     font-style: normal;
-    font-size: 2vw;
+    font-size: 2.4vw;
     color: white;
     margin: 10% auto auto;
     text-align: center;
@@ -435,7 +440,7 @@ body {
     font-family: houschka-rounded,sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 1.5vw;
+    font-size: 1.9vw;
     color: white;
     margin: 1% auto auto;
     text-align: center;
@@ -468,7 +473,7 @@ body {
 
 #profile-div-change-btns {
     text-align: center;
-    width: 12vw;
+    width: 15vw;
     margin: 5vw auto auto;
 }
 
@@ -508,7 +513,7 @@ body {
     border-radius: 7px;
     border: none;
     font-family: houschka-rounded,sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-style: normal;
     font-size: 1.2vw;
     color: #854acc;
@@ -742,11 +747,13 @@ body {
     color: black;
     text-align: center;
     margin-top: 12vw;
+    font-size: 1.2vw;
 }
 
 #email-verification-div {
     color: #a65cff;
     text-align: center;
+    font-size: 1.2vw;
 }
 
 #verification-err-div {
@@ -803,6 +810,21 @@ body {
 
 #email-confirm-div-forgot-pwd {
     color: #a65cff;
+}
+
+#num_classes_sources_div {
+    text-align: center;
+    margin-top: 1.5vw;
+}
+
+#add-source-error-div {
+    text-align: center;
+    width: 50%;
+    color: #ff1427;
+    margin-top: 8.5vw;
+    float: right;
+    font-size: 1.2vw;
+    margin-right: -34.2vw;
 }
 
 

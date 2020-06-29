@@ -112,6 +112,7 @@ export default function AddSourcePopup(props) {
     const handleInputChange = (event) => {
         const eventName = event.target.name;
         const eventValue = event.target.value;
+        setErrorMsg("");
         if (eventName === 'url') {
             setSourceUrl(eventValue);
             setSuggestedTitleParam('');
@@ -159,6 +160,8 @@ export default function AddSourcePopup(props) {
     const handleSubmit = () => {
         if (sourceUrl === "") {
             setErrorMsg("url is empty");
+        } else if (props.categories.length === 0) {
+            setErrorMsg("no category is selected");
         } else {
             let categoryIDSubmit = categoryID;
             if (categoryID === -1 && props.categories[props.currCatIndex] !== undefined) {
@@ -214,9 +217,13 @@ export default function AddSourcePopup(props) {
             xhr.addEventListener('load', async () => {
                 if (props.popupOpen) {
                     await setLoadingSuggestedTitle(false);
-                    setSuggestedTitle(xhr.response);
                     setPrevUrlChecked(sourceUrl);
-                    setSuggestedTitleParam(xhr.response);
+                    if (xhr.response.substring(0, 6) === 'ERROR:') {
+                        setSuggestedTitle('invalid url, please try again');
+                    } else {
+                        setSuggestedTitle(xhr.response);
+                        setSuggestedTitleParam(xhr.response);
+                    }
                 }
             });
             xhr.open('POST', 'http://localhost:3000/get_suggested_title', true);
@@ -246,19 +253,19 @@ export default function AddSourcePopup(props) {
             >
                 <div id={'add-source-div'}>
                     <CloseIcon onClick={() => {props.handleClose(); resetInputs();}} style={{fill: '#a65cff', width: '2.4vw', float: 'right', marginTop:  '1.3vw', marginRight: '1.3vw', cursor: 'pointer'}} />
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '9vw', marginLeft: '4.2vw', width: '32.4vw'}}>website url</div>
+                    <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', marginTop: '9vw', marginLeft: '4.2vw', width: '32.4vw'}}>website url</div>
                     <div style={{marginTop: '.8vw', width: '32.6vw'}}>
                         <input name={'url'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceUrl} onChange={handleInputChange} onMouseLeave={handleSuggestedTitle} />
                     </div>
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '2vw', marginLeft: '4.2vw', width: '32.4vw'}}>source title</div>
+                    <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', marginTop: '2vw', marginLeft: '4.2vw', width: '32.4vw'}}>source title</div>
                     <div style={{marginTop: '.8vw', width: '32.6vw'}}>
                         <input name={'title'} className={'new-source-inputs'} style={{height: '3.5vw'}} value={sourceTitle} onChange={handleInputChange} />
                     </div>
-                    {loadingSuggestedTitle ? <img id={'suggested-title-loading'} src={'src/images/loadingroll.gif'} alt={'loading roll gif'} /> :
+                    {loadingSuggestedTitle ? <div id={'suggested-title'}><img id={'suggested-title-loading'} src={'src/images/loadingroll.gif'} alt={'loading roll gif'} /></div> :
                         <div id={'suggested-title'} className={'houshcka_demibold'} onClick={handleUseSuggestedTitle}>
                         {suggestedTitle !== "use suggested title: " ? "use suggested title: " + suggestedTitle : ""}
                     </div>}
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', float: 'right', width: '34.6vw', marginTop: '-16.17vw'}}>notes</div>
+                    <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', float: 'right', width: '34.6vw', marginTop: '-16.17vw'}}>notes</div>
                     <Scrollbars
                         style={{float: 'right', width: '32vw', marginTop: '-13.77vw', height: '25vw', marginRight: '2.7vw'}}
                         //id='source_scroll_div'
@@ -267,7 +274,7 @@ export default function AddSourcePopup(props) {
                     >
                         <textarea id={'source-notes-textarea'} className={'scrollable-textarea'} name={'notes'} value={sourceNotes} onChange={handleInputChange} onInput={handleOnInput} />
                     </Scrollbars>
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginLeft: '4.2vw', marginTop: '2vw'}}>class</div>
+                    <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', marginLeft: '4.2vw', marginTop: '2vw'}}>class</div>
                     <select id={'cat-select'} className={'new-source-inputs'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} name={'parent_cat_select'} onChange={handleInputChange}>
                         {props.categories.map((category, index) => {
                             if (props.currCatIndex === index) {
@@ -277,7 +284,8 @@ export default function AddSourcePopup(props) {
                             }
                         })}
                     </select>
-                    <Button className={classes.submitButton} onClick={handleSubmit}>add source</Button>
+                    {errorMsg === "" ? <Button className={classes.submitButton} onClick={handleSubmit}>add source</Button> :
+                        <div id={'add-source-error-div'} className={'houshcka_demibold'}>{errorMsg}</div>}
                 </div>
             </Dialog>
         </div>

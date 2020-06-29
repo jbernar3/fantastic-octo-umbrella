@@ -184,11 +184,11 @@ export default function AddCategoryPopup(props) {
             >
                 <div id={'add-category-div'}>
                     <CloseIcon onClick={() => props.handleClose()} style={{fill: '#a65cff', width: '2vw', float: 'right', marginTop:  '1vw', marginRight: '1vw', cursor: 'pointer'}} />
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '10vw', marginLeft: '5vw'}}>name of class</div>
+                    <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', marginTop: '10vw', marginLeft: '5vw'}}>name of class</div>
                     <div style={{marginTop: '.5vw'}}>
                         <input id={'new-cat-name'} className={'new-cat-inputs'} name={'cat_name'} value={catName} onChange={handleInputChange} />
                     </div>
-                    <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '3vw', marginLeft: '5vw'}}>parent class</div>
+                    <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', marginTop: '3vw', marginLeft: '5vw'}}>parent class</div>
                     <select id={'parent-cat-select'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} className={'new-cat-inputs'} name={'parent_cat_select'} onChange={handleInputChange}>
                         <option id={-1} className={'select-options'} value={-1}>no parent</option>
                         {props.categories.map((category, index) => {

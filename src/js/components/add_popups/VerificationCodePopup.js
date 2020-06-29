@@ -85,7 +85,7 @@ export default function VerificationCodePopup(props) {
         <div id={'verify-code-popup'}>
             <CloseIcon onClick={handleClose} style={closeIconStyle} />
             <div id={'message-verification-div'} className={'houshcka_demibold'}>Please enter the six-digit code sent to:</div>
-            <div id={'email-verification-div'} className={'houshcka_demibold'}>{props.email}.</div>
+            <div id={'email-verification-div'} className={'houshcka_demibold'}>{props.email}</div>
             <input name={'verify_code'} id={'code-input'} value={verifyCode} onChange={handleInputChange} />
             {errorMsg === "" ? <Button onClick={handleSubmit} className={classes.submitBtnStyle}>submit</Button> :
             <div id={'verification-err-div'} className={'houshcka_demibold'}>{errorMsg}</div>}
