@@ -129,6 +129,7 @@ export default function AddSourcePopup(props) {
     };
 
     const resetInputs = () => {
+        setErrorMsg("");
         setSourceTitle("");
         setSourceUrl("");
         setSourceNotes("");

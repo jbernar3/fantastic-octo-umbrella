@@ -508,7 +508,7 @@ body {
 }
 
 .new-source-inputs {
-    background-color: rgba(167, 93, 255, 0.15);
+    background-color: rgba(167, 93, 255, 0.12);
     outline: none;
     border-radius: 7px;
     border: none;
@@ -596,7 +596,7 @@ body {
 }
 
 .scrollable-textarea {
-    background-color: rgba(167, 93, 255, 0.15);
+    background-color: rgba(167, 93, 255, 0.12);
     border: none;
     border-radius: 7px;
     outline: none;
@@ -604,7 +604,7 @@ body {
     font-weight: 500;
     font-style: normal;
     font-size: 1.2vw;
-    color: #a65cff;
+    color: #7d45c1;
     padding: .5vw;
     resize: none;
 }
@@ -815,6 +815,7 @@ body {
 #num_classes_sources_div {
     text-align: center;
     margin-top: 1.5vw;
+    color: #a7a7a7;
 }
 
 #add-source-error-div {
@@ -827,4 +828,34 @@ body {
     margin-right: -34.2vw;
 }
 
+#add-cat-error-div {
+    text-align: center;
+    color: #ff1427;
+    margin-top: 4.5vw;
+    font-size: 1.2vw;
+}
 
+#source-popup-div {
+    height: 43vw;
+    width: 73vw;
+    background-image: url('images/source-popup-back.png');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+#source-popup-title {
+    text-align: center;
+    color: #a65cff;
+    font-size: 1.5vw;
+    margin-top: 1.4vw;
+    margin-left: 3.7vw;
+    width: 70vw;
+}
+
+#source-popup-cat {
+    font-size: 1.2vw;
+    text-align: center;
+    margin-top: 4.8vw;
+    color: #a65cff;
+}

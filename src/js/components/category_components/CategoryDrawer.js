@@ -17,6 +17,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import FolderIcon from "@material-ui/icons/Folder";
 import SourceCard from "../source_components/SourceCard";
 import Scrollbars from "react-scrollbars-custom";
+import Dialog from "@material-ui/core/Dialog";
+import Slide from "@material-ui/core/Slide";
+import SourcePopup from "../add_popups/SourcePopup";
 
 const drawerWidth = 240;
 
@@ -81,12 +84,27 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="left" ref={ref} {...props} />;
+});
+
 export default function CategoryDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [indexCurrCat, setIndexCurrCat] = React.useState(0);
     const [categories, setCategories] = React.useState(props.categories);
+    const [openSourcePopup, setOpenSourcePopup] = React.useState(false);
+    const [sourcePopup, setSourcePopup] = React.useState(null);
     let scrollbars = null;
+
+    const handleOpenSourcePopup = async (source) => {
+        await setSourcePopup(source);
+        setOpenSourcePopup(true);
+    };
+
+    const handleCloseSourcePopup = () => {
+        setOpenSourcePopup(false);
+    };
 
     useEffect(() => {
         console.log("IN USE EFFECT FOR CATEGORY DRAWER");
@@ -183,10 +201,22 @@ export default function CategoryDrawer(props) {
                     trackXProps={{ className: "trackX" }}
                 >
                     {categories.length > 0 ? props.categories[indexCurrCat].sources.map((source, index) => (
-                        <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} />
+                        <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)} />
                     )) : "No sources"}
                 </Scrollbars>
             </main>
+            <Dialog
+                open={openSourcePopup}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleCloseSourcePopup}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+                maxWidth={false}
+            >
+                {props.categories[indexCurrCat] === undefined ? <SourcePopup source={sourcePopup} handleClose={handleCloseSourcePopup} /> :
+                    <SourcePopup categoryName={props.categories[indexCurrCat].category_name} source={sourcePopup} handleClose={handleCloseSourcePopup} />}
+            </Dialog>
         </div>
     );
 }

@@ -80,6 +80,8 @@ export default function SourceCard(props) {
         if (name === 'open-button') {
             window.open(source.url,'_blank');
             event.stopPropagation();
+        } else if (name === 'source-card') {
+            props.openSourcePopup();
         }
         console.log(name);
     };

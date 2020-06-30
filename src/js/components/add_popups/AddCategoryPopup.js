@@ -131,6 +131,7 @@ export default function AddCategoryPopup(props) {
     const handleInputChange = (event) => {
         const eventName = event.target.name;
         const eventValue = event.target.value;
+        setErrorMsg("");
         if (eventName === 'cat_name') {
             if (eventValue.length <= 20) {
                 setCatName(eventValue);
@@ -146,24 +147,28 @@ export default function AddCategoryPopup(props) {
 
 
     const handleSubmit = () => {
-        const postParameters = {
-            userID: props.userID,
-            catName: catName,
-            parentID: parentID
-        };
+        if (catName === "") {
+            setErrorMsg("category is name empty");
+        } else {
+            const postParameters = {
+                userID: props.userID,
+                catName: catName,
+                parentID: parentID
+            };
 
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener('load', () => {
-            console.log(xhr.response);
-            if (xhr.response.startsWith("ERROR:")) {
-                setErrorMsg(xhr.response.substring(6));
-            } else {
-                props.addNewCategory(JSON.parse(xhr.response));
-            }
-        });
-        xhr.open('POST', 'http://localhost:3000/new_category', false);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(postParameters));
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                console.log(xhr.response);
+                if (xhr.response.startsWith("ERROR:")) {
+                    setErrorMsg(xhr.response.substring(6));
+                } else {
+                    props.addNewCategory(JSON.parse(xhr.response));
+                }
+            });
+            xhr.open('POST', 'http://localhost:3000/new_category', false);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(postParameters));
+        }
     };
 
     const handleMouseDown = (event) => {
@@ -195,7 +200,8 @@ export default function AddCategoryPopup(props) {
                             return (<option className={'select-options'} key={index} value={category._id}>{category.category_name}</option>);
                         })}
                     </select>
-                    <Button id={'submit_new_class'} className={classes.submitButton} onClick={handleSubmit}>create</Button>
+                    {errorMsg === "" ? <Button id={'submit_new_class'} className={classes.submitButton} onClick={handleSubmit}>create</Button> :
+                        <div id={'add-cat-error-div'} className={'houshcka_demibold'}>{errorMsg}</div>}
                 </div>
             </Dialog>
         </div>
