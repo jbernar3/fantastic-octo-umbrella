@@ -43,7 +43,7 @@ export default function SourcePopup(props) {
     const getSourceImg = (source) => {
         if (source.source_urlImgFlag) {
             let styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
-                backgroundPosition: 'center', width: '27vw', height: '16vw', backgroundSize: 'cover', marginTop: '3vw',
+                backgroundPosition: 'center', width: '27vw', height: '15.2vw', backgroundSize: 'cover', marginTop: '3.8vw',
             marginLeft: '5vw'};
             return (<div style={styleImg}>
             </div>);
@@ -63,7 +63,7 @@ export default function SourcePopup(props) {
     };
 
     const beautifyDate = (date) => {
-        let output = "";
+        let output = "date added: ";
         console.log(date);
         const monthNum = date.substring(5, 7);
         if (monthNum === '01') {
@@ -95,17 +95,37 @@ export default function SourcePopup(props) {
         return output + date.substring(0,4);
     };
 
+    const handleClick = (name) => {
+        if (name === 'open-btn') {
+            window.open(props.source.url,'_blank');
+        }
+    };
+
     return (
         <div id={'source-popup-div'}>
             <CloseIcon onClick={props.handleClose}
-                       style={{fill: '#a65cff', width: '2.4vw', float: 'right', marginTop:  '1.3vw', marginRight: '1.3vw', cursor: 'pointer'}} />
+                       style={{fill: '#a65cff', width: '2.4vw', float: 'right', marginTop:  '1.5vw', marginRight: '1.3vw', cursor: 'pointer'}} />
             {props.source !== null ?
                 <React.Fragment>
                     <div id={'source-popup-title'} className={'houshcka_demibold'}>{props.source.source_name}</div>
                     {props.categoryName === undefined ? "" :
                         <div id={'source-popup-cat'} className={'houshcka_demibold'}>class: {props.categoryName}</div>}
                     {getSourceImg(props.source)}
-                    <div>{beautifyDate(props.source.date_added)}</div>
+                    <div id={'source-popup-date'} className={'houshcka_medium'}>{beautifyDate(props.source.date_added)}</div>
+                    <button id={'source-popup-open-src'} className={'houshcka_demibold open-src-button'}
+                            onClick={() => handleClick('open-btn')}>open source</button>
+                    <Scrollbars
+                        style={{ float: 'right', marginRight: '4vw', marginTop: '-19.2vw', height: '22vw', width: '28vw' }}
+                        id='source_scroll_div'
+                        ref={ref => (scrollbars = ref)}
+                        thumbYProps={{ className: "thumbY" }}
+                        trackXProps={{ className: "trackX" }}
+                    >
+                        <div id={'source-popup-source-notes'} className={'houshcka_medium'}>
+                            {props.source.source_notes === "" || props.source.source_notes === undefined ? "no source notes" :
+                                props.source.source_notes}
+                        </div>
+                    </Scrollbars>
                 </React.Fragment>
             : ""}
         </div>

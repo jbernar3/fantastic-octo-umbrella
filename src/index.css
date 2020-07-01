@@ -859,3 +859,42 @@ body {
     margin-top: 4.8vw;
     color: #a65cff;
 }
+
+#source-popup-date {
+    font-size: 1.1vw;
+    text-align: center;
+    margin-top: .8vw;
+    color: #a65cff;
+    margin-left: 5.1vw;
+    width: 26.9vw;
+}
+
+#source-popup-open-src {
+    margin-left: 14.9vw;
+    margin-top: 3vw;
+}
+
+.open-src-button {
+    border-style: solid;
+    border-color: #a65cff;
+    border-width: .15vw;
+    background-color: white;
+    color: #a65cff;
+    font-size: 1.1vw;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    padding: .5vw;
+}
+
+.open-src-button:hover {
+    background-color: rgba(167, 93, 255, 0.15);
+}
+
+#source-popup-source-notes {
+    width: 27vw;
+    float: left;
+    font-size: 1.1vw;
+    /*margin-top: -19.5vw;*/
+    /*margin-right: 5vw;*/
+}
