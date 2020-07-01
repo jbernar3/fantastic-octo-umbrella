@@ -30,6 +30,22 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const notesScrollStyle = {
+    float: 'right',
+    marginRight: '4vw',
+    marginTop: '-19.2vw',
+    height: '22vw',
+    width: '28vw'
+};
+
+const notesScrollStyleYoutube = {
+    float: 'right',
+    marginRight: '4vw',
+    marginTop: '-18vw',
+    height: '22vw',
+    width: '28vw'
+};
+
 export default function SourcePopup(props) {
     const classes = useStyles();
 
@@ -91,7 +107,7 @@ export default function SourcePopup(props) {
         } else if (monthNum === '12') {
             output += "December ";
         }
-        output += date.substring(8,10) + ", ";
+        output += date.substring(8,10) + " ";
         return output + date.substring(0,4);
     };
 
@@ -115,7 +131,7 @@ export default function SourcePopup(props) {
                     <button id={'source-popup-open-src'} className={'houshcka_demibold open-src-button'}
                             onClick={() => handleClick('open-btn')}>open source</button>
                     <Scrollbars
-                        style={{ float: 'right', marginRight: '4vw', marginTop: '-19.2vw', height: '22vw', width: '28vw' }}
+                        style={props.source.source_urlImgFlag ? notesScrollStyleYoutube : notesScrollStyle}
                         id='source_scroll_div'
                         ref={ref => (scrollbars = ref)}
                         thumbYProps={{ className: "thumbY" }}
