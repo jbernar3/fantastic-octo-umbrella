@@ -122,6 +122,16 @@ export default function SourceCard(props) {
         }
     };
 
+    const getSourceNotes = (source) => {
+        if (source.source_urlImgFlag && !source.has_user_notes) {
+            return <div id={'source-card-description'} dangerouslySetInnerHTML={{ __html: source.source_notes }} />
+        } else if (!source.has_user_notes) {
+            return <div id={'source-card-description'}>no source notes.</div>
+        } else {
+            return source.source_notes;
+        }
+    };
+
     return (
         <Card name={'source-card'} className={classes.root} style={{borderRadius: 6}} onClick={(event) => handleClick(event, 'source-card')}>
             <CardContent>
@@ -131,20 +141,24 @@ export default function SourceCard(props) {
                     <div className={'source_title'}>
                         {source.source_name.length > 75 ? source.source_name.substring(0, 75) + "..." : source.source_name}
                     </div>}
-
-                <Typography className={classes.description} variant="body2" component="p">
-                    On a narrow field surrounded by low-rise apartments, bus stops and a tangled
-                    ribbon of highway ramps, the camel scampered past lions, which leapt against their
-                    cage. It distracted the acrobats practicing their flips on an aerial hoop and
-                    sauntered toward the languid, pregnant tiger, and stalls of horses and African
-                    Watsui bulls.
-                </Typography>
+                <div id={'source-card-description'}>
+                    {getSourceNotes(source)}
+                </div>
+                {/*<Typography className={classes.description} variant="body2" component="p">*/}
+                {/*    On a narrow field surrounded by low-rise apartments, bus stops and a tangled*/}
+                {/*    ribbon of highway ramps, the camel scampered past lions, which leapt against their*/}
+                {/*    cage. It distracted the acrobats practicing their flips on an aerial hoop and*/}
+                {/*    sauntered toward the languid, pregnant tiger, and stalls of horses and African*/}
+                {/*    Watsui bulls.*/}
+                {/*</Typography>*/}
                 {getSourceImg(source)}
 
             </CardContent>
             <CardActions>
                 {/*<Button size="small" onClick={() => {window.open('http://google.com','_blank')}}>Open Source</Button>*/}
-                <Button size="small" onClick={(event) => handleClick(event,'open-button')}>Open Source</Button>
+                {/*<Button size="small" onClick={(event) => handleClick(event,'open-button')}>Open Source</Button>*/}
+                <button id={'source-card-open-src'} className={'houshcka_demibold open-src-button'}
+                        onClick={(event) => handleClick(event,'open-button')}>open source</button>
             </CardActions>
         </Card>
     );

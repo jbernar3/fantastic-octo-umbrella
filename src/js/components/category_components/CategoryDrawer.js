@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
+        // justifyContent: 'flex-end',
     },
     content: {
         flexGrow: 1,
@@ -95,6 +95,7 @@ export default function CategoryDrawer(props) {
     const [categories, setCategories] = React.useState(props.categories);
     const [openSourcePopup, setOpenSourcePopup] = React.useState(false);
     const [sourcePopup, setSourcePopup] = React.useState(null);
+    const [searchValue, setSearchValue] = React.useState("");
     let scrollbars = null;
 
     const handleOpenSourcePopup = async (source) => {
@@ -106,8 +107,11 @@ export default function CategoryDrawer(props) {
         setOpenSourcePopup(false);
     };
 
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
     useEffect(() => {
-        console.log("IN USE EFFECT FOR CATEGORY DRAWER");
         setCategories(props.categories);
     }, [props.categories]);
 
@@ -124,9 +128,7 @@ export default function CategoryDrawer(props) {
                     }}
                 >
                     <div className={classes.drawerHeader}>
-                        <IconButton onClick={() => console.log("yay i clicked an unnecessary button")}>
-                            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                        </IconButton>
+                        <input id={'cat-search-bar'} className={'houshcka_demibold'} value={searchValue} onChange={handleInputChange} />
                     </div>
                     <List/>
                 </Drawer>
@@ -154,9 +156,7 @@ export default function CategoryDrawer(props) {
                 }}
             >
                 <div className={classes.drawerHeader}>
-                    <IconButton onClick={() => console.log("yay i clicked an unnecessary button")}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
+                    <input id={'cat-search-bar'} className={'houshcka_demibold'} value={searchValue} onChange={handleInputChange} />
                 </div>
                 <Scrollbars
                     style={{width: drawerWidth, height: '73%' }}
@@ -166,22 +166,24 @@ export default function CategoryDrawer(props) {
                 >
                     <List>
                         {categories.map(function (category, index) {
-                            if (index === indexCurrCat) {
-                                return (<ListItem button key={index} name={index.toString()} style={{backgroundColor: 'rgba(166, 92, 254, 0.29)'}}
-                                                  onClick={() => {setIndexCurrCat(index);
-                                                  document.getElementById('source_scroll_div').scrollTop =0;
-                                                  props.setCurrCatIndex(index)}}>
-                                    <ListItemIcon><img alt={'folder-icon'} src={'src/images/parent-category-icon.png'} style={{width: 28}} /></ListItemIcon>
-                                    <div className={'category_name_drawer'}>{category.category_name}</div>
-                                </ListItem>)
-                            } else {
-                                return (<ListItem button key={index} name={index.toString()}
-                                                  onClick={() => {setIndexCurrCat(index);
-                                                  document.getElementById('source_scroll_div').scrollTop =0;
-                                                  props.setCurrCatIndex(index);}}>
-                                    <ListItemIcon><img alt={'folder-icon'} src={'src/images/parent-category-icon.png'} style={{width: 28}} /></ListItemIcon>
-                                    <div className={'category_name_drawer'}>{category.category_name}</div>
-                                </ListItem>)
+                            if (category.category_name.toLowerCase().includes(searchValue)) {
+                                if (index === indexCurrCat) {
+                                    return (<ListItem button key={index} name={index.toString()} style={{backgroundColor: 'rgba(166, 92, 254, 0.29)'}}
+                                                      onClick={() => {setIndexCurrCat(index);
+                                                          document.getElementById('source_scroll_div').scrollTop =0;
+                                                          props.setCurrCatIndex(index)}}>
+                                        <ListItemIcon><img alt={'folder-icon'} src={'src/images/parent-category-icon.png'} style={{width: 28}} /></ListItemIcon>
+                                        <div className={'category_name_drawer'}>{category.category_name}</div>
+                                    </ListItem>)
+                                } else {
+                                    return (<ListItem button key={index} name={index.toString()}
+                                                      onClick={() => {setIndexCurrCat(index);
+                                                          document.getElementById('source_scroll_div').scrollTop =0;
+                                                          props.setCurrCatIndex(index);}}>
+                                        <ListItemIcon><img alt={'folder-icon'} src={'src/images/parent-category-icon.png'} style={{width: 28}} /></ListItemIcon>
+                                        <div className={'category_name_drawer'}>{category.category_name}</div>
+                                    </ListItem>)
+                                }
                             }
                         }.bind(this))}
                     </List>

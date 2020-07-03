@@ -187,7 +187,7 @@ export default function AddSourcePopup(props) {
                     const newSource = JSON.parse(xhr.response);
                     await props.addNewSource(newSource, categoryIDSubmit);
                     await resetInputs();
-                    if (!newSource.source_urlImgFlag) {
+                    if (!newSource.source_urlImgFlag && newSource.source_img === undefined) {
                         setTimeout(function cb() {
                             handleGetImage(categoryIDSubmit, newSource.source_id, newSource._id);
                         }, 1000);

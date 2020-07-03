@@ -872,6 +872,12 @@ body {
 #source-popup-open-src {
     margin-left: 14.9vw;
     margin-top: 3vw;
+    font-size: 1.1vw;
+}
+
+#source-card-open-src {
+    margin-left: .5vw;
+    font-size: .8vw;
 }
 
 .open-src-button {
@@ -880,7 +886,6 @@ body {
     border-width: .15vw;
     background-color: white;
     color: #a65cff;
-    font-size: 1.1vw;
     border-radius: 5px;
     outline: none;
     cursor: pointer;
@@ -897,4 +902,29 @@ body {
     font-size: 1.1vw;
     /*margin-top: -19.5vw;*/
     /*margin-right: 5vw;*/
+}
+
+#source-card-description {
+    margin-top: 1%;
+    font-family: houschka-rounded,sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1vw;
+    width: 67.5%;
+    display: inline-block;
+    height: 9vh;
+    overflow: hidden;
+}
+
+#cat-search-bar {
+    float: left;
+    outline: none;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: .2vw;
+    border-color: #a65cff;
+    font-size: 11pt;
+    padding: 2px 5px;
+    margin-left: 30px;
+    margin-top: 13px;
 }

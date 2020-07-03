@@ -117,6 +117,17 @@ export default function SourcePopup(props) {
         }
     };
 
+    const getSourceNotes = (source) => {
+        if (source.source_urlImgFlag && !source.has_user_notes) {
+            return <div id={'source-popup-source-notes'} className={'houshcka_medium'} dangerouslySetInnerHTML={{ __html: props.source.source_notes }} />;
+        } else if (source.source_notes === undefined || source.source_notes === "") {
+            return <div id={'source-popup-source-notes'} className={'houshcka_medium'}>no source notes</div>;
+        }
+        return <div id={'source-popup-source-notes'} className={'houshcka_medium'}>
+            {source.source_notes}
+        </div>
+    };
+
     return (
         <div id={'source-popup-div'}>
             <CloseIcon onClick={props.handleClose}
@@ -137,10 +148,7 @@ export default function SourcePopup(props) {
                         thumbYProps={{ className: "thumbY" }}
                         trackXProps={{ className: "trackX" }}
                     >
-                        <div id={'source-popup-source-notes'} className={'houshcka_medium'}>
-                            {props.source.source_notes === "" || props.source.source_notes === undefined ? "no source notes" :
-                                props.source.source_notes}
-                        </div>
+                        {getSourceNotes(props.source)}
                     </Scrollbars>
                 </React.Fragment>
             : ""}
