@@ -31,13 +31,14 @@
     "html-webpack-plugin": "^4.3.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "clsx": "latest",
+    "clsx": "^1.1.1",
     "flatted": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-expand-animated": "^1.0.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scrollbars-custom": "^4.0.25",

@@ -82,6 +82,52 @@ class Home extends Component {
             } else {
                 console.log("THIS IS GET CATEGORIES RESPONSE");
                 console.log(JSON.parse(xhr.response));
+                const categories = JSON.parse(xhr.response);
+                const mapSubcategories = new Map();
+                const mapCategories = new Map();
+                const rootCategories = [];
+                categories.forEach((category) => {
+                    mapCategories.set(category._id, category);
+                    if (category.parent_id === '-1') {
+                        rootCategories.push(category._id);
+                    } else if (mapSubcategories.has(category.parent_id)) {
+                        const newSubCats = mapSubcategories.get(category.parent_id);
+                        newSubCats.push(category._id);
+                        mapSubcategories.set(category.parent_id, newSubCats);
+                    } else {
+                        mapSubcategories.set(category.parent_id, [category._id]);
+                    }
+                });
+                // let tempCats = categories;
+                // while (tempCats.length !== 0) {
+                //     let newTempCats = [];
+                //     tempCats.forEach((category) => {
+                //         if (category.parent_id === '-1') {
+                //             category.subcategories = new Map();
+                //             rootCategories.set(category._id, category);
+                //             mapParentIDs.set(category._id, category.parent_id);
+                //         } else if (mapParentIDs.has(category.parent_id)) {
+                //             category.subcategories = [];
+                //             mapParentIDs.set(category._id, category.parent_id);
+                //             const pathParents = [];
+                //             let parentCat = category.parent_id;
+                //             while (parentCat !== -1) {
+                //                 pathParents.push(parentCat);
+                //                 parentCat = mapParentIDs.get(parentCat);
+                //             }
+                //             const rootCat = rootCategories.get(pathParents[pathParents.length-1]);
+                //             let prevCat = rootCat;
+                //             for (let i=pathParents.length-2; i>=0; i--) {
+                //                 // get root category to change and add it back into the og map
+                //                 prevCat = prevCat.subcategories.get(pathParents[i]);
+                //             }
+                //         } else {
+                //             newTempCats.push(category);
+                //             console.log("PUSHED TO TEMP CATS");
+                //         }
+                //     });
+                //     tempCats = newTempCats;
+                // }
                 this.setState({categories: JSON.parse(xhr.response)});
             }
         });

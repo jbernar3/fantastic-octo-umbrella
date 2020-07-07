@@ -104,9 +104,9 @@ export default function MenuAppBar(props) {
                     {({ TransitionProps }) => (
                         <Slide direction="left" {...TransitionProps} timeout={350}>
                             <div id={'logout-popper-div'}>
-                                <div style={{float: 'left', marginLeft: '24vw', marginTop: '1px'}}>Are you sure you want to logout?</div>
                                 <div className={'logout-popper-response'} style={{marginRight: '2vw'}} onClick={() => setOpenPopper(false)}>no</div>
                                 <div className={'logout-popper-response'} style={{marginRight: '.8vw'}} onClick={() => props.logout()}>yes</div>
+                                <div style={{float: 'right', marginRight: '2.5vw', marginTop: '1.5px'}}>Are you sure you want to logout?</div>
                             </div>
                         </Slide>
                     )}

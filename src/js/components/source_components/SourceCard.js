@@ -83,7 +83,6 @@ export default function SourceCard(props) {
         } else if (name === 'source-card') {
             props.openSourcePopup();
         }
-        console.log(name);
     };
 
     useEffect(
@@ -93,12 +92,12 @@ export default function SourceCard(props) {
     const getSourceImg = (source) => {
         if (source.source_urlImgFlag) {
             let styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
-                backgroundPosition: 'center', height: '23vh', width: '27%', backgroundSize: 'cover', marginTop: '-2.5vh', float: 'right',
-                top: '50%', marginRight: '2.7%'};
+                backgroundPosition: 'center', height: '11.3vw', width: '18.5vw', backgroundSize: 'cover', marginTop: '-1.7vw', float: 'right',
+                marginRight: '1.45vw'};
             if (!props.drawerOpen) {
                 styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
-                    backgroundPosition: 'center', height: '23vh', width: '21.2%', backgroundSize: 'cover', marginTop: '-2.5vh', float: 'right',
-                    top: '50%', marginRight: '5%'}
+                    backgroundPosition: 'center', height: '11.3vw', width: '18.5vw', backgroundSize: 'cover', marginTop: '-1.7vw', float: 'right',
+                    marginRight: '1.45vw'}
             }
             return (<div style={styleImg}>
             </div>);
@@ -111,9 +110,9 @@ export default function SourceCard(props) {
                 <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={styleGif} />
             </div>);
         } else {
-            let styleImg = {width: '90%', height: '90%', border:'2px solid #a65cff', marginTop: '-8%'};
+            let styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw'};
             if (!props.drawerOpen) {
-                styleImg = {width: '70%', height: '70%', border:'2px solid #a65cff', marginTop: '-6%', marginLeft: '12%'};
+                styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw', marginLeft: '5vw'};
             }
             return (<div className={classes.sourceimg}>
                 <img src={`data:image/png;base64,${arrayBufferToBase64(source.source_img.data.data)}`}  alt={"temp source img"}
