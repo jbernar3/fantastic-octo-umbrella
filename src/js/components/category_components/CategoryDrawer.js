@@ -131,6 +131,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const clearIconStyle = {
+    marginLeft: 6,
+    marginTop: 12,
+    color: '#a65cff',
+    cursor: 'pointer'
+};
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
 });
@@ -225,7 +232,7 @@ export default function CategoryDrawer(props) {
             >
                 <div className={classes.drawerHeader}>
                     <input id={'cat-search-bar'} className={'houshcka_demibold'} value={searchValue} onChange={handleInputChange} />
-                    {searchValue === "" ? "" : <div id={'search_reset'} className={'houshcka_medium'}>reset</div> }
+                    {searchValue === "" ? "" : <ClearIcon style={clearIconStyle} onClick={() => setSearchValue("")} /> }
                 </div>
                 <Scrollbars
                     style={{width: drawerWidth, height: '73%' }}
