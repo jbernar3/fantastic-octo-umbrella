@@ -140,11 +140,15 @@ export default function CategoryDrawer(props) {
     const theme = useTheme();
     const [indexCurrCat, setIndexCurrCat] = React.useState(0);
     const [categories, setCategories] = React.useState(props.categories);
+    const [rootCategories, setRootCategories] = React.useState(props.rootCategories);
+    const [mapCategories, setMapCategories] = React.useState(props.mapCategories);
+    const [mapSubcategories, setMapSubcategories] = React.useState(props.mapSubcategories);
     const [openSourcePopup, setOpenSourcePopup] = React.useState(false);
     const [sourcePopup, setSourcePopup] = React.useState(null);
     const [searchValue, setSearchValue] = React.useState("");
     const [collapseOpen, setCollapseOpen] = React.useState(false);
     const [collapseOpen2, setCollapseOpen2] = React.useState(false);
+    const [currCatID, setCurrCatID] = React.useState(null);
     let scrollbars = null;
 
     const handleOpenSourcePopup = async (source) => {
@@ -164,7 +168,22 @@ export default function CategoryDrawer(props) {
         setCategories(props.categories);
     }, [props.categories]);
 
-    if (categories === undefined) {
+    useEffect(() => {
+        setRootCategories(props.rootCategories);
+        if (currCatID === null) {
+            setCurrCatID(rootCategories[0]);
+        }
+    }, [props.rootCategories]);
+
+    useEffect(() => {
+        setMapCategories(props.mapCategories);
+    }, [props.mapCategories]);
+
+    useEffect(() => {
+        setMapSubcategories(props.mapSubcategories);
+    }, [props.mapSubcategories]);
+
+    if (categories === undefined || mapCategories.size === 0) {
         return (
             <div className={classes.root}>
                 <Drawer
@@ -215,6 +234,48 @@ export default function CategoryDrawer(props) {
                     trackXProps={{ className: "trackX" }}
                 >
                     <List>
+                        {/*{rootCategories.map(function (categoryID, index) {*/}
+                        {/*    const category = mapCategories.get(categoryID);*/}
+                        {/*    if (category.category_name.toLowerCase().includes(searchValue)) {*/}
+                        {/*        return (<React.Fragment><ListItem button key={index} name={index.toString()}*/}
+                        {/*                                          style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}*/}
+                        {/*                                          onClick={() => {*/}
+                        {/*                                              setCurrCatID(category._id);*/}
+                        {/*                                              setIndexCurrCat(index);*/}
+                        {/*                                              // document.getElementById('source_scroll_div').scrollTop = 0;*/}
+                        {/*                                              props.setCurrCatIndex(index)*/}
+                        {/*                                          }}>*/}
+                        {/*            <ListItemIcon><img alt={'folder-icon'}*/}
+                        {/*                               src={'src/images/parent-category-icon.png'}*/}
+                        {/*                               style={{width: 28}}/></ListItemIcon>*/}
+                        {/*            <div className={'category_name_drawer'}>{category.category_name}</div>*/}
+                        {/*            /!*<Expand open={collapseOpen2}>*!/*/}
+                        {/*            /!*    <div style={{backgroundColor: 'blue'}}>*!/*/}
+                        {/*            /!*        Hello*!/*/}
+                        {/*            /!*    </div>*!/*/}
+                        {/*            /!*</Expand>*!/*/}
+                        {/*        </ListItem>*/}
+                        {/*            {mapSubcategories.get(categoryID) === undefined ? "" :*/}
+                        {/*                <Expand open={index === indexCurrCat}>*/}
+                        {/*                    {mapSubcategories.get(categoryID).map(function (subID, index) {*/}
+                        {/*                        const subCat = mapCategories.get(subID);*/}
+                        {/*                        return (<ListItem button key={index} name={index.toString()}*/}
+                        {/*                                          style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}*/}
+                        {/*                                          onClick={() => {*/}
+                        {/*                                              setIndexCurrCat(index);*/}
+                        {/*                                              // document.getElementById('source_scroll_div').scrollTop = 0;*/}
+                        {/*                                              props.setCurrCatIndex(index)*/}
+                        {/*                                          }}>*/}
+                        {/*                            <ListItemIcon><img alt={'folder-icon'}*/}
+                        {/*                                               src={'src/images/subfoldericon.png'}*/}
+                        {/*                                               style={{width: 28}}/></ListItemIcon>*/}
+                        {/*                            <div className={'category_name_drawer'}>{subCat.category_name}</div>*/}
+                        {/*                        </ListItem>);*/}
+                        {/*                    })}*/}
+                        {/*                </Expand>*/}
+                        {/*            }</React.Fragment>)*/}
+                        {/*    }*/}
+                        {/*}.bind(this))}*/}
                         {categories.map(function (category, index) {
                             if (category.category_name.toLowerCase().includes(searchValue)) {
                                 return (<React.Fragment><ListItem button key={index} name={index.toString()}

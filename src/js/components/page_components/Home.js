@@ -17,7 +17,10 @@ class Home extends Component {
             firstRender: true,
             addCatOpen: false,
             addSourceOpen: false,
-            indexCurrCat: 0
+            indexCurrCat: 0,
+            rootCategories: [],
+            mapCategories: new Map(),
+            mapSubcategories: new Map()
         };
 
         this.handleSetCategories = this.handleSetCategories.bind(this);
@@ -31,9 +34,18 @@ class Home extends Component {
         this.setState({indexCurrCat: index});
     }
 
-    addNewCategory(category) {
+    addNewCategory(category, parentID) {
         this.setState({addCatOpen: false});
         this.state.categories.push(category);
+        this.state.mapCategories.set(category._id, category);
+        if (parentID === -1) {
+            this.state.rootCategories.push(category._id);
+        } else {
+            console.log("HELLO IM IN ADD NEW CATEGORY ELSE STATEMENT SUBCAT");
+            const newSubCats = this.state.mapSubcategories.get(parentID);
+            newSubCats.push(category._id);
+            this.state.mapSubcategories.set(parentID, newSubCats);
+        }
     }
 
     addNewSource(source, categoryID) {
@@ -128,7 +140,10 @@ class Home extends Component {
                 //     });
                 //     tempCats = newTempCats;
                 // }
-                this.setState({categories: JSON.parse(xhr.response)});
+                console.log("THIS IS ROOT CATEGORIES");
+                console.log(rootCategories);
+                this.setState({categories: JSON.parse(xhr.response), mapCategories: mapCategories,
+                    mapSubcategories: mapSubcategories, rootCategories: rootCategories});
             }
         });
         xhr.open('POST', 'http://localhost:3000/get_categories', false);
@@ -169,7 +184,9 @@ class Home extends Component {
                                                                            categories={this.state.categories} addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} currCatIndex={this.state.indexCurrCat} />
                         : ""}
                 </div>
-                <CategoryDrawer setCurrCatIndex={this.setCurrCatIndex} categories={this.state.categories} drawerOpen={this.state.drawerOpen}/>
+                <CategoryDrawer setCurrCatIndex={this.setCurrCatIndex} categories={this.state.categories}
+                                rootCategories={this.state.rootCategories} mapCategories={this.state.mapCategories}
+                                mapSubcategories={this.state.mapSubcategories} drawerOpen={this.state.drawerOpen}/>
             </div>
         )
     }

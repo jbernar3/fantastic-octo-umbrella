@@ -162,7 +162,7 @@ export default function AddCategoryPopup(props) {
                 if (xhr.response.startsWith("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else {
-                    props.addNewCategory(JSON.parse(xhr.response));
+                    props.addNewCategory(JSON.parse(xhr.response), parentID);
                 }
             });
             xhr.open('POST', 'http://localhost:3000/new_category', false);
