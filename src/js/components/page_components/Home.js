@@ -28,6 +28,7 @@ class Home extends Component {
         this.addNewSource = this.addNewSource.bind(this);
         this.setSourceImg = this.setSourceImg.bind(this);
         this.setCurrCatIndex = this.setCurrCatIndex.bind(this);
+        this.handleEditSource = this.handleEditSource.bind(this);
     }
 
     setCurrCatIndex(index) {
@@ -80,6 +81,20 @@ class Home extends Component {
             }
         });
         this.setState({categories: updatedCategories});
+    }
+
+    handleEditSource(categoryID, newSource) {
+        let tempCategory = this.state.mapCategories.get(categoryID);
+        if (tempCategory) {
+            let tempSources = tempCategory.sources;
+            for (let i=0; i<tempSources.length; i++) {
+                if (newSource._id === tempSources[i]._id) {
+                    tempSources[i] = newSource;
+                    break;
+                }
+            }
+            this.state.mapCategories.set(categoryID, tempCategory);
+        }
     }
 
     handleSetCategories() {
@@ -189,7 +204,8 @@ class Home extends Component {
                 </div>
                 <CategoryDrawer setCurrCatIndex={this.setCurrCatIndex} categories={this.state.categories}
                                 rootCategories={this.state.rootCategories} mapCategories={this.state.mapCategories}
-                                mapSubcategories={this.state.mapSubcategories} drawerOpen={this.state.drawerOpen}/>
+                                mapSubcategories={this.state.mapSubcategories} drawerOpen={this.state.drawerOpen}
+                                userID={this.props.userID} handleEditSource={this.handleEditSource}/>
             </div>
         )
     }

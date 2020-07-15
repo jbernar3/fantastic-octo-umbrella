@@ -143,13 +143,6 @@ export default function SourceCard(props) {
                 <div id={'source-card-description'}>
                     {getSourceNotes(source)}
                 </div>
-                {/*<Typography className={classes.description} variant="body2" component="p">*/}
-                {/*    On a narrow field surrounded by low-rise apartments, bus stops and a tangled*/}
-                {/*    ribbon of highway ramps, the camel scampered past lions, which leapt against their*/}
-                {/*    cage. It distracted the acrobats practicing their flips on an aerial hoop and*/}
-                {/*    sauntered toward the languid, pregnant tiger, and stalls of horses and African*/}
-                {/*    Watsui bulls.*/}
-                {/*</Typography>*/}
                 {getSourceImg(source)}
 
             </CardContent>

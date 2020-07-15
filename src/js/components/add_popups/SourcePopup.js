@@ -2,7 +2,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Zoom from '@material-ui/core/Zoom';
-import React from "react";
+import React, {useEffect} from "react";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -25,8 +25,21 @@ const useStyles = makeStyles(theme => ({
         color: '#a65cff',
         textTransform: 'none',
         float: 'right',
-        marginTop: '7.8vw',
-        marginRight: '-19.5vw'
+        marginTop: '3vw',
+        marginRight: '-21.2vw'
+    },
+    editButton: {
+        backgroundColor: 'rgba(166, 92, 254, 0.09)',
+        borderRadius: '7px',
+        border: 'none',
+        fontFamily: 'houschka-rounded,sans-serif',
+        fontWeight: 700,
+        fontStyle: 'normal',
+        fontSize: '1.2vw',
+        color: '#a65cff',
+        textTransform: 'none',
+        marginTop: '1vw',
+        marginLeft: '1vw'
     }
 }));
 
@@ -48,6 +61,17 @@ const notesScrollStyleYoutube = {
 
 export default function SourcePopup(props) {
     const classes = useStyles();
+    const [isEditMode, setIsEditMode] = React.useState(false);
+    const [newTitle, setNewTitle] = React.useState(null);
+    const [newNotes, setNewNotes] = React.useState(null);
+    const [errMsg, setErrMsg] = React.useState("");
+
+    useEffect(() => {
+        if (props.source !== null && newTitle === null && newNotes === null) {
+            setNewTitle(props.source.source_name);
+            setNewNotes(props.source.source_notes);
+        }
+    }, [props.source]);
 
     const arrayBufferToBase64 = (buffer) => {
         let binary = '';
@@ -80,7 +104,6 @@ export default function SourcePopup(props) {
 
     const beautifyDate = (date) => {
         let output = "date added: ";
-        console.log(date);
         const monthNum = date.substring(5, 7);
         if (monthNum === '01') {
             output += "January ";
@@ -128,28 +151,91 @@ export default function SourcePopup(props) {
         </div>
     };
 
+    const handleInputChange = (event) => {
+        const eventName = event.target.name;
+        const eventValue = event.target.value;
+        if (eventName === 'title') {
+            setNewTitle(eventValue);
+        } else if (eventName === 'notes') {
+            setNewNotes(eventValue);
+        }
+    };
+
+    const handleOnInput = (event) => {
+        event.target.style.height = "";
+        event.target.style.height = event.target.scrollHeight + "px";
+    };
+
+    const handleCancelEdit = () => {
+        if (isEditMode) {
+            setNewTitle(props.source.source_name);
+            setNewNotes(props.source.source_notes);
+        }
+        setIsEditMode(!isEditMode);
+    };
+
+    const handleSubmit = () => {
+        if (props.categoryID !== null && props.sourceID !== null) {
+            if (newTitle === "") {
+                setErrMsg("title cannot be empty");
+            } else {
+                const postParameters = {
+                    userID: props.userID,
+                    categoryID: props.categoryID,
+                    sourceID: props.sourceID,
+                    newTitle: newTitle,
+                    newNotes: newNotes
+                };
+
+                const xhr = new XMLHttpRequest();
+                xhr.addEventListener('load', async () => {
+                    if (xhr.response.startsWith("ERROR:")) {
+                        setErrMsg(xhr.response.substring(6));
+                    } else {
+                        props.handleEditSource(props.categoryID, JSON.parse(xhr.response));
+                    }
+                });
+                xhr.open('POST', 'http://localhost:3000/edit_source', false);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify(postParameters));
+            }
+        }
+    };
+
     return (
         <div id={'source-popup-div'}>
+            <div id={'source-popup-edit-div'} className={'houshcka_demibold'} onClick={handleCancelEdit}>{isEditMode ? "cancel edit" : "edit"}</div>
             <CloseIcon onClick={props.handleClose}
-                       style={{fill: '#a65cff', width: '2.4vw', float: 'right', marginTop:  '1.5vw', marginRight: '1.3vw', cursor: 'pointer'}} />
+                       style={{fill: '#a65cff', width: '2.4vw', float: 'right', marginTop: '-1.2vw', marginRight: '1.3vw', cursor: 'pointer'}} />
             {props.source !== null ?
                 <React.Fragment>
-                    <div id={'source-popup-title'} className={'houshcka_demibold'}>{props.source.source_name}</div>
+                    {isEditMode ? <div id={'edit-source-title'}><input name={'title'} value={newTitle} onChange={handleInputChange} className={'edit-source-inputs'} /></div> :
+                        <div id={'source-popup-title'} className={'houshcka_demibold'}>{props.source.source_name}</div>}
                     {props.categoryName === undefined ? "" :
                         <div id={'source-popup-cat'} className={'houshcka_demibold'}>class: {props.categoryName}</div>}
                     {getSourceImg(props.source)}
                     <div id={'source-popup-date'} className={'houshcka_medium'}>{beautifyDate(props.source.date_added)}</div>
                     <button id={'source-popup-open-src'} className={'houshcka_demibold open-src-button'}
                             onClick={() => handleClick('open-btn')}>open source</button>
-                    <Scrollbars
-                        style={props.source.source_urlImgFlag ? notesScrollStyleYoutube : notesScrollStyle}
-                        id='source_scroll_div'
-                        ref={ref => (scrollbars = ref)}
-                        thumbYProps={{ className: "thumbY" }}
-                        trackXProps={{ className: "trackX" }}
-                    >
-                        {getSourceNotes(props.source)}
-                    </Scrollbars>
+                    {isEditMode ? <React.Fragment><Scrollbars
+                            style={{float: 'right', width: '32vw', marginTop: '-19vw', height: '21vw', marginRight: '2.7vw'}}
+                            //id='source_scroll_div'
+                            thumbYProps={{ className: "thumbY" }}
+                            trackXProps={{ className: "trackX" }}
+                        >
+                            <textarea id={'edit-source-notes-textarea'} className={'scrollable-textarea'} name={'notes'} value={newNotes} onChange={handleInputChange} onInput={handleOnInput} />
+                        </Scrollbars>
+                            <Button onClick={handleSubmit} className={classes.submitButton}>submit changes</Button>
+                        </React.Fragment>:
+                        <Scrollbars
+                            style={props.source.source_urlImgFlag ? notesScrollStyleYoutube : notesScrollStyle}
+                            id='source_scroll_div'
+                            ref={ref => (scrollbars = ref)}
+                            thumbYProps={{ className: "thumbY" }}
+                            trackXProps={{ className: "trackX" }}
+                        >
+                            {getSourceNotes(props.source)}
+                        </Scrollbars>}
                 </React.Fragment>
             : ""}
         </div>

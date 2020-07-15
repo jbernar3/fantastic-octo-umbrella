@@ -203,31 +203,33 @@ export default function CategoryDrawer(props) {
         return (<Expand open={openCurrCatIDs.includes(categoryID)}>
             {mapSubcategories.get(categoryID).map(function (subID, index) {
                 const subCat = mapCategories.get(subID);
-                return (<React.Fragment><ListItem button key={index} name={index.toString()}
-                                  style={{backgroundColor: subID === currCatID ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
-                                  onClick={() => {
-                                      setIndexCurrCat(index);
-                                      setCurrCatID(subID);
-                                      const tempOpenIDs = [];
-                                      for (let i=0; i<openCurrCatIDs.length; i++) {
-                                          tempOpenIDs.push(openCurrCatIDs[i]);
-                                          if (mapSubcategories.get(openCurrCatIDs[i]).includes(subID)) {
-                                              tempOpenIDs.push(subID);
-                                              break;
-                                          }
-                                      }
-                                      setOpenCurrCatIDs(tempOpenIDs);
-                                      document.getElementById('source_scroll_div').scrollTop = 0;
-                                      props.setCurrCatIndex(index)
-                                  }}>
-                    <ListItemIcon><img alt={'folder-icon'}
-                                       src={mapSubcategories.get(subID) === undefined || mapSubcategories.get(subID).length === 0 ?
-                                           'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
-                                       style={{width: 28}}/></ListItemIcon>
-                    <div className={'category_name_drawer'}>{subCat.category_name}</div>
-                </ListItem>
-                    {getSubcategories(subID, index)}
-                </React.Fragment>);
+                if (subCat.category_name.toLowerCase().includes(searchValue)) {
+                    return (<React.Fragment><ListItem button key={index} name={index.toString()}
+                                                      style={{backgroundColor: subID === currCatID ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
+                                                      onClick={() => {
+                                                          setIndexCurrCat(index);
+                                                          setCurrCatID(subID);
+                                                          const tempOpenIDs = [];
+                                                          for (let i=0; i<openCurrCatIDs.length; i++) {
+                                                              tempOpenIDs.push(openCurrCatIDs[i]);
+                                                              if (mapSubcategories.get(openCurrCatIDs[i]).includes(subID)) {
+                                                                  tempOpenIDs.push(subID);
+                                                                  break;
+                                                              }
+                                                          }
+                                                          setOpenCurrCatIDs(tempOpenIDs);
+                                                          document.getElementById('source_scroll_div').scrollTop = 0;
+                                                          props.setCurrCatIndex(index)
+                                                      }}>
+                        <ListItemIcon><img alt={'folder-icon'}
+                                           src={mapSubcategories.get(subID) === undefined || mapSubcategories.get(subID).length === 0 ?
+                                               'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
+                                           style={{width: 28}}/></ListItemIcon>
+                        <div className={'category_name_drawer'}>{subCat.category_name}</div>
+                    </ListItem>
+                        {getSubcategories(subID, index)}
+                    </React.Fragment>);
+                }
             })}
             <Divider />
         </Expand>);
@@ -422,7 +424,8 @@ export default function CategoryDrawer(props) {
                 maxWidth={false}
             >
                 {props.categories[indexCurrCat] === undefined ? <SourcePopup source={sourcePopup} handleClose={handleCloseSourcePopup} /> :
-                    <SourcePopup categoryName={props.categories[indexCurrCat].category_name} source={sourcePopup} handleClose={handleCloseSourcePopup} />}
+                    <SourcePopup userID={props.userID} categoryID={mapCategories.get(currCatID)._id} handleEditSource={props.handleEditSource}
+                                 categoryName={mapCategories.get(currCatID).category_name} source={sourcePopup} handleClose={handleCloseSourcePopup} />}
             </Dialog>
         </div>
     );
