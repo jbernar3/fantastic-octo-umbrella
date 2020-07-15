@@ -42,7 +42,10 @@ class Home extends Component {
             this.state.rootCategories.push(category._id);
         } else {
             console.log("HELLO IM IN ADD NEW CATEGORY ELSE STATEMENT SUBCAT");
-            const newSubCats = this.state.mapSubcategories.get(parentID);
+            let newSubCats = this.state.mapSubcategories.get(parentID);
+            if (newSubCats === undefined) {
+                newSubCats = [];
+            }
             newSubCats.push(category._id);
             this.state.mapSubcategories.set(parentID, newSubCats);
         }

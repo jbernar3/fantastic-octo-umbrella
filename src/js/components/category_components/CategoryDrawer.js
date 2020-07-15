@@ -156,6 +156,7 @@ export default function CategoryDrawer(props) {
     const [collapseOpen, setCollapseOpen] = React.useState(false);
     const [collapseOpen2, setCollapseOpen2] = React.useState(false);
     const [currCatID, setCurrCatID] = React.useState(null);
+    const [openCurrCatIDs, setOpenCurrCatIDs] = React.useState([]);
     let scrollbars = null;
 
     const handleOpenSourcePopup = async (source) => {
@@ -169,6 +170,8 @@ export default function CategoryDrawer(props) {
 
     const handleInputChange = (event) => {
         setSearchValue(event.target.value);
+        console.log("CURRENT CATEGORY ID");
+        console.log(currCatID);
     };
 
     useEffect(() => {
@@ -177,8 +180,9 @@ export default function CategoryDrawer(props) {
 
     useEffect(() => {
         setRootCategories(props.rootCategories);
-        if (currCatID === null) {
-            setCurrCatID(rootCategories[0]);
+        if (currCatID === null || currCatID === undefined) {
+            setCurrCatID(props.rootCategories[0]);
+            openCurrCatIDs.push(props.rootCategories[0])
         }
     }, [props.rootCategories]);
 
@@ -189,6 +193,45 @@ export default function CategoryDrawer(props) {
     useEffect(() => {
         setMapSubcategories(props.mapSubcategories);
     }, [props.mapSubcategories]);
+
+
+
+    const getSubcategories = (categoryID, index) => {
+        if (mapSubcategories.get(categoryID) === undefined) {
+            return "";
+        }
+        return (<Expand open={openCurrCatIDs.includes(categoryID)}>
+            {mapSubcategories.get(categoryID).map(function (subID, index) {
+                const subCat = mapCategories.get(subID);
+                return (<React.Fragment><ListItem button key={index} name={index.toString()}
+                                  style={{backgroundColor: subID === currCatID ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
+                                  onClick={() => {
+                                      setIndexCurrCat(index);
+                                      setCurrCatID(subID);
+                                      const tempOpenIDs = [];
+                                      for (let i=0; i<openCurrCatIDs.length; i++) {
+                                          tempOpenIDs.push(openCurrCatIDs[i]);
+                                          if (mapSubcategories.get(openCurrCatIDs[i]).includes(subID)) {
+                                              tempOpenIDs.push(subID);
+                                              break;
+                                          }
+                                      }
+                                      setOpenCurrCatIDs(tempOpenIDs);
+                                      document.getElementById('source_scroll_div').scrollTop = 0;
+                                      props.setCurrCatIndex(index)
+                                  }}>
+                    <ListItemIcon><img alt={'folder-icon'}
+                                       src={mapSubcategories.get(subID) === undefined || mapSubcategories.get(subID).length === 0 ?
+                                           'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
+                                       style={{width: 28}}/></ListItemIcon>
+                    <div className={'category_name_drawer'}>{subCat.category_name}</div>
+                </ListItem>
+                    {getSubcategories(subID, index)}
+                </React.Fragment>);
+            })}
+            <Divider />
+        </Expand>);
+    };
 
     if (categories === undefined || mapCategories.size === 0) {
         return (
@@ -241,17 +284,56 @@ export default function CategoryDrawer(props) {
                     trackXProps={{ className: "trackX" }}
                 >
                     <List>
-                        {/*{rootCategories.map(function (categoryID, index) {*/}
-                        {/*    const category = mapCategories.get(categoryID);*/}
+                        {rootCategories.map(function (categoryID, index) {
+                            const category = mapCategories.get(categoryID);
+                            if (category.category_name.toLowerCase().includes(searchValue)) {
+                                return (<React.Fragment><ListItem button key={index} name={index.toString()}
+                                                                  style={{backgroundColor: categoryID === currCatID ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
+                                                                  onClick={() => {
+                                                                      setCurrCatID(category._id);
+                                                                      setOpenCurrCatIDs([category._id]);
+                                                                      // setIndexCurrCat(index);
+                                                                      document.getElementById('source_scroll_div').scrollTop = 0;
+                                                                      props.setCurrCatIndex(index)
+                                                                  }}>
+                                    <ListItemIcon><img alt={'folder-icon'}
+                                                       src={mapSubcategories.get(categoryID) === undefined || mapSubcategories.get(categoryID).length === 0 ?
+                                                           'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
+                                                       style={{width: 28}}/></ListItemIcon>
+                                    <div className={'category_name_drawer'}>{category.category_name}</div>
+                                </ListItem>
+                                    {getSubcategories(categoryID, index)}
+                                    {/*{mapSubcategories.get(categoryID) === undefined ? "" :*/}
+                                    {/*    <Expand open={index === indexCurrCat}>*/}
+                                    {/*        {mapSubcategories.get(categoryID).map(function (subID, index) {*/}
+                                    {/*            const subCat = mapCategories.get(subID);*/}
+                                    {/*            return (<ListItem button key={index} name={index.toString()}*/}
+                                    {/*                              style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}*/}
+                                    {/*                              onClick={() => {*/}
+                                    {/*                                  setIndexCurrCat(index);*/}
+                                    {/*                                  // document.getElementById('source_scroll_div').scrollTop = 0;*/}
+                                    {/*                                  props.setCurrCatIndex(index)*/}
+                                    {/*                              }}>*/}
+                                    {/*                <ListItemIcon><img alt={'folder-icon'}*/}
+                                    {/*                                   src={'src/images/subfoldericon.png'}*/}
+                                    {/*                                   style={{width: 28}}/></ListItemIcon>*/}
+                                    {/*                <div className={'category_name_drawer'}>{subCat.category_name}</div>*/}
+                                    {/*            </ListItem>);*/}
+                                    {/*        })}*/}
+                                    {/*    </Expand>*/}
+                                    {/*}*/}
+                                </React.Fragment>)
+                            }
+                        }.bind(this))}
+                        {/*{categories.map(function (category, index) {*/}
                         {/*    if (category.category_name.toLowerCase().includes(searchValue)) {*/}
                         {/*        return (<React.Fragment><ListItem button key={index} name={index.toString()}*/}
-                        {/*                                          style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}*/}
-                        {/*                                          onClick={() => {*/}
-                        {/*                                              setCurrCatID(category._id);*/}
-                        {/*                                              setIndexCurrCat(index);*/}
-                        {/*                                              // document.getElementById('source_scroll_div').scrollTop = 0;*/}
-                        {/*                                              props.setCurrCatIndex(index)*/}
-                        {/*                                          }}>*/}
+                        {/*                          style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}*/}
+                        {/*                          onClick={() => {*/}
+                        {/*                              setIndexCurrCat(index);*/}
+                        {/*                              document.getElementById('source_scroll_div').scrollTop = 0;*/}
+                        {/*                              props.setCurrCatIndex(index)*/}
+                        {/*                          }}>*/}
                         {/*            <ListItemIcon><img alt={'folder-icon'}*/}
                         {/*                               src={'src/images/parent-category-icon.png'}*/}
                         {/*                               style={{width: 28}}/></ListItemIcon>*/}
@@ -262,118 +344,53 @@ export default function CategoryDrawer(props) {
                         {/*            /!*    </div>*!/*/}
                         {/*            /!*</Expand>*!/*/}
                         {/*        </ListItem>*/}
-                        {/*            {mapSubcategories.get(categoryID) === undefined ? "" :*/}
-                        {/*                <Expand open={index === indexCurrCat}>*/}
-                        {/*                    {mapSubcategories.get(categoryID).map(function (subID, index) {*/}
-                        {/*                        const subCat = mapCategories.get(subID);*/}
-                        {/*                        return (<ListItem button key={index} name={index.toString()}*/}
-                        {/*                                          style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}*/}
-                        {/*                                          onClick={() => {*/}
-                        {/*                                              setIndexCurrCat(index);*/}
-                        {/*                                              // document.getElementById('source_scroll_div').scrollTop = 0;*/}
-                        {/*                                              props.setCurrCatIndex(index)*/}
-                        {/*                                          }}>*/}
-                        {/*                            <ListItemIcon><img alt={'folder-icon'}*/}
-                        {/*                                               src={'src/images/subfoldericon.png'}*/}
-                        {/*                                               style={{width: 28}}/></ListItemIcon>*/}
-                        {/*                            <div className={'category_name_drawer'}>{subCat.category_name}</div>*/}
-                        {/*                        </ListItem>);*/}
-                        {/*                    })}*/}
-                        {/*                </Expand>*/}
-                        {/*            }</React.Fragment>)*/}
+                        {/*            <Expand open={index === indexCurrCat}>*/}
+                        {/*                <ListItem button key={index} name={index.toString()}*/}
+                        {/*                          style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}*/}
+                        {/*                          onClick={() => {*/}
+                        {/*                              setIndexCurrCat(index);*/}
+                        {/*                              document.getElementById('source_scroll_div').scrollTop = 0;*/}
+                        {/*                              props.setCurrCatIndex(index)*/}
+                        {/*                          }}>*/}
+                        {/*                    <ListItemIcon><img alt={'folder-icon'}*/}
+                        {/*                                       src={'src/images/parent-category-icon.png'}*/}
+                        {/*                                       style={{width: 28}}/></ListItemIcon>*/}
+                        {/*                    <div className={'category_name_drawer'}>{category.category_name}</div>*/}
+                        {/*                    /!*<Expand open={collapseOpen2}>*!/*/}
+                        {/*                    /!*    <div style={{backgroundColor: 'blue'}}>*!/*/}
+                        {/*                    /!*        Hello*!/*/}
+                        {/*                    /!*    </div>*!/*/}
+                        {/*                    /!*</Expand>*!/*/}
+                        {/*                </ListItem>*/}
+                        {/*    </Expand></React.Fragment>)*/}
+                        {/*        // if (index === indexCurrCat) {*/}
+                        {/*        //     return (<ListItem button key={index} name={index.toString()}*/}
+                        {/*        //                       style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}*/}
+                        {/*        //                       onClick={() => {*/}
+                        {/*        //                           setIndexCurrCat(index);*/}
+                        {/*        //                           document.getElementById('source_scroll_div').scrollTop = 0;*/}
+                        {/*        //                           props.setCurrCatIndex(index)*/}
+                        {/*        //                       }}>*/}
+                        {/*        //         <ListItemIcon><img alt={'folder-icon'}*/}
+                        {/*        //                            src={'src/images/parent-category-icon.png'}*/}
+                        {/*        //                            style={{width: 28}}/></ListItemIcon>*/}
+                        {/*        //         <div className={'category_name_drawer'}>{category.category_name}</div>*/}
+                        {/*        //     </ListItem>)*/}
+                        {/*        // } else {*/}
+                        {/*        //     return (<ListItem button key={index} name={index.toString()}*/}
+                        {/*        //                       onClick={() => {*/}
+                        {/*        //                           setIndexCurrCat(index);*/}
+                        {/*        //                           document.getElementById('source_scroll_div').scrollTop = 0;*/}
+                        {/*        //                           props.setCurrCatIndex(index);*/}
+                        {/*        //                       }}>*/}
+                        {/*        //         <ListItemIcon><img alt={'folder-icon'}*/}
+                        {/*        //                            src={'src/images/parent-category-icon.png'}*/}
+                        {/*        //                            style={{width: 28}}/></ListItemIcon>*/}
+                        {/*        //         <div className={'category_name_drawer'}>{category.category_name}</div>*/}
+                        {/*        //     </ListItem>)*/}
+                        {/*        // }*/}
                         {/*    }*/}
                         {/*}.bind(this))}*/}
-                        {categories.map(function (category, index) {
-                            if (category.category_name.toLowerCase().includes(searchValue)) {
-                                return (<React.Fragment><ListItem button key={index} name={index.toString()}
-                                                  style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
-                                                  onClick={() => {
-                                                      setIndexCurrCat(index);
-                                                      document.getElementById('source_scroll_div').scrollTop = 0;
-                                                      props.setCurrCatIndex(index)
-                                                  }}>
-                                    <ListItemIcon><img alt={'folder-icon'}
-                                                       src={'src/images/parent-category-icon.png'}
-                                                       style={{width: 28}}/></ListItemIcon>
-                                    <div className={'category_name_drawer'}>{category.category_name}</div>
-                                    {/*<Expand open={collapseOpen2}>*/}
-                                    {/*    <div style={{backgroundColor: 'blue'}}>*/}
-                                    {/*        Hello*/}
-                                    {/*    </div>*/}
-                                    {/*</Expand>*/}
-                                </ListItem>
-                                    <Expand open={index === indexCurrCat}>
-                                        <ListItem button key={index} name={index.toString()}
-                                                  style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
-                                                  onClick={() => {
-                                                      setIndexCurrCat(index);
-                                                      document.getElementById('source_scroll_div').scrollTop = 0;
-                                                      props.setCurrCatIndex(index)
-                                                  }}>
-                                            <ListItemIcon><img alt={'folder-icon'}
-                                                               src={'src/images/parent-category-icon.png'}
-                                                               style={{width: 28}}/></ListItemIcon>
-                                            <div className={'category_name_drawer'}>{category.category_name}</div>
-                                            {/*<Expand open={collapseOpen2}>*/}
-                                            {/*    <div style={{backgroundColor: 'blue'}}>*/}
-                                            {/*        Hello*/}
-                                            {/*    </div>*/}
-                                            {/*</Expand>*/}
-                                        </ListItem>
-                            </Expand></React.Fragment>)
-                                // if (index === indexCurrCat) {
-                                //     return (<ListItem button key={index} name={index.toString()}
-                                //                       style={{backgroundColor: index === indexCurrCat ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
-                                //                       onClick={() => {
-                                //                           setIndexCurrCat(index);
-                                //                           document.getElementById('source_scroll_div').scrollTop = 0;
-                                //                           props.setCurrCatIndex(index)
-                                //                       }}>
-                                //         <ListItemIcon><img alt={'folder-icon'}
-                                //                            src={'src/images/parent-category-icon.png'}
-                                //                            style={{width: 28}}/></ListItemIcon>
-                                //         <div className={'category_name_drawer'}>{category.category_name}</div>
-                                //     </ListItem>)
-                                // } else {
-                                //     return (<ListItem button key={index} name={index.toString()}
-                                //                       onClick={() => {
-                                //                           setIndexCurrCat(index);
-                                //                           document.getElementById('source_scroll_div').scrollTop = 0;
-                                //                           props.setCurrCatIndex(index);
-                                //                       }}>
-                                //         <ListItemIcon><img alt={'folder-icon'}
-                                //                            src={'src/images/parent-category-icon.png'}
-                                //                            style={{width: 28}}/></ListItemIcon>
-                                //         <div className={'category_name_drawer'}>{category.category_name}</div>
-                                //     </ListItem>)
-                                // }
-                            }
-                        }.bind(this))}
-                        {/*<ExpansionPanel square expanded={collapseOpen} style={{backgroundColor: '#ececec', outline: 'none', border: 'none'}}>*/}
-                        {/*    <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header" onClick={() => setCollapseOpen(!collapseOpen)}>*/}
-                        {/*        <Typography>Collapsible Group Item #1</Typography>*/}
-                        {/*    </ExpansionPanelSummary>*/}
-                        {/*    <ExpansionPanelDetails>*/}
-                        {/*        <List>*/}
-                        {/*            <ExpansionPanel square expanded={false} style={{width: '100%', backgroundColor: '#ececec', outline: 'none', border: 'none'}}>*/}
-                        {/*                <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header" onClick={() => console.log("clicked 2")}>*/}
-                        {/*                    <Typography>Collapsible Group Item #2</Typography>*/}
-                        {/*                </ExpansionPanelSummary>*/}
-                        {/*                <ExpansionPanelDetails>*/}
-                        {/*                    Hello*/}
-                        {/*                </ExpansionPanelDetails>*/}
-                        {/*            </ExpansionPanel>*/}
-                        {/*            <ExpansionPanel square expanded={false} style={{width: '100%', backgroundColor: '#ececec', outline: 'none', border: 'none'}}>*/}
-                        {/*                <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header" onClick={() => console.log("clicked 3")}>*/}
-                        {/*                    <Typography>Collapsible Group Item #3</Typography>*/}
-                        {/*                </ExpansionPanelSummary>*/}
-                        {/*                <ExpansionPanelDetails>*/}
-                        {/*                    World*/}
-                        {/*                </ExpansionPanelDetails>*/}
-                        {/*            </ExpansionPanel>*/}
-                        {/*        </List>*/}
-                        {/*    </ExpansionPanelDetails>*/}
-                        {/*</ExpansionPanel>*/}
                     </List>
                 </Scrollbars>
             </Drawer>
@@ -382,7 +399,7 @@ export default function CategoryDrawer(props) {
                     [classes.contentShift]: props.drawerOpen,
                 })}
             >
-                <div className={'category_name_title'}>{props.categories.length > 0 ? props.categories[indexCurrCat].category_name : "No Categories"}</div>
+                <div className={'category_name_title'}>{rootCategories.length > 0 ? mapCategories.get(currCatID).category_name : "No Categories"}</div>
                 <Scrollbars
                     style={{ marginLeft: '-10vh', height: '70vh', marginTop: '5vh' }}
                     id='source_scroll_div'
@@ -390,7 +407,7 @@ export default function CategoryDrawer(props) {
                     thumbYProps={{ className: "thumbY" }}
                     trackXProps={{ className: "trackX" }}
                 >
-                    {categories.length > 0 ? props.categories[indexCurrCat].sources.map((source, index) => (
+                    {rootCategories.length > 0 && mapCategories.get(currCatID).sources.length !== 0 ? mapCategories.get(currCatID).sources.map((source, index) => (
                         <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)} />
                     )) : "No sources"}
                 </Scrollbars>
