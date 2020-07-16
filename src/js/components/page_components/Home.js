@@ -101,11 +101,15 @@ class Home extends Component {
     }
 
     handleDeleteCat(categoryID) {
+        console.log("IN HANDLE");
+        console.log(categoryID);
         const parentID = this.state.mapCategories.get(categoryID).parent_id;
         this.state.mapCategories.delete(categoryID);
         const tempSubcats = this.state.mapSubcategories.get(categoryID);
-        tempSubcats.forEach((subCat) => this.handleDeleteCat(subCat));
-        this.state.mapSubcategories.delete(categoryID);
+        if (tempSubcats !== undefined) {
+            tempSubcats.forEach((subCat) => this.handleDeleteCat(subCat));
+            this.state.mapSubcategories.delete(categoryID);
+        }
         if (parentID !== '-1') {
             const tempSubcatsParent = this.state.mapSubcategories.get(parentID);
             const indexSubcat = tempSubcatsParent.indexOf(categoryID);
@@ -114,7 +118,7 @@ class Home extends Component {
             }
             this.state.mapSubcategories.set(parentID, tempSubcats);
         } else {
-            const indexCat = this.rootCategories.indexOf(categoryID);
+            const indexCat = this.state.rootCategories.indexOf(categoryID);
             this.state.rootCategories.splice(indexCat, 1);
         }
     }
