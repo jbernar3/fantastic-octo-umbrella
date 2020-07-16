@@ -22,10 +22,7 @@ import Slide from "@material-ui/core/Slide";
 import SourcePopup from "../add_popups/SourcePopup";
 import Expand from "react-expand-animated";
 import ClearIcon from '@material-ui/icons/Clear';
-import { ExpansionPanel } from '@material-ui/core';
-import { ExpansionPanelSummary } from '@material-ui/core';
-import { ExpansionPanelDetails } from '@material-ui/core';
-import withStyles from "@material-ui/core/styles/withStyles";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const drawerWidth = 240;
 
@@ -142,6 +139,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
 });
 
+const deleteIconStyle = {
+    color: '#a65cff'
+};
+
 export default function CategoryDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
@@ -157,6 +158,7 @@ export default function CategoryDrawer(props) {
     const [collapseOpen2, setCollapseOpen2] = React.useState(false);
     const [currCatID, setCurrCatID] = React.useState(null);
     const [openCurrCatIDs, setOpenCurrCatIDs] = React.useState([]);
+    const [currCatListHover, setCurrCatListHover] = React.useState("");
     let scrollbars = null;
 
     const handleOpenSourcePopup = async (source) => {
@@ -194,7 +196,25 @@ export default function CategoryDrawer(props) {
         setMapSubcategories(props.mapSubcategories);
     }, [props.mapSubcategories]);
 
+    const handleDeleteCat = (categoryID) => {
+        const postParameters = {
+            userID: props.userID,
+            categoryID: categoryID
+        };
 
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', async () => {
+            if (xhr.response.startsWith("ERROR:")) {
+                setErrMsg(xhr.response.substring(6));
+            } else {
+                props.handleDeleteCat(categoryID, openCurrCatIDs);
+                setOpenCurrCatIDs(openCurrCatIDs.remove(categoryID));
+            }
+        });
+        xhr.open('POST', 'http://localhost:3000/delete_category', false);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(postParameters));
+    };
 
     const getSubcategories = (categoryID, index) => {
         if (mapSubcategories.get(categoryID) === undefined) {
@@ -206,6 +226,8 @@ export default function CategoryDrawer(props) {
                 if (subCat.category_name.toLowerCase().includes(searchValue)) {
                     return (<React.Fragment><ListItem button key={index} name={index.toString()}
                                                       style={{backgroundColor: subID === currCatID ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
+                                                      onMouseEnter={() => setCurrCatListHover(subID)}
+                                                      onMouseLeave={() => setCurrCatListHover("")}
                                                       onClick={() => {
                                                           setIndexCurrCat(index);
                                                           setCurrCatID(subID);
@@ -221,10 +243,11 @@ export default function CategoryDrawer(props) {
                                                           document.getElementById('source_scroll_div').scrollTop = 0;
                                                           props.setCurrCatIndex(index)
                                                       }}>
-                        <ListItemIcon><img alt={'folder-icon'}
+                        <ListItemIcon>{currCatListHover === subID ? <DeleteIcon style={deleteIconStyle} onClick={() => handleDeleteCat(subID)} /> :
+                            <img alt={'folder-icon'}
                                            src={mapSubcategories.get(subID) === undefined || mapSubcategories.get(subID).length === 0 ?
                                                'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
-                                           style={{width: 28}}/></ListItemIcon>
+                                           style={{width: 28}}/>}</ListItemIcon>
                         <div className={'category_name_drawer'}>{subCat.category_name}</div>
                     </ListItem>
                         {getSubcategories(subID, index)}
@@ -291,6 +314,8 @@ export default function CategoryDrawer(props) {
                             if (category.category_name.toLowerCase().includes(searchValue)) {
                                 return (<React.Fragment><ListItem button key={index} name={index.toString()}
                                                                   style={{backgroundColor: categoryID === currCatID ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
+                                                                  onMouseEnter={() => setCurrCatListHover(categoryID)}
+                                                                  onMouseLeave={() => setCurrCatListHover("")}
                                                                   onClick={() => {
                                                                       setCurrCatID(category._id);
                                                                       setOpenCurrCatIDs([category._id]);
@@ -298,10 +323,11 @@ export default function CategoryDrawer(props) {
                                                                       document.getElementById('source_scroll_div').scrollTop = 0;
                                                                       props.setCurrCatIndex(index)
                                                                   }}>
-                                    <ListItemIcon><img alt={'folder-icon'}
+                                    <ListItemIcon>{currCatListHover === categoryID ? <DeleteIcon style={deleteIconStyle} onClick={() => handleDeleteCat(categoryID)} /> :
+                                        <img alt={'folder-icon'}
                                                        src={mapSubcategories.get(categoryID) === undefined || mapSubcategories.get(categoryID).length === 0 ?
                                                            'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
-                                                       style={{width: 28}}/></ListItemIcon>
+                                                       style={{width: 28}}/>}</ListItemIcon>
                                     <div className={'category_name_drawer'}>{category.category_name}</div>
                                 </ListItem>
                                     {getSubcategories(categoryID, index)}

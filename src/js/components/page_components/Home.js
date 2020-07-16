@@ -29,6 +29,7 @@ class Home extends Component {
         this.setSourceImg = this.setSourceImg.bind(this);
         this.setCurrCatIndex = this.setCurrCatIndex.bind(this);
         this.handleEditSource = this.handleEditSource.bind(this);
+        this.handleDeleteCat = this.handleDeleteCat.bind(this);
     }
 
     setCurrCatIndex(index) {
@@ -96,6 +97,25 @@ class Home extends Component {
                 }
             }
             this.state.mapCategories.set(categoryID, tempCategory);
+        }
+    }
+
+    handleDeleteCat(categoryID) {
+        const parentID = this.state.mapCategories.get(categoryID).parent_id;
+        this.state.mapCategories.delete(categoryID);
+        const tempSubcats = this.state.mapSubcategories.get(categoryID);
+        tempSubcats.forEach((subCat) => this.handleDeleteCat(subCat));
+        this.state.mapSubcategories.delete(categoryID);
+        if (parentID !== '-1') {
+            const tempSubcatsParent = this.state.mapSubcategories.get(parentID);
+            const indexSubcat = tempSubcatsParent.indexOf(categoryID);
+            if (indexSubcat > -1) {
+                tempSubcatsParent.splice(indexSubcat, 1);
+            }
+            this.state.mapSubcategories.set(parentID, tempSubcats);
+        } else {
+            const indexCat = this.rootCategories.indexOf(categoryID);
+            this.state.rootCategories.splice(indexCat, 1);
         }
     }
 
@@ -207,7 +227,7 @@ class Home extends Component {
                 <CategoryDrawer setCurrCatIndex={this.setCurrCatIndex} categories={this.state.categories}
                                 rootCategories={this.state.rootCategories} mapCategories={this.state.mapCategories}
                                 mapSubcategories={this.state.mapSubcategories} drawerOpen={this.state.drawerOpen}
-                                userID={this.props.userID} handleEditSource={this.handleEditSource}/>
+                                userID={this.props.userID} handleEditSource={this.handleEditSource} handleDeleteCat={this.handleDeleteCat}/>
             </div>
         )
     }
