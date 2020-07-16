@@ -88,8 +88,10 @@ class Home extends Component {
         if (tempCategory) {
             let tempSources = tempCategory.sources;
             for (let i=0; i<tempSources.length; i++) {
-                if (newSource._id === tempSources[i]._id) {
-                    tempSources[i] = newSource;
+                if (newSource._id.toString() === tempSources[i]._id.toString()) {
+                    tempSources[i].source_name = newSource.source_name;
+                    tempSources[i].source_notes = newSource.source_notes;
+                    tempCategory.sources = tempSources;
                     break;
                 }
             }

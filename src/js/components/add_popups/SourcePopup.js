@@ -175,14 +175,14 @@ export default function SourcePopup(props) {
     };
 
     const handleSubmit = () => {
-        if (props.categoryID !== null && props.sourceID !== null) {
+        if (props.categoryID !== null && props.source !== null) {
             if (newTitle === "") {
                 setErrMsg("title cannot be empty");
             } else {
                 const postParameters = {
                     userID: props.userID,
                     categoryID: props.categoryID,
-                    sourceID: props.sourceID,
+                    sourceID: props.source._id,
                     newTitle: newTitle,
                     newNotes: newNotes
                 };
@@ -193,6 +193,7 @@ export default function SourcePopup(props) {
                         setErrMsg(xhr.response.substring(6));
                     } else {
                         props.handleEditSource(props.categoryID, JSON.parse(xhr.response));
+                        setIsEditMode(false);
                     }
                 });
                 xhr.open('POST', 'http://localhost:3000/edit_source', false);
@@ -238,6 +239,7 @@ export default function SourcePopup(props) {
                         </Scrollbars>}
                 </React.Fragment>
             : ""}
+            <div>{errMsg}</div>
         </div>
     );
 }
