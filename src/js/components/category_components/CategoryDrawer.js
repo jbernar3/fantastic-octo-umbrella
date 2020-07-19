@@ -200,6 +200,19 @@ export default function CategoryDrawer(props) {
         setMapSubcategories(props.mapSubcategories);
     }, [props.mapSubcategories]);
 
+    const generateCatSearchName = (categoryID) => {
+        if (mapCategories.get(categoryID) === undefined) {
+            return "";
+        }
+        let output = mapCategories.get(categoryID).category_name.toLowerCase();
+        if (mapSubcategories.get(categoryID)) {
+            for (let i=0; i<mapSubcategories.get(categoryID).length; i++) {
+                output += generateCatSearchName(mapSubcategories.get(categoryID)[i]);
+            }
+        }
+        return output;
+    };
+
     const handleClickDelete = (categoryID, event) => {
         event.stopPropagation();
         setDeleteClass(mapCategories.get(categoryID));
@@ -255,7 +268,7 @@ export default function CategoryDrawer(props) {
         return (<Expand open={openCurrCatIDs.includes(categoryID)}>
             {mapSubcategories.get(categoryID).map(function (subID, index) {
                 const subCat = mapCategories.get(subID);
-                if (subCat.category_name.toLowerCase().includes(searchValue)) {
+                if (generateCatSearchName(subID).includes(searchValue)) {
                     return (<React.Fragment><ListItem button key={index} name={index.toString()}
                                                       style={{backgroundColor: subID === currCatID ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
                                                       onMouseEnter={() => setCurrCatListHover(subID)}
@@ -345,7 +358,7 @@ export default function CategoryDrawer(props) {
                         <List>
                             {rootCategories.map(function (categoryID, index) {
                                 const category = mapCategories.get(categoryID);
-                                if (category.category_name.toLowerCase().includes(searchValue)) {
+                                if (generateCatSearchName(categoryID).includes(searchValue)) {
                                     return (<React.Fragment><ListItem button key={index} name={index.toString()}
                                                                       style={{backgroundColor: categoryID === currCatID ? 'rgba(166, 92, 254, 0.29)' : '#ececec'}}
                                                                       onMouseEnter={() => setCurrCatListHover(categoryID)}
