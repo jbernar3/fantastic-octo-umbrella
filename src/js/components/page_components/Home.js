@@ -101,8 +101,6 @@ class Home extends Component {
     }
 
     handleDeleteCat(categoryID) {
-        console.log("IN HANDLE");
-        console.log(categoryID);
         const parentID = this.state.mapCategories.get(categoryID).parent_id;
         this.state.mapCategories.delete(categoryID);
         const tempSubcats = this.state.mapSubcategories.get(categoryID);
@@ -116,7 +114,7 @@ class Home extends Component {
             if (indexSubcat > -1) {
                 tempSubcatsParent.splice(indexSubcat, 1);
             }
-            this.state.mapSubcategories.set(parentID, tempSubcats);
+            this.state.mapSubcategories.set(parentID, tempSubcatsParent);
         } else {
             const indexCat = this.state.rootCategories.indexOf(categoryID);
             this.state.rootCategories.splice(indexCat, 1);

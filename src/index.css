@@ -970,3 +970,30 @@ body {
     font-size: 1.1vw;
     margin-left: 2.1vw;
 }
+
+#delete-category-div {
+    height: 28vw;
+    width: 50vw;
+    background-image: url('images/delete-class.png');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+#delete-category-msg {
+    width: 36vw;
+    text-align: center;
+    margin-left: 7vw;
+    font-size: 1.5vw;
+    margin-top: 15vw;
+}
+
+#delete-category-msg-inner {
+    color: #a65cff;
+    display: inline-block;
+}
+
+#delete-cat-buttons-div {
+    margin-top: 4vw;
+    text-align: center;
+}

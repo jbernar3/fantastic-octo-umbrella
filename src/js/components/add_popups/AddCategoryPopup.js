@@ -112,21 +112,6 @@ export default function AddCategoryPopup(props) {
     const [parentName, setParentName] = React.useState("no parent");
     const [errorMsg, setErrorMsg] = React.useState("");
     const classes = useStyles();
-    const InputProps = {
-        classes: {
-            root: classes.outlinedRoot,
-            notchedOutline: classes.notchedOutline,
-            focused: classes.focused
-        },
-    };
-
-    const InputPropsShort = {
-        classes: {
-            root: classes.outlinedRootShort,
-            notchedOutline: classes.notchedOutline,
-            focused: classes.focused
-        }
-    };
 
     const handleInputChange = (event) => {
         const eventName = event.target.name;
@@ -162,6 +147,7 @@ export default function AddCategoryPopup(props) {
                 if (xhr.response.startsWith("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else {
+                    setCatName("");
                     props.addNewCategory(JSON.parse(xhr.response), parentID);
                 }
             });
