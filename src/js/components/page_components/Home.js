@@ -155,6 +155,7 @@ class Home extends Component {
                 console.log("handle get categories error");
             } else {
                 console.log("THIS IS GET CATEGORIES RESPONSE");
+                console.log(xhr.response);
                 console.log(JSON.parse(xhr.response));
                 const categories = JSON.parse(xhr.response);
                 const mapSubcategories = new Map();

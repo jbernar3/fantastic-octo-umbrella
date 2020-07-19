@@ -1,7 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
 import MenuBar from "../general_components/MenuBar";
-import {changeDisplayCategory, editProfile, signoutUser, updateCategories, updateEmail} from "../../../actions";
+import {
+    changeDisplayCategory,
+    editProfile,
+    signoutUser,
+    updateCategories,
+    updateEmail,
+    updateUsername
+} from "../../../actions";
 import SideBar from "../general_components/SideBar";
 import Button from "@material-ui/core/Button";
 import SourceCard from "../source_components/SourceCard";
@@ -13,6 +20,7 @@ import Redirect from "react-router-dom/es/Redirect";
 import {makeStyles} from "@material-ui/core/styles";
 import ChangePasswordPopup from "../add_popups/ChangePasswordPopup";
 import ChangeEmailPopup from "../add_popups/ChangeEmailPopup";
+import ChangeUsernamePopup from "../add_popups/ChangeUsernamePopup";
 
 const changeBtnStyle = {
     color: 'white',
@@ -31,7 +39,8 @@ class Profile extends React.Component {
             editOpen: false,
             goHome: false,
             changePwdOpen: false,
-            changeEmailOpen: false
+            changeEmailOpen: false,
+            changeUsernameOpen: false
         };
     }
 
@@ -77,6 +86,7 @@ class Profile extends React.Component {
                         <div id={'profile-display-name'}>{this.props.username}</div>
                         <div id={'profile-email'}>{this.props.email}</div>
                         <div id={'profile-div-change-btns'}>
+                            <Button onClick={() => this.setState({changeUsernameOpen: true})} style={changeBtnStyle}>change username</Button>
                             <Button onClick={() => this.setState({changeEmailOpen: true})} style={changeBtnStyle}>change email</Button>
                             <Button onClick={() => this.setState({changePwdOpen: true})} style={changeBtnStyle}>change password</Button>
                         </div>
@@ -86,6 +96,8 @@ class Profile extends React.Component {
                                              handleClose={() => {this.setState({changePwdOpen: false})}} />
                         <ChangeEmailPopup userID={this.props.userID} currEmail={this.props.email} changeEmailOpen={this.state.changeEmailOpen}
                                             handleClose={() => {this.setState({changeEmailOpen: false})}} updateEmail={this.props.updateEmail}/>
+                        <ChangeUsernamePopup userID={this.props.userID} popupOpen={this.state.changeUsernameOpen} currUsername={this.props.username}
+                                            handleClose={() => {this.setState({changeUsernameOpen: false})}} updateUsername={this.props.updateUsername} />
                     </div>
                 </div>);
     }
@@ -112,6 +124,9 @@ function mapDispatchToProps(dispatch) {
         },
         updateEmail: (email) => {
             dispatch(updateEmail(email))
+        },
+        updateUsername: (username) => {
+            dispatch(updateUsername(username))
         }
     }
 }

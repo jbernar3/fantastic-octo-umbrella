@@ -8,6 +8,7 @@ export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const CHANGE_DISPLAY_CATEGORY = 'CHANGE_DISPLAY_CATEGORY';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const UPDATE_EMAIL = 'UPDATE_EMAIL';
+export const UPDATE_USERNAME = 'UPDATE_USERNAME';
 
 export const INITIAL_STATE = {
     type: SIGNIN_USER,
@@ -46,4 +47,8 @@ export function editProfile(firstName, lastName, bio) {
 
 export function updateEmail(email) {
     return {type: UPDATE_EMAIL, email}
+}
+
+export function updateUsername(username) {
+    return {type: UPDATE_USERNAME, username}
 }

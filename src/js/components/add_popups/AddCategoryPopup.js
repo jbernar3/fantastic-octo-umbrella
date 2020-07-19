@@ -122,8 +122,6 @@ export default function AddCategoryPopup(props) {
                 setCatName(eventValue);
             }
         } else {
-            console.log(eventName);
-            console.log(eventValue);
             setParentID(eventValue);
             setParentName(eventName);
             event.target.blur();
