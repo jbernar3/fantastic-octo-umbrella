@@ -3,10 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import CardMedia from "@material-ui/core/CardMedia";
-import {Image} from "@material-ui/icons";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const useStyles = makeStyles({
     root: {
@@ -151,6 +148,9 @@ export default function SourceCard(props) {
                 {/*<Button size="small" onClick={(event) => handleClick(event,'open-button')}>Open Source</Button>*/}
                 <button id={'source-card-open-src'} className={'houshcka_demibold open-src-button'}
                         onClick={(event) => handleClick(event,'open-button')}>open source</button>
+                <CopyToClipboard text={source.url}>
+                    <button id={'source-card-copy-url'} className={'houshcka_demibold open-src-button'} onClick={(event) => event.stopPropagation()}>copy url</button>
+                </CopyToClipboard>
             </CardActions>
         </Card>
     );

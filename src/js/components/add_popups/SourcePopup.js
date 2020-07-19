@@ -12,6 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
 import CloseIcon from "@material-ui/icons/Close";
+import {CopyToClipboard} from "react-copy-to-clipboard";
 
 const useStyles = makeStyles(theme => ({
     submitButton: {
@@ -218,6 +219,9 @@ export default function SourcePopup(props) {
                     <div id={'source-popup-date'} className={'houshcka_medium'}>{beautifyDate(props.source.date_added)}</div>
                     <button id={'source-popup-open-src'} className={'houshcka_demibold open-src-button'}
                             onClick={() => handleClick('open-btn')}>open source</button>
+                    <CopyToClipboard text={props.source.url}>
+                        <button id={'source-popup-copy-url'} className={'houshcka_demibold open-src-button'} onClick={(event) => event.stopPropagation()}>copy url</button>
+                    </CopyToClipboard>
                     {isEditMode ? <React.Fragment><Scrollbars
                             style={{float: 'right', width: '32vw', marginTop: '-19vw', height: '21vw', marginRight: '2.7vw'}}
                             //id='source_scroll_div'

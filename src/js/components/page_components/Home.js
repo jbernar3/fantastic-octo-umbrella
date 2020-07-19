@@ -61,6 +61,11 @@ class Home extends Component {
                 break;
             }
         }
+        if (this.state.mapCategories.get(categoryID)) {
+            const newCat = this.state.mapCategories.get(categoryID);
+            newCat.sources.push(source);
+            this.state.mapCategories.set(categoryID, newCat);
+        }
     }
 
     setSourceImg(img, categoryID, sourceID) {

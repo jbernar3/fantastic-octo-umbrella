@@ -871,14 +871,24 @@ body {
 }
 
 #source-popup-open-src {
-    margin-left: 14.9vw;
+    margin-left: 11.9vw;
     margin-top: 3vw;
+    font-size: 1.1vw;
+}
+
+#source-popup-copy-url {
+    margin-left: 1vw;
     font-size: 1.1vw;
 }
 
 #source-card-open-src {
     margin-left: .5vw;
     font-size: .8vw;
+}
+
+#source-card-copy-url {
+    font-size: .8vw;
+    margin-left: .7vw;
 }
 
 .open-src-button {

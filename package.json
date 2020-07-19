@@ -37,6 +37,7 @@
     "clsx": "^1.1.1",
     "flatted": "^2.0.2",
     "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-expand-animated": "^1.0.2",
     "react-redux": "^7.2.0",
