@@ -30,6 +30,7 @@ class Home extends Component {
         this.setCurrCatIndex = this.setCurrCatIndex.bind(this);
         this.handleEditSource = this.handleEditSource.bind(this);
         this.handleDeleteCat = this.handleDeleteCat.bind(this);
+        this.handleDeleteSource = this.handleDeleteSource.bind(this);
     }
 
     setCurrCatIndex(index) {
@@ -123,6 +124,20 @@ class Home extends Component {
         } else {
             const indexCat = this.state.rootCategories.indexOf(categoryID);
             this.state.rootCategories.splice(indexCat, 1);
+        }
+    }
+
+    handleDeleteSource(categoryID, sourceID) {
+        if (this.state.mapCategories.get(categoryID)) {
+            const tempCat = this.state.mapCategories.get(categoryID);
+            const tempSources = [];
+            tempCat.sources.forEach((source) => {
+                if (source._id.toString() !== sourceID) {
+                    tempSources.push(source);
+                }
+            });
+            tempCat.sources = tempSources;
+            this.state.mapCategories.set(categoryID, tempCat);
         }
     }
 
@@ -234,7 +249,8 @@ class Home extends Component {
                 <CategoryDrawer setCurrCatIndex={this.setCurrCatIndex} categories={this.state.categories}
                                 rootCategories={this.state.rootCategories} mapCategories={this.state.mapCategories}
                                 mapSubcategories={this.state.mapSubcategories} drawerOpen={this.state.drawerOpen}
-                                userID={this.props.userID} handleEditSource={this.handleEditSource} handleDeleteCat={this.handleDeleteCat}/>
+                                userID={this.props.userID} handleEditSource={this.handleEditSource} handleDeleteCat={this.handleDeleteCat}
+                                handleDeleteSource={this.handleDeleteSource}/>
             </div>
         )
     }

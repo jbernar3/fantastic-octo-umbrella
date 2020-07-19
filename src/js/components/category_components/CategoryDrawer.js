@@ -24,6 +24,7 @@ import Expand from "react-expand-animated";
 import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteClassPopup from "../add_popups/DeleteClassPopup";
+import DeleteSourcePopup from "../add_popups/DeleteSourcePopup";
 
 const drawerWidth = 240;
 
@@ -127,6 +128,12 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+    deleteIconStyle: {
+        color: '#a65cff',
+        '&:hover': {
+            color: 'rgba(166,92,254,0.42)'
+        }
+    }
 }));
 
 const clearIconStyle = {
@@ -140,10 +147,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const deleteIconStyle = {
-    color: '#a65cff'
-};
-
 export default function CategoryDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
@@ -155,13 +158,12 @@ export default function CategoryDrawer(props) {
     const [openSourcePopup, setOpenSourcePopup] = React.useState(false);
     const [sourcePopup, setSourcePopup] = React.useState(null);
     const [searchValue, setSearchValue] = React.useState("");
-    const [collapseOpen, setCollapseOpen] = React.useState(false);
-    const [collapseOpen2, setCollapseOpen2] = React.useState(false);
     const [currCatID, setCurrCatID] = React.useState(props.rootCategories === undefined || props.rootCategories[0] === undefined ? null : props.rootCategories[0]._id);
     const [openCurrCatIDs, setOpenCurrCatIDs] = React.useState([]);
     const [currCatListHover, setCurrCatListHover] = React.useState("");
     const [deleteClassOpen, setDeleteClassOpen] = React.useState(false);
     const [deleteClass, setDeleteClass] = React.useState(undefined);
+    const [deleteSource, setDeleteSource] = React.useState(null);
 
     let scrollbars = null;
 
@@ -219,6 +221,10 @@ export default function CategoryDrawer(props) {
         setDeleteClassOpen(true);
     };
 
+    const handleDeleteSourceClose = () => {
+        setDeleteSource(null);
+    };
+
     const handleDeleteCatClose = () => {
         setDeleteClass(undefined);
         setDeleteClassOpen(false);
@@ -238,7 +244,6 @@ export default function CategoryDrawer(props) {
                 const indexCat = openCurrCatIDs.indexOf(categoryID);
                 if (indexCat !== -1) {
                     openCurrCatIDs.splice(indexCat, 1);
-                    // setOpenCurrCatIDs(openCurrCatIDs.remove(categoryID));
                 }
                 if (currCatID === categoryID) {
                     const parentID = mapCategories.get(categoryID).parent_id;
@@ -289,7 +294,7 @@ export default function CategoryDrawer(props) {
                                                           document.getElementById('source_scroll_div').scrollTop = 0;
                                                           props.setCurrCatIndex(index)
                                                       }}>
-                        <ListItemIcon>{currCatListHover === subID ? <DeleteIcon style={deleteIconStyle} onClick={(event) => handleClickDelete(subID, event)} /> :
+                        <ListItemIcon>{currCatListHover === subID ? <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(subID, event)} /> :
                             <img alt={'folder-icon'}
                                            src={mapSubcategories.get(subID) === undefined || mapSubcategories.get(subID).length === 0 ?
                                                'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
@@ -370,7 +375,7 @@ export default function CategoryDrawer(props) {
                                                                           document.getElementById('source_scroll_div').scrollTop = 0;
                                                                           props.setCurrCatIndex(index)
                                                                       }}>
-                                        <ListItemIcon>{currCatListHover === categoryID ? <DeleteIcon style={deleteIconStyle} onClick={(event) => handleClickDelete(categoryID, event)} /> :
+                                        <ListItemIcon>{currCatListHover === categoryID ? <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(categoryID, event)} /> :
                                             <img alt={'folder-icon'}
                                                  src={mapSubcategories.get(categoryID) === undefined || mapSubcategories.get(categoryID).length === 0 ?
                                                      'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
@@ -398,7 +403,7 @@ export default function CategoryDrawer(props) {
                         trackXProps={{ className: "trackX" }}
                     >
                         {rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined && mapCategories.get(currCatID).sources.length !== 0 ? mapCategories.get(currCatID).sources.map((source, index) => (
-                            <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)} />
+                            <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)} changeDeleteSource={(source) => setDeleteSource(source)} />
                         )) : "No sources"}
                     </Scrollbars>
                 </main>
@@ -417,6 +422,8 @@ export default function CategoryDrawer(props) {
                 </Dialog>
                 <DeleteClassPopup popupOpen={deleteClassOpen} category={deleteClass} handleDelete={handleDeleteCat}
                     handleClose={handleDeleteCatClose} />
+                <DeleteSourcePopup userID={props.userID} popupOpen={deleteSource !== null} source={deleteSource} handleClose={handleDeleteSourceClose} categoryID={currCatID}
+                    categoryName={!mapCategories || !mapCategories.get(currCatID) ? "" : mapCategories.get(currCatID).category_name} handleDeleteSource={props.handleDeleteSource}/>
             </div>
         );
     }

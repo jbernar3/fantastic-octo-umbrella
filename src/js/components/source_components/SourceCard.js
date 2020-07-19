@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
     root: {
@@ -47,6 +48,14 @@ const useStyles = makeStyles({
         marginTop: '-10px',
         width: '200px',
         height: '25px',
+    },
+    deleteIconStyle: {
+        display: 'inline-block',
+        color: '#a65cff',
+        marginLeft: '.8vw',
+        '&:hover': {
+            color: 'rgba(166,92,254,0.42)'
+        }
     }
 });
 
@@ -54,6 +63,7 @@ export default function SourceCard(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
     const [source, setSource] = React.useState(props.source);
+    const [showDelete, setShowDelete] = React.useState(false);
 
     const arrayBufferToBase64 = (buffer) => {
         let binary = '';
@@ -128,8 +138,17 @@ export default function SourceCard(props) {
         }
     };
 
+    const handleDeleteSource = (event) => {
+        event.stopPropagation();
+        if (source) {
+            props.changeDeleteSource(source);
+        }
+    };
+
     return (
-        <Card name={'source-card'} className={classes.root} style={{borderRadius: 6}} onClick={(event) => handleClick(event, 'source-card')}>
+        <Card name={'source-card'} className={classes.root}
+              style={{borderRadius: 6}} onClick={(event) => handleClick(event, 'source-card')}
+              onMouseEnter={() => setShowDelete(true)} onMouseLeave={() => setShowDelete(false)}>
             <CardContent>
                 {props.drawerOpen ? <div className={'source_title'}>
                     {source.source_name.length > 55 ? source.source_name.substring(0, 55) + "..." : source.source_name}
@@ -144,13 +163,12 @@ export default function SourceCard(props) {
 
             </CardContent>
             <CardActions>
-                {/*<Button size="small" onClick={() => {window.open('http://google.com','_blank')}}>Open Source</Button>*/}
-                {/*<Button size="small" onClick={(event) => handleClick(event,'open-button')}>Open Source</Button>*/}
                 <button id={'source-card-open-src'} className={'houshcka_demibold open-src-button'}
                         onClick={(event) => handleClick(event,'open-button')}>open source</button>
                 <CopyToClipboard text={source.url}>
                     <button id={'source-card-copy-url'} className={'houshcka_demibold open-src-button'} onClick={(event) => event.stopPropagation()}>copy url</button>
                 </CopyToClipboard>
+                {showDelete ? <DeleteIcon onClick={handleDeleteSource} className={classes.deleteIconStyle} /> : ""}
             </CardActions>
         </Card>
     );
