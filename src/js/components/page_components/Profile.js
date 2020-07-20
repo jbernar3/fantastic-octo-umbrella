@@ -75,7 +75,9 @@ class Profile extends React.Component {
                             trackXProps={{ className: "trackX" }}
                         >
                             <div className={'profile-description'}>
-                                {this.props.bio === "" || this.props.bio === undefined ? "empty bio" : this.props.bio}
+                                <span style={{whiteSpace: 'pre-line'}}>
+                                    {this.props.bio === "" || this.props.bio === undefined ? "empty bio" : this.props.bio}
+                                </span>
                             </div>
                         </Scrollbars>
                         <EditProfilePopup userID={this.props.userID} firstName={this.props.firstName} lastName={this.props.lastName} bio={this.props.bio} editProfile={this.props.editProfile}

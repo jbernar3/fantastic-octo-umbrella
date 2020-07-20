@@ -1109,3 +1109,9 @@ body {
     text-align: center;
     width: 99%;
 }
+
+#menubar-profile-icon {
+    cursor: pointer;
+    margin-right: 2vh;
+    width: 3vh;
+}

@@ -93,6 +93,7 @@ export default function MenuAppBar(props) {
                         <div>
                             <Tooltip title={"My Profile"} aria-label="add">
                                 <AccountCircleIcon style={{cursor: 'pointer', fill: '#ffffff', marginRight: '2vh'}} onClick={handleGoToProfile} />
+                                {/*<img id={'menubar-profile-icon'} src={'src/images/icons/' + props.profileImg}  alt={'profile icon'}/>*/}
                             </Tooltip>
                             <Tooltip title={"Logout"}>
                                 <ExitToAppIcon style={{cursor: 'pointer', fill: '#ffffff'}} onClick={handleClickLogout} />

@@ -163,6 +163,7 @@ export default function SourcePopup(props) {
         if (eventName === 'title') {
             setNewTitle(eventValue);
         } else if (eventName === 'notes') {
+            console.log(newNotes);
             setNewNotes(eventValue);
         }
     };
@@ -248,7 +249,9 @@ export default function SourcePopup(props) {
                             thumbYProps={{ className: "thumbY" }}
                             trackXProps={{ className: "trackX" }}
                         >
-                            {getSourceNotes(props.source)}
+                            <span style={{whiteSpace: 'pre-line'}}>
+                                {getSourceNotes(props.source)}
+                            </span>
                         </Scrollbars>}
                 </React.Fragment>
             : ""}

@@ -142,9 +142,6 @@ class Home extends Component {
     }
 
     handleSetCategories() {
-        // if (this.props.location.state !== undefined && this.props.location.state.categories !== null) {
-        //     this.setState({categories: this.props.location.state.categories});
-        // } else {
         const postParameters = {
             userID: this.props.userID
         };
@@ -154,9 +151,6 @@ class Home extends Component {
             if (xhr.response === "error") {
                 console.log("handle get categories error");
             } else {
-                console.log("THIS IS GET CATEGORIES RESPONSE");
-                console.log(xhr.response);
-                console.log(JSON.parse(xhr.response));
                 const categories = JSON.parse(xhr.response);
                 const mapSubcategories = new Map();
                 const mapCategories = new Map();
@@ -173,38 +167,6 @@ class Home extends Component {
                         mapSubcategories.set(category.parent_id, [category._id]);
                     }
                 });
-                // let tempCats = categories;
-                // while (tempCats.length !== 0) {
-                //     let newTempCats = [];
-                //     tempCats.forEach((category) => {
-                //         if (category.parent_id === '-1') {
-                //             category.subcategories = new Map();
-                //             rootCategories.set(category._id, category);
-                //             mapParentIDs.set(category._id, category.parent_id);
-                //         } else if (mapParentIDs.has(category.parent_id)) {
-                //             category.subcategories = [];
-                //             mapParentIDs.set(category._id, category.parent_id);
-                //             const pathParents = [];
-                //             let parentCat = category.parent_id;
-                //             while (parentCat !== -1) {
-                //                 pathParents.push(parentCat);
-                //                 parentCat = mapParentIDs.get(parentCat);
-                //             }
-                //             const rootCat = rootCategories.get(pathParents[pathParents.length-1]);
-                //             let prevCat = rootCat;
-                //             for (let i=pathParents.length-2; i>=0; i--) {
-                //                 // get root category to change and add it back into the og map
-                //                 prevCat = prevCat.subcategories.get(pathParents[i]);
-                //             }
-                //         } else {
-                //             newTempCats.push(category);
-                //             console.log("PUSHED TO TEMP CATS");
-                //         }
-                //     });
-                //     tempCats = newTempCats;
-                // }
-                console.log("THIS IS ROOT CATEGORIES");
-                console.log(rootCategories);
                 this.setState({categories: JSON.parse(xhr.response), mapCategories: mapCategories,
                     mapSubcategories: mapSubcategories, rootCategories: rootCategories});
             }
@@ -231,13 +193,6 @@ class Home extends Component {
                         <img src={'src/images/menu_icon.png'} alt={'menu icon'} style={{width: '2vh', height: '2vh', marginRight: '1vh', marginLeft: '-1vh'}} />
                         classes
                     </div>
-                    {/*<Button style={{*/}
-                    {/*    fontFamily: 'houschka-rounded,sans-serif',*/}
-                    {/*    fontWeight: 400,*/}
-                    {/*    fontStyle: 'normal',*/}
-                    {/*    color: '#a65cff',*/}
-                    {/*    marginTop: '1vh',*/}
-                    {/*    textTransform: 'none'}} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</Button>*/}
                     <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
                     <div id={'add_source_div'} onClick={() => this.setState({addSourceOpen: true})}>+ Add Source</div>
                     {this.state.categories !== undefined ? <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
@@ -262,6 +217,7 @@ function mapStateToProps(state) {
         userID: state.signin.userID,
         firstName: state.signin.firstName,
         lastName: state.signin.lastName,
+        profileImg: state.signin.profileImg
     }
 }
 

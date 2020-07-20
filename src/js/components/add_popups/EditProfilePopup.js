@@ -179,7 +179,7 @@ export default function EditProfilePopup(props) {
                 </div>
             </Dialog>
             <ChooseProfileImagePopup popupOpen={profileImgOpen} handleClose={() => setProfileImgOpen(false)}
-                                     profileImg={props.profileImg.toString()} updateImg={(img) => setImg(img)} />
+                                     profileImg={props.profileImg !== undefined ? props.profileImg.toString() : ""} updateImg={(img) => setImg(img)} />
         </div>
     );
 }
