@@ -151,7 +151,6 @@ export default function CategoryDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [indexCurrCat, setIndexCurrCat] = React.useState(0);
-    const [categories, setCategories] = React.useState(props.categories);
     const [rootCategories, setRootCategories] = React.useState(props.rootCategories);
     const [mapCategories, setMapCategories] = React.useState(props.mapCategories);
     const [mapSubcategories, setMapSubcategories] = React.useState(props.mapSubcategories);
@@ -183,13 +182,10 @@ export default function CategoryDrawer(props) {
     };
 
     useEffect(() => {
-        setCategories(props.categories);
-    }, [props.categories]);
-
-    useEffect(() => {
         setRootCategories(props.rootCategories);
         if (currCatID === null || currCatID === undefined) {
             setCurrCatID(props.rootCategories[0]);
+            props.setCurrCatID(props.rootCategories[0]);
             openCurrCatIDs.push(props.rootCategories[0])
         }
     }, [props.rootCategories]);
@@ -250,11 +246,14 @@ export default function CategoryDrawer(props) {
                     if (parentID === '-1') {
                         if (props.rootCategories.length === 0) {
                             setCurrCatID(null);
+                            props.setCurrCatID(null);
                         } else {
                             setCurrCatID(props.rootCategories[0]);
+                            props.setCurrCatID(props.rootCategories[0]);
                         }
                     } else {
                         setCurrCatID(parentID);
+                        props.setCurrCatID(parentID);
                     }
                 }
                 handleDeleteCatClose();
@@ -281,6 +280,7 @@ export default function CategoryDrawer(props) {
                                                       onClick={() => {
                                                           setIndexCurrCat(index);
                                                           setCurrCatID(subID);
+                                                          props.setCurrCatID(subID);
                                                           const tempOpenIDs = [];
                                                           for (let i=0; i<openCurrCatIDs.length; i++) {
                                                               tempOpenIDs.push(openCurrCatIDs[i]);
@@ -370,6 +370,7 @@ export default function CategoryDrawer(props) {
                                                                       onMouseLeave={() => setCurrCatListHover("")}
                                                                       onClick={() => {
                                                                           setCurrCatID(category._id);
+                                                                          props.setCurrCatID(category._id);
                                                                           setOpenCurrCatIDs([category._id]);
                                                                           // setIndexCurrCat(index);
                                                                           document.getElementById('source_scroll_div').scrollTop = 0;

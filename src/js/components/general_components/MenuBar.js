@@ -156,7 +156,7 @@ export default function MenuAppBar(props) {
     if (goToProfile) {
         return (<Redirect to={{
             pathname: 'profile',
-            state: { categories: props.categories }
+            state: { mapCategories: props.mapCategories }
         }} />);
     } else {
         return basicMenuBar;

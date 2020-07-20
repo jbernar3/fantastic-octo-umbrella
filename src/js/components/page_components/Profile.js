@@ -49,13 +49,12 @@ class Profile extends React.Component {
         if (this.state.goHome) {
             return (<Redirect to={{
                 pathname: '/home',
-                state: { categories: this.props.location.state.categories }
             }} />);
         }
-        const numCategories = this.props.location.state.categories.length;
+        const numCategories = this.props.location.state.mapCategories.size;
         let numSources = 0;
-        for (let i=0; i<numCategories; i++) {
-            numSources += this.props.location.state.categories[i].sources.length;
+        for (let [key, category] of this.props.location.state.mapCategories) {
+            numSources += category.sources.length;
         }
         return ( <div className={"main_content"}>
                     <div className={"first-half-profile"}>

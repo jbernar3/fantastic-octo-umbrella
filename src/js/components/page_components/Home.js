@@ -13,11 +13,10 @@ class Home extends Component {
         super(props);
         this.state = {
             drawerOpen: true,
-            categories: undefined,
             firstRender: true,
             addCatOpen: false,
             addSourceOpen: false,
-            indexCurrCat: 0,
+            currCatID: 0,
             rootCategories: [],
             mapCategories: new Map(),
             mapSubcategories: new Map()
@@ -27,14 +26,14 @@ class Home extends Component {
         this.addNewCategory = this.addNewCategory.bind(this);
         this.addNewSource = this.addNewSource.bind(this);
         this.setSourceImg = this.setSourceImg.bind(this);
-        this.setCurrCatIndex = this.setCurrCatIndex.bind(this);
+        this.setCurrCatID = this.setCurrCatID.bind(this);
         this.handleEditSource = this.handleEditSource.bind(this);
         this.handleDeleteCat = this.handleDeleteCat.bind(this);
         this.handleDeleteSource = this.handleDeleteSource.bind(this);
     }
 
-    setCurrCatIndex(index) {
-        this.setState({indexCurrCat: index});
+    setCurrCatID(id) {
+        this.setState({currCatID: id});
     }
 
     addNewCategory(category, parentID) {
@@ -70,24 +69,21 @@ class Home extends Component {
     }
 
     setSourceImg(img, categoryID, sourceID) {
-        const updatedCategories = this.state.categories.map((category, i) => {
-            if (category._id.toString() === categoryID) {
-                const copyCategory = category;
-                copyCategory.sources = category.sources.map((source, j) => {
-                    if (source._id.toString() === sourceID) {
-                        const copySource = source;
-                        copySource.source_img = img;
-                        return copySource;
-                    } else {
-                        return source;
-                    }
-                });
-                return copyCategory;
-            } else {
-                return category;
-            }
-        });
-        this.setState({categories: updatedCategories});
+        if (this.state.mapCategories.get(categoryID)) {
+            const tempCat = this.state.mapCategories.get(categoryID);
+            const tempSources = [];
+            tempCat.sources.forEach((source) => {
+                if (source._id.toString() === sourceID) {
+                    const tempSource = source;
+                    tempSource.source_img = img;
+                    tempSources.push(tempSource);
+                } else {
+                    tempSources.push(source);
+                }
+            });
+            tempCat.sources = tempSources;
+            this.state.mapCategories.set(categoryID, tempCat);
+        }
     }
 
     handleEditSource(categoryID, newSource) {
@@ -167,7 +163,7 @@ class Home extends Component {
                         mapSubcategories.set(category.parent_id, [category._id]);
                     }
                 });
-                this.setState({categories: JSON.parse(xhr.response), mapCategories: mapCategories,
+                this.setState({mapCategories: mapCategories,
                     mapSubcategories: mapSubcategories, rootCategories: rootCategories});
             }
         });
@@ -187,7 +183,7 @@ class Home extends Component {
         }
         return(
             <div>
-                <MenuBar logout={this.props.logout} categories={this.state.categories} />
+                <MenuBar logout={this.props.logout} mapCategories={this.state.mapCategories} />
                 <div style={{width: '100%', marginTop: '1.8vh'}}>
                     <div id={"classes_clickable_div"} onClick={() => {this.setState({drawerOpen: !this.state.drawerOpen})}}>
                         <img src={'src/images/menu_icon.png'} alt={'menu icon'} style={{width: '2vh', height: '2vh', marginRight: '1vh', marginLeft: '-1vh'}} />
@@ -195,14 +191,16 @@ class Home extends Component {
                     </div>
                     <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
                     <div id={'add_source_div'} onClick={() => this.setState({addSourceOpen: true})}>+ Add Source</div>
-                    {this.state.categories !== undefined ? <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
-                                                                             categories={this.state.categories} addNewCategory={this.addNewCategory} currCatIndex={this.state.indexCurrCat} />
+                    {this.state.mapCategories !== undefined ? <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
+                                                                             mapCategories={this.state.mapCategories} rootCategories={this.state.rootCategories} mapSubcategories={this.state.mapSubcategories}
+                                                                                addNewCategory={this.addNewCategory} currCatID={this.state.currCatID} />
                     : ""}
-                    {this.state.categories !== undefined ? <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
-                                                                           categories={this.state.categories} addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} currCatIndex={this.state.indexCurrCat} />
+                    {this.state.mapCategories !== undefined ? <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
+                                                                              mapCategories={this.state.mapCategories} rootCategories={this.state.rootCategories} mapSubcategories={this.state.mapSubcategories}
+                                                                           addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} currCatID={this.state.currCatID} />
                         : ""}
                 </div>
-                <CategoryDrawer setCurrCatIndex={this.setCurrCatIndex} categories={this.state.categories}
+                <CategoryDrawer setCurrCatID={this.setCurrCatID} categories={this.state.categories}
                                 rootCategories={this.state.rootCategories} mapCategories={this.state.mapCategories}
                                 mapSubcategories={this.state.mapSubcategories} drawerOpen={this.state.drawerOpen}
                                 userID={this.props.userID} handleEditSource={this.handleEditSource} handleDeleteCat={this.handleDeleteCat}

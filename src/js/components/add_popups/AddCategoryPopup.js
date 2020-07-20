@@ -160,6 +160,22 @@ export default function AddCategoryPopup(props) {
         }
     };
 
+    const generateOptions = (categoryID) => {
+        if (!props.mapCategories.get(categoryID) === undefined) {
+            return "";
+        }
+        return (<React.Fragment>
+            <option className={'select-options'} key={categoryID}
+                    value={categoryID}>{props.mapCategories.get(categoryID).category_name}</option>
+            {!props.mapSubcategories.get(categoryID) ? props.mapSubcategories.map((subCat) => {
+                return (<React.Fragment><option className={'select-options'} key={subCat}
+                        value={subCat}>{props.mapCategories.get(subCat).category_name}</option>
+                    {generateOptions(subCat)}
+                </React.Fragment>);
+            }) : ""}
+        </React.Fragment>)
+    };
+
     return (
         <div>
             <Dialog
@@ -179,9 +195,12 @@ export default function AddCategoryPopup(props) {
                     <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', marginTop: '3vw', marginLeft: '5vw'}}>parent class</div>
                     <select id={'parent-cat-select'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} className={'new-cat-inputs'} name={'parent_cat_select'} onChange={handleInputChange}>
                         <option id={-1} className={'select-options'} value={-1}>no parent</option>
-                        {props.categories.map((category, index) => {
-                            return (<option className={'select-options'} key={index} value={category._id}>{category.category_name}</option>);
-                        })}
+                        {props.rootCategories ? props.rootCategories.map((rootID, index) => {
+                            return (<React.Fragment>
+                                <option className={'select-options'} style={{fontStyle: 'bold'}} key={index} value={rootID}>{props.mapCategories.get(rootID).category_name}</option>
+                            </React.Fragment>);
+                        }) : ""}
+
                     </select>
                     {errorMsg === "" ? <Button id={'submit_new_class'} className={classes.submitButton} onClick={handleSubmit}>create</Button> :
                         <div id={'add-cat-error-div'} className={'houshcka_demibold'}>{errorMsg}</div>}
