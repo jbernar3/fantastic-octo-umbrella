@@ -404,7 +404,7 @@ export default function CategoryDrawer(props) {
                     >
                         {rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined && mapCategories.get(currCatID).sources.length !== 0 ? mapCategories.get(currCatID).sources.map((source, index) => (
                             <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)} changeDeleteSource={(source) => setDeleteSource(source)} />
-                        )) : "No sources"}
+                        )) : <div id={'no-sources-icon-div'}><img id={'no-sources-icon'} src={'src/images/no-sources.png'} alt={'no sources'}/></div>}
                     </Scrollbars>
                 </main>
                 <Dialog

@@ -1048,7 +1048,8 @@ body {
 }
 
 #img-edit-profile {
-    margin: 1.5vw 16.9vw auto;
+    margin-top: 5vw;
+    margin-left: 16.93vw;
     width: 8.2vw;
     cursor:pointer;
 }
@@ -1095,4 +1096,16 @@ body {
     background-image: url('images/choose-icon.png');
     background-size: cover;
     background-position: center;
+}
+
+#no-sources-icon {
+    width: 16vw;
+    opacity: .6;
+}
+
+#no-sources-icon-div {
+    margin-left: 1%;
+    margin-top: 10vh;
+    text-align: center;
+    width: 99%;
 }
