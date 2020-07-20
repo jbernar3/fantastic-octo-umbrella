@@ -17,7 +17,8 @@ export const INITIAL_STATE = {
     firstName: "",
     lastName: "",
     bio: "",
-    username: ""
+    username: "",
+    profileImg: ""
 };
 
 
@@ -25,8 +26,8 @@ export const INITIAL_STATE = {
  * action creators
  */
 
-export function signinUser(userID, email, firstName, lastName, bio, username) {
-    return { type: SIGNIN_USER, userID, email, firstName, lastName, bio, username}
+export function signinUser(userID, email, firstName, lastName, bio, username, profileImg) {
+    return { type: SIGNIN_USER, userID, email, firstName, lastName, bio, username, profileImg}
 }
 
 export function signoutUser() {
@@ -41,8 +42,8 @@ export function changeDisplayCategory(index) {
     return {type: CHANGE_DISPLAY_CATEGORY, index}
 }
 
-export function editProfile(firstName, lastName, bio) {
-    return {type: EDIT_PROFILE, firstName, lastName, bio}
+export function editProfile(firstName, lastName, bio, profileImg) {
+    return {type: EDIT_PROFILE, firstName, lastName, bio, profileImg}
 }
 
 export function updateEmail(email) {

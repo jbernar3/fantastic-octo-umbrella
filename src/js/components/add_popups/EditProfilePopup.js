@@ -10,10 +10,22 @@ import Scrollbars from "react-scrollbars-custom";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Tooltip from '@material-ui/core/Tooltip';
+import CloseIcon from "@material-ui/icons/Close";
+import ChooseProfileImagePopup from "./ChooseProfileImagePopup";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Zoom ref={ref} {...props} />;
 });
+
+const closeIconStyle = {
+    fill: '#a65cff',
+    width: '2.5vw',
+    float: 'right',
+    marginTop:  '1.5vw',
+    marginRight: '1.2vw',
+    cursor: 'pointer'
+};
 
 const useStyles = makeStyles(theme => ({
     textInput: {
@@ -69,6 +81,9 @@ export default function EditProfilePopup(props) {
     const [updatedFName, setFName] = React.useState(props.firstName);
     const [updatedLName, setLName] = React.useState(props.lastName);
     const [updatedBio, setBio] = React.useState(props.bio);
+    const [updatedImg, setImg] = React.useState(props.profileImg);
+    const [profileImgOpen, setProfileImgOpen] = React.useState(false);
+
     const classes = useStyles();
     const InputProps = {
         classes: {
@@ -101,7 +116,8 @@ export default function EditProfilePopup(props) {
             userID: props.userID,
             firstName: updatedFName,
             lastName: updatedLName,
-            bio: updatedBio
+            bio: updatedBio,
+            profileImg: updatedImg
         };
 
         const xhr = new XMLHttpRequest();
@@ -110,7 +126,7 @@ export default function EditProfilePopup(props) {
                 console.log("handle edit profile error");
             } else if (xhr.response === "success") {
                 props.handleClose();
-                props.editProfile(updatedFName, updatedLName, updatedBio);
+                props.editProfile(updatedFName, updatedLName, updatedBio, updatedImg);
             }
         });
         xhr.open('POST', 'http://localhost:3000/edit_profile', false);
@@ -130,7 +146,10 @@ export default function EditProfilePopup(props) {
                 maxWidth={false}
             >
                 <div id={'edit-profile-popup'}>
-                    <img src={'src/images/c-logo.png'} alt={'profile icon'} style={{margin: '5.5vw 16.9vw auto', width: '8.2vw'}}/>
+                    <CloseIcon onClick={props.handleClose} style={closeIconStyle} />
+                    <Tooltip title={'edit profile image'}>
+                        <img id={'img-edit-profile'} src={'src/images/icons/' + updatedImg} alt={'profile icon'} onClick={() => setProfileImgOpen(true)} />
+                    </Tooltip>
                     <div className={'text-input-profile-description'} style={{float: 'left', marginLeft: '4.6vw'}}>first name</div>
                     <div className={'text-input-profile-description'} style={{float: 'right', marginRight: '9vw'}}>last name</div>
                     <input id={'new-fname'} className={'new-cat-inputs'} name={'fName'} value={updatedFName} onChange={handleInputChange} />
@@ -159,6 +178,8 @@ export default function EditProfilePopup(props) {
                     <Button id={'update-profile-btn'} onClick={handleSubmit}>Update Profile</Button>
                 </div>
             </Dialog>
+            <ChooseProfileImagePopup popupOpen={profileImgOpen} handleClose={() => setProfileImgOpen(false)}
+                                     profileImg={props.profileImg.toString()} updateImg={(img) => setImg(img)} />
         </div>
     );
 }

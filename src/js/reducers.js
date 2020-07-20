@@ -16,7 +16,8 @@ function signin(state = INITIAL_STATE, action) {
                 firstName: action.firstName,
                 lastName: action.lastName,
                 bio: action.bio,
-                username: action.username
+                username: action.username,
+                profileImg: action.profileImg
             });
         case SIGNOUT_USER:
             return Object.assign({}, state, {
@@ -25,7 +26,8 @@ function signin(state = INITIAL_STATE, action) {
                 firstName: "",
                 lastName: "",
                 bio: "",
-                username: ""
+                username: "",
+                profileImg: ""
             });
         case UPDATE_CATEGORIES:
             return Object.assign({}, state, {
@@ -39,7 +41,8 @@ function signin(state = INITIAL_STATE, action) {
             return Object.assign({}, state, {
                 firstName: action.firstName,
                 lastName: action.lastName,
-                bio: action.bio
+                bio: action.bio,
+                profileImg: action.profileImg
             });
         case UPDATE_EMAIL:
             return Object.assign({}, state, {

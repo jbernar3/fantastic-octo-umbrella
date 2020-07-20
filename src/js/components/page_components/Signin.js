@@ -154,7 +154,9 @@ function SignInSide(props) {
     };
 
     const handleSignin = (user) => {
-        props.onSignin(user._id, user.email, user.first_name, user.last_name, user.bio, user.username);
+        console.log("IN USER HANDLE SIGNIN");
+        console.log(user);
+        props.onSignin(user._id, user.email, user.first_name, user.last_name, user.bio, user.username, user.profileImg);
         // setUserCategories(user.categories);
         setSignedIn(true);
     };
@@ -237,8 +239,8 @@ class Signin extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onClick: (userID, email, fName, lName, bio, username) => {
-            dispatch(signinUser(userID, email, fName, lName, bio, username))
+        onClick: (userID, email, fName, lName, bio, username, profileImg) => {
+            dispatch(signinUser(userID, email, fName, lName, bio, username, profileImg))
         }
     };
 };

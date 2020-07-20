@@ -13,6 +13,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
 import CloseIcon from "@material-ui/icons/Close";
 import {CopyToClipboard} from "react-copy-to-clipboard";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(theme => ({
     submitButton: {
@@ -41,6 +42,10 @@ const useStyles = makeStyles(theme => ({
         textTransform: 'none',
         marginTop: '1vw',
         marginLeft: '1vw'
+    },
+    deleteIconStyle: {
+        color: '#a65cff',
+        width: '2vw',
     }
 }));
 
@@ -217,11 +222,15 @@ export default function SourcePopup(props) {
                         <div id={'source-popup-cat'} className={'houshcka_demibold'}>class: {props.categoryName}</div>}
                     {getSourceImg(props.source)}
                     <div id={'source-popup-date'} className={'houshcka_medium'}>{beautifyDate(props.source.date_added)}</div>
-                    <button id={'source-popup-open-src'} className={'houshcka_demibold open-src-button'}
-                            onClick={() => handleClick('open-btn')}>open source</button>
-                    <CopyToClipboard text={props.source.url}>
-                        <button id={'source-popup-copy-url'} className={'houshcka_demibold open-src-button'} onClick={(event) => event.stopPropagation()}>copy url</button>
-                    </CopyToClipboard>
+                    {isEditMode ? "" :
+                        <React.Fragment>
+                            <button id={'source-popup-open-src'} className={'houshcka_demibold open-src-button'}
+                                onClick={() => handleClick('open-btn')}>open source</button>
+                            <CopyToClipboard text={props.source.url}>
+                                <button id={'source-popup-copy-url'} className={'houshcka_demibold open-src-button'} onClick={(event) => event.stopPropagation()}>copy url</button>
+                            </CopyToClipboard>
+                        </React.Fragment>
+                    }
                     {isEditMode ? <React.Fragment><Scrollbars
                             style={{float: 'right', width: '32vw', marginTop: '-19vw', height: '21vw', marginRight: '2.7vw'}}
                             //id='source_scroll_div'

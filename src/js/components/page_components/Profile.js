@@ -65,7 +65,7 @@ class Profile extends React.Component {
                         </Button>
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
                             fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'right', marginRight: '2%'}} onClick={() => {this.setState({editOpen: true})}}>edit profile</Button>
-                        <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} />
+                        <img src={'src/images/icons/' + this.props.profileImg} alt={'profile icon'} id={'profile-img'} />
                         <div className={'profile-name'}>{this.props.firstName} {this.props.lastName}</div>
                         <div id={'num_classes_sources_div'} className={'houshcka_demibold'}>classes: {numCategories} | sources: {numSources}</div>
                         <Scrollbars
@@ -79,7 +79,7 @@ class Profile extends React.Component {
                             </div>
                         </Scrollbars>
                         <EditProfilePopup userID={this.props.userID} firstName={this.props.firstName} lastName={this.props.lastName} bio={this.props.bio} editProfile={this.props.editProfile}
-                                          editOpen={this.state.editOpen} handleClose={() => {this.setState({editOpen: false})}}/>
+                                          editOpen={this.state.editOpen} handleClose={() => {this.setState({editOpen: false})}} profileImg={this.props.profileImg}/>
                     </div>
                     <div className={'second-half-profile'}>
                         <img src={'src/images/c-logo.png'} alt={'c logo'} id={'profile-c-logo'} style={{marginTop: '5vw'}} />
@@ -110,7 +110,8 @@ function mapStateToProps(state) {
         firstName: state.signin.firstName,
         lastName: state.signin.lastName,
         bio: state.signin.bio,
-        username: state.signin.username
+        username: state.signin.username,
+        profileImg: state.signin.profileImg
     }
 }
 
@@ -119,8 +120,8 @@ function mapDispatchToProps(dispatch) {
         logOut: () => {
             dispatch(signoutUser())
         },
-        editProfile: (firstName, lastName, bio) => {
-            dispatch(editProfile(firstName, lastName, bio))
+        editProfile: (firstName, lastName, bio, profileImg) => {
+            dispatch(editProfile(firstName, lastName, bio, profileImg))
         },
         updateEmail: (email) => {
             dispatch(updateEmail(email))

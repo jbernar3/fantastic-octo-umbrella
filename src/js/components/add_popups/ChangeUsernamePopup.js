@@ -122,7 +122,7 @@ export default function ChangeUsernamePopup(props) {
                 aria-describedby="alert-dialog-slide-description"
                 maxWidth={false}
             >
-                <div id={'change-email-popup'}>
+                <div id={'change-username-popup'}>
                     <CloseIcon onClick={handleClose} style={closeIconStyle} />
                     <div className={'houshcka_medium'} style={{fontSize: '1.2vw', marginTop: '14.5vw', marginLeft: '7.5vw'}}>
                         current username
