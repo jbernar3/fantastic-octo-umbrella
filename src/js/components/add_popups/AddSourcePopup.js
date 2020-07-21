@@ -240,6 +240,33 @@ export default function AddSourcePopup(props) {
         }
     };
 
+    const generateOptions = (categoryID) => {
+        if (!props.mapCategories.get(categoryID) === undefined) {
+            return "";
+        }
+        return (<React.Fragment>
+            {props.mapSubcategories.get(categoryID) ? props.mapSubcategories.get(categoryID).map((subCat) => {
+                if (props.currCatID === props.mapCategories.get(subCat)._id.toString()) {
+                    return (<React.Fragment>
+                        <option className={'select-options'} key={categoryID}
+                                value={categoryID}>{props.mapCategories.get(categoryID).category_name}</option>
+                        <option id={subCat} selected={'selected'} className={'select-options'} value={subCat}>
+                            {props.mapCategories.get(subCat) ? props.mapCategories.get(subCat).category_name : ""}
+                        </option>
+                    </React.Fragment>)
+                }
+                return (<React.Fragment>
+                    <option className={'select-options'} key={categoryID}
+                            value={categoryID}>{props.mapCategories.get(categoryID).category_name}</option>
+                    <option id={subCat} className={'select-options'} value={subCat}>
+                        {props.mapCategories.get(subCat) ? props.mapCategories.get(subCat).category_name : ""}
+                    </option>
+                    {generateOptions(subCat)}
+                </React.Fragment>);
+            }) : ""}
+        </React.Fragment>)
+    };
+
     return (
         <div>
             <Dialog
@@ -277,12 +304,8 @@ export default function AddSourcePopup(props) {
                     </Scrollbars>
                     <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', marginLeft: '4.2vw', marginTop: '2vw'}}>class</div>
                     <select id={'cat-select'} className={'new-source-inputs'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} name={'parent_cat_select'} onChange={handleInputChange}>
-                        {props.categories.map((category, index) => {
-                            if (props.currCatIndex === index) {
-                                return (<option id={index} selected={'selected'} className={'select-options'} value={category._id}>{category.category_name}</option>);
-                            } else {
-                                return (<option id={index} className={'select-options'} value={category._id}>{category.category_name}</option>);
-                            }
+                        {props.rootCategories.map((rootID, index) => {
+                            {generateOptions(rootID)}
                         })}
                     </select>
                     {errorMsg === "" ? <Button className={classes.submitButton} onClick={handleSubmit}>add source</Button> :

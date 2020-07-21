@@ -167,7 +167,7 @@ export default function AddCategoryPopup(props) {
         return (<React.Fragment>
             <option className={'select-options'} key={categoryID}
                     value={categoryID}>{props.mapCategories.get(categoryID).category_name}</option>
-            {!props.mapSubcategories.get(categoryID) ? props.mapSubcategories.map((subCat) => {
+            {props.mapSubcategories.get(categoryID) ? props.mapSubcategories.get(categoryID).map((subCat) => {
                 return (<React.Fragment><option className={'select-options'} key={subCat}
                         value={subCat}>{props.mapCategories.get(subCat).category_name}</option>
                     {generateOptions(subCat)}
