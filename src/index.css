@@ -927,7 +927,7 @@ body {
     font-weight: 300;
     font-style: normal;
     font-size: 1vw;
-    width: 67.5%;
+    /*width: 35vw;*/
     display: inline-block;
     height: 9vh;
     overflow: hidden;
@@ -968,16 +968,16 @@ body {
     font-size: 1.5vw;
     color: #854acc;
     text-align: center;
-    width: 20vw;
+    width: 28vw;
     font-family: houschka-rounded,sans-serif;
     font-weight: 600;
     font-style: normal;
 }
 
 #edit-source-title {
-    margin-left: 26.2vw;
+    margin-left: 22.2vw;
     margin-top: -.9vw;
-    width: 20vw;
+    min-width: 28vw;
 }
 
 #edit-source-notes-textarea {
@@ -1114,4 +1114,14 @@ body {
     cursor: pointer;
     margin-right: 2vh;
     width: 3vh;
+}
+
+#edit-source-error {
+    color: red;
+    font-size: 1.2vw;
+    width: 28vw;
+    float: right;
+    margin-right: -30.1vw;
+    margin-top: 3.5vw;
+    text-align: center;
 }

@@ -161,12 +161,12 @@ export default function AddSourcePopup(props) {
     const handleSubmit = () => {
         if (sourceUrl === "") {
             setErrorMsg("url is empty");
-        } else if (props.categories.length === 0) {
+        } else if (props.mapCategories.size === 0) {
             setErrorMsg("no category is selected");
         } else {
             let categoryIDSubmit = categoryID;
-            if (categoryID === -1 && props.categories[props.currCatIndex] !== undefined) {
-                categoryIDSubmit = props.categories[props.currCatIndex]._id;
+            if (categoryID === -1 && props.mapCategories.get(props.currCatID) !== undefined) {
+                categoryIDSubmit = props.mapCategories.get(props.currCatID)._id;
             }
             const postParameters = {
                 userID: props.userID,
@@ -206,7 +206,7 @@ export default function AddSourcePopup(props) {
     };
 
     const handleMouseDown = (event) => {
-        if (event.target.options.length>6) {
+        if (event.target.options && event.target.options.length>6) {
             event.target.size = 6;
         }
     };
@@ -248,16 +248,12 @@ export default function AddSourcePopup(props) {
             {props.mapSubcategories.get(categoryID) ? props.mapSubcategories.get(categoryID).map((subCat) => {
                 if (props.currCatID === props.mapCategories.get(subCat)._id.toString()) {
                     return (<React.Fragment>
-                        <option className={'select-options'} key={categoryID}
-                                value={categoryID}>{props.mapCategories.get(categoryID).category_name}</option>
                         <option id={subCat} selected={'selected'} className={'select-options'} value={subCat}>
                             {props.mapCategories.get(subCat) ? props.mapCategories.get(subCat).category_name : ""}
                         </option>
                     </React.Fragment>)
                 }
                 return (<React.Fragment>
-                    <option className={'select-options'} key={categoryID}
-                            value={categoryID}>{props.mapCategories.get(categoryID).category_name}</option>
                     <option id={subCat} className={'select-options'} value={subCat}>
                         {props.mapCategories.get(subCat) ? props.mapCategories.get(subCat).category_name : ""}
                     </option>
@@ -305,7 +301,11 @@ export default function AddSourcePopup(props) {
                     <div className={'houshcka_demibold'} style={{fontSize: '1.1vw', marginLeft: '4.2vw', marginTop: '2vw'}}>class</div>
                     <select id={'cat-select'} className={'new-source-inputs'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} name={'parent_cat_select'} onChange={handleInputChange}>
                         {props.rootCategories.map((rootID, index) => {
-                            {generateOptions(rootID)}
+                            return (<React.Fragment>
+                                <option className={'select-options'} key={rootID}
+                                        value={rootID}>{props.mapCategories.get(rootID).category_name}</option>
+                                {generateOptions(rootID)}
+                            </React.Fragment>);
                         })}
                     </select>
                     {errorMsg === "" ? <Button className={classes.submitButton} onClick={handleSubmit}>add source</Button> :

@@ -59,6 +59,15 @@ const useStyles = makeStyles({
     }
 });
 
+const styleImg = {
+    width: '18.5vw',
+    height: '11.3vw',
+    border:'2px solid #a65cff',
+    marginTop: '-1.7vw',
+    float: 'right',
+    marginRight: '.5vw'
+};
+
 export default function SourceCard(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
@@ -98,15 +107,20 @@ export default function SourceCard(props) {
 
     const getSourceImg = (source) => {
         if (source.source_urlImgFlag) {
-            let styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
-                backgroundPosition: 'center', height: '11.3vw', width: '18.5vw', backgroundSize: 'cover', marginTop: '-1.7vw', float: 'right',
-                marginRight: '1.45vw'};
-            if (!props.drawerOpen) {
-                styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
-                    backgroundPosition: 'center', height: '11.3vw', width: '18.5vw', backgroundSize: 'cover', marginTop: '-1.7vw', float: 'right',
-                    marginRight: '1.45vw'}
-            }
-            return (<div style={styleImg}>
+            // let styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
+            //     backgroundPosition: 'center', height: '11.3vw', width: '18.5vw', backgroundSize: 'cover', marginTop: '-1.7vw', float: 'right',
+            //     marginRight: '1.45vw'};
+            // if (!props.drawerOpen) {
+            //     styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
+            //         backgroundPosition: 'center', height: '11.3vw', width: '18.5vw', backgroundSize: 'cover', marginTop: '-1.7vw', float: 'right',
+            //         marginRight: '1.45vw'}
+            // }
+            // return (<div style={styleImg}>
+            // </div>);
+            // let styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw', float: 'right', marginRight: '.5vw'};
+            return (<div className={classes.sourceimg}>
+                <img src={source.source_urlImg}  alt={"temp source img"}
+                     style={styleImg}/>
             </div>);
         } else if (source.source_img === undefined) {
             let styleGif = {width: '50%', height: '50%', marginTop: '-4%', marginLeft: '20%'};
@@ -117,10 +131,10 @@ export default function SourceCard(props) {
                 <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={styleGif} />
             </div>);
         } else {
-            let styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw'};
-            if (!props.drawerOpen) {
-                styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw', marginLeft: '5vw'};
-            }
+            // let styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw', float: 'right', marginRight: '.5vw'};
+            // if (!props.drawerOpen) {
+            //     styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw', marginLeft: '5vw'};
+            // }
             return (<div className={classes.sourceimg}>
                 <img src={`data:image/png;base64,${arrayBufferToBase64(source.source_img.data.data)}`}  alt={"temp source img"}
                      style={styleImg}/>
@@ -156,7 +170,7 @@ export default function SourceCard(props) {
                     <div className={'source_title'}>
                         {source.source_name.length > 75 ? source.source_name.substring(0, 75) + "..." : source.source_name}
                     </div>}
-                <div id={'source-card-description'}>
+                <div id={'source-card-description'} style={props.drawerOpen ? {width: '35vw'} : {width: '40vw'}}>
                     {getSourceNotes(source)}
                 </div>
                 {getSourceImg(source)}

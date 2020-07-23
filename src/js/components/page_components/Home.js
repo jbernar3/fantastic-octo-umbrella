@@ -38,7 +38,6 @@ class Home extends Component {
 
     addNewCategory(category, parentID) {
         this.setState({addCatOpen: false});
-        this.state.categories.push(category);
         this.state.mapCategories.set(category._id, category);
         if (parentID === -1) {
             this.state.rootCategories.push(category._id);
@@ -55,12 +54,6 @@ class Home extends Component {
 
     addNewSource(source, categoryID) {
         this.setState({addSourceOpen: false});
-        for (let i=0; i<this.state.categories.length; i++) {
-            if (this.state.categories[i]._id === categoryID) {
-                this.state.categories[i].sources.push(source);
-                break;
-            }
-        }
         if (this.state.mapCategories.get(categoryID)) {
             const newCat = this.state.mapCategories.get(categoryID);
             newCat.sources.push(source);
@@ -200,7 +193,7 @@ class Home extends Component {
                                                                            addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} currCatID={this.state.currCatID} />
                         : ""}
                 </div>
-                <CategoryDrawer setCurrCatID={this.setCurrCatID} categories={this.state.categories}
+                <CategoryDrawer setCurrCatID={this.setCurrCatID}
                                 rootCategories={this.state.rootCategories} mapCategories={this.state.mapCategories}
                                 mapSubcategories={this.state.mapSubcategories} drawerOpen={this.state.drawerOpen}
                                 userID={this.props.userID} handleEditSource={this.handleEditSource} handleDeleteCat={this.handleDeleteCat}

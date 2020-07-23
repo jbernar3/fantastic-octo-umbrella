@@ -133,6 +133,8 @@ export default function AddCategoryPopup(props) {
         if (catName === "") {
             setErrorMsg("category is name empty");
         } else {
+            console.log("PARENT ID IN HANDLE SUBMIT of ADD CAT");
+            console.log(parentID);
             const postParameters = {
                 userID: props.userID,
                 catName: catName,
@@ -165,8 +167,6 @@ export default function AddCategoryPopup(props) {
             return "";
         }
         return (<React.Fragment>
-            <option className={'select-options'} key={categoryID}
-                    value={categoryID}>{props.mapCategories.get(categoryID).category_name}</option>
             {props.mapSubcategories.get(categoryID) ? props.mapSubcategories.get(categoryID).map((subCat) => {
                 return (<React.Fragment><option className={'select-options'} key={subCat}
                         value={subCat}>{props.mapCategories.get(subCat).category_name}</option>
@@ -197,7 +197,9 @@ export default function AddCategoryPopup(props) {
                         <option id={-1} className={'select-options'} value={-1}>no parent</option>
                         {props.rootCategories ? props.rootCategories.map((rootID, index) => {
                             return (<React.Fragment>
-                                <option className={'select-options'} style={{fontStyle: 'bold'}} key={index} value={rootID}>{props.mapCategories.get(rootID).category_name}</option>
+                                <option className={'select-options'} key={rootID}
+                                        value={rootID}>{props.mapCategories.get(rootID).category_name}</option>
+                                {generateOptions(rootID)}
                             </React.Fragment>);
                         }) : ""}
 

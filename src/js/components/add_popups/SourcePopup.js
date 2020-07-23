@@ -49,6 +49,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="left" ref={ref} {...props} />;
+});
+
 const notesScrollStyle = {
     float: 'right',
     marginRight: '4vw',
@@ -160,6 +164,7 @@ export default function SourcePopup(props) {
     const handleInputChange = (event) => {
         const eventName = event.target.name;
         const eventValue = event.target.value;
+        setErrMsg("");
         if (eventName === 'title') {
             setNewTitle(eventValue);
         } else if (eventName === 'notes') {
@@ -210,52 +215,71 @@ export default function SourcePopup(props) {
         }
     };
 
+    const handleClose = () => {
+        props.handleClose();
+        setNewTitle(null);
+        setNewNotes(null);
+        setErrMsg("");
+        setIsEditMode(false);
+    };
+
     return (
-        <div id={'source-popup-div'}>
-            <div id={'source-popup-edit-div'} className={'houshcka_demibold'} onClick={handleCancelEdit}>{isEditMode ? "cancel edit" : "edit"}</div>
-            <CloseIcon onClick={props.handleClose}
-                       style={{fill: '#a65cff', width: '2.4vw', float: 'right', marginTop: '-1.2vw', marginRight: '1.3vw', cursor: 'pointer'}} />
-            {props.source !== null ?
-                <React.Fragment>
-                    {isEditMode ? <div id={'edit-source-title'}><input name={'title'} value={newTitle} onChange={handleInputChange} className={'edit-source-inputs'} /></div> :
-                        <div id={'source-popup-title'} className={'houshcka_demibold'}>{props.source.source_name}</div>}
-                    {props.categoryName === undefined ? "" :
-                        <div id={'source-popup-cat'} className={'houshcka_demibold'}>class: {props.categoryName}</div>}
-                    {getSourceImg(props.source)}
-                    <div id={'source-popup-date'} className={'houshcka_medium'}>{beautifyDate(props.source.date_added)}</div>
-                    {isEditMode ? "" :
-                        <React.Fragment>
-                            <button id={'source-popup-open-src'} className={'houshcka_demibold open-src-button'}
-                                onClick={() => handleClick('open-btn')}>open source</button>
-                            <CopyToClipboard text={props.source.url}>
-                                <button id={'source-popup-copy-url'} className={'houshcka_demibold open-src-button'} onClick={(event) => event.stopPropagation()}>copy url</button>
-                            </CopyToClipboard>
-                        </React.Fragment>
-                    }
-                    {isEditMode ? <React.Fragment><Scrollbars
-                            style={{float: 'right', width: '32vw', marginTop: '-19vw', height: '21vw', marginRight: '2.7vw'}}
-                            //id='source_scroll_div'
-                            thumbYProps={{ className: "thumbY" }}
-                            trackXProps={{ className: "trackX" }}
-                        >
-                            <textarea id={'edit-source-notes-textarea'} className={'scrollable-textarea'} name={'notes'} value={newNotes} onChange={handleInputChange} onInput={handleOnInput} />
-                        </Scrollbars>
-                            <Button onClick={handleSubmit} className={classes.submitButton}>submit changes</Button>
-                        </React.Fragment>:
-                        <Scrollbars
-                            style={props.source.source_urlImgFlag ? notesScrollStyleYoutube : notesScrollStyle}
-                            id='source_scroll_div'
-                            ref={ref => (scrollbars = ref)}
-                            thumbYProps={{ className: "thumbY" }}
-                            trackXProps={{ className: "trackX" }}
-                        >
-                            <span style={{whiteSpace: 'pre-line'}}>
-                                {getSourceNotes(props.source)}
-                            </span>
-                        </Scrollbars>}
-                </React.Fragment>
-            : ""}
-            <div>{errMsg}</div>
-        </div>
+        <Dialog
+            open={props.popupOpen}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+            maxWidth={false}
+        >
+            <div id={'source-popup-div'}>
+                <div id={'source-popup-edit-div'} className={'houshcka_demibold'} onClick={handleCancelEdit}>{isEditMode ? "cancel edit" : "edit"}</div>
+                <CloseIcon onClick={handleClose}
+                           style={{fill: '#a65cff', width: '2.4vw', float: 'right', marginTop: '-1.2vw', marginRight: '1.3vw', cursor: 'pointer'}} />
+                {props.source !== null ?
+                    <React.Fragment>
+                        {isEditMode ? <div id={'edit-source-title'}><input name={'title'} value={newTitle} onChange={handleInputChange} className={'edit-source-inputs'} /></div> :
+                            <div id={'source-popup-title'} className={'houshcka_demibold'}>{props.source.source_name}</div>}
+                        {props.categoryName === undefined ? "" :
+                            <div id={'source-popup-cat'} className={'houshcka_demibold'}>class: {props.categoryName}</div>}
+                        {getSourceImg(props.source)}
+                        <div id={'source-popup-date'} className={'houshcka_medium'}>{beautifyDate(props.source.date_added)}</div>
+                        {isEditMode ? "" :
+                            <React.Fragment>
+                                <button id={'source-popup-open-src'} className={'houshcka_demibold open-src-button'}
+                                    onClick={() => handleClick('open-btn')}>open source</button>
+                                <CopyToClipboard text={props.source.url}>
+                                    <button id={'source-popup-copy-url'} className={'houshcka_demibold open-src-button'} onClick={(event) => event.stopPropagation()}>copy url</button>
+                                </CopyToClipboard>
+                            </React.Fragment>
+                        }
+                        {isEditMode ? <React.Fragment><Scrollbars
+                                style={{float: 'right', width: '32vw', marginTop: '-19vw', height: '21vw', marginRight: '2.7vw'}}
+                                //id='source_scroll_div'
+                                thumbYProps={{ className: "thumbY" }}
+                                trackXProps={{ className: "trackX" }}
+                            >
+                                <textarea id={'edit-source-notes-textarea'} className={'scrollable-textarea'} name={'notes'} value={newNotes} onChange={handleInputChange} onInput={handleOnInput} />
+                            </Scrollbars>
+                                {errMsg === "" ? <Button onClick={handleSubmit} className={classes.submitButton}>submit changes</Button> :
+                                    <div id={'edit-source-error'} className={'houshcka_demibold'}>{errMsg}</div>}
+                            </React.Fragment>:
+                            <Scrollbars
+                                style={props.source.source_urlImgFlag ? notesScrollStyleYoutube : notesScrollStyle}
+                                id='source_scroll_div'
+                                ref={ref => (scrollbars = ref)}
+                                thumbYProps={{ className: "thumbY" }}
+                                trackXProps={{ className: "trackX" }}
+                            >
+                                <span style={{whiteSpace: 'pre-line'}}>
+                                    {getSourceNotes(props.source)}
+                                </span>
+                            </Scrollbars>}
+                    </React.Fragment>
+                : ""}
+
+            </div>
+        </Dialog>
     );
 }

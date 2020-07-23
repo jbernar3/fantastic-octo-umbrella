@@ -143,10 +143,6 @@ const clearIconStyle = {
     cursor: 'pointer'
 };
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="left" ref={ref} {...props} />;
-});
-
 export default function CategoryDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
@@ -292,7 +288,6 @@ export default function CategoryDrawer(props) {
                                                           }
                                                           setOpenCurrCatIDs(tempOpenIDs);
                                                           document.getElementById('source_scroll_div').scrollTop = 0;
-                                                          props.setCurrCatIndex(index)
                                                       }}>
                         <ListItemIcon>{currCatListHover === subID ? <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(subID, event)} /> :
                             <img alt={'folder-icon'}
@@ -374,7 +369,6 @@ export default function CategoryDrawer(props) {
                                                                           setOpenCurrCatIDs([category._id]);
                                                                           // setIndexCurrCat(index);
                                                                           document.getElementById('source_scroll_div').scrollTop = 0;
-                                                                          props.setCurrCatIndex(index)
                                                                       }}>
                                         <ListItemIcon>{currCatListHover === categoryID ? <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(categoryID, event)} /> :
                                             <img alt={'folder-icon'}
@@ -408,19 +402,10 @@ export default function CategoryDrawer(props) {
                         )) : <div id={'no-sources-icon-div'}><img id={'no-sources-icon'} src={'src/images/no-sources.png'} alt={'no sources'}/></div>}
                     </Scrollbars>
                 </main>
-                <Dialog
-                    open={openSourcePopup}
-                    TransitionComponent={Transition}
-                    keepMounted
-                    onClose={handleCloseSourcePopup}
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description"
-                    maxWidth={false}
-                >
-                    {mapCategories.get(currCatID) === undefined ? <SourcePopup source={sourcePopup} handleClose={handleCloseSourcePopup} /> :
-                        <SourcePopup userID={props.userID} categoryID={mapCategories.get(currCatID) === undefined ? "" : mapCategories.get(currCatID)._id} handleEditSource={props.handleEditSource}
-                                     categoryName={mapCategories.get(currCatID) === undefined ? "" : mapCategories.get(currCatID).category_name} source={sourcePopup} handleClose={handleCloseSourcePopup} />}
-                </Dialog>
+                {mapCategories.get(currCatID) === undefined ? <SourcePopup source={sourcePopup} handleClose={handleCloseSourcePopup} popupOpen={false} /> :
+                    <SourcePopup userID={props.userID} categoryID={mapCategories.get(currCatID) === undefined ? "" : mapCategories.get(currCatID)._id} handleEditSource={props.handleEditSource}
+                                 categoryName={mapCategories.get(currCatID) === undefined ? "" : mapCategories.get(currCatID).category_name} source={sourcePopup} handleClose={handleCloseSourcePopup}
+                                 popupOpen={openSourcePopup}/>}
                 <DeleteClassPopup popupOpen={deleteClassOpen} category={deleteClass} handleDelete={handleDeleteCat}
                     handleClose={handleDeleteCatClose} />
                 <DeleteSourcePopup userID={props.userID} popupOpen={deleteSource !== null} source={deleteSource} handleClose={handleDeleteSourceClose} categoryID={currCatID}
