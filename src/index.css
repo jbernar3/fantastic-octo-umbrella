@@ -330,10 +330,14 @@ body {
     width: 10%;
 }
 
+#profile-img-div {
+    width: 100%;
+    text-align: center;
+    margin-top: 5.2vw;
+}
+
 #profile-img {
-    margin-top: 15%;
-    margin-left: 21.35%;
-    width: 23%;
+    width: 15vw;
 }
 
 #edit-profile-popup {

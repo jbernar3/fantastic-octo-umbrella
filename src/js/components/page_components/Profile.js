@@ -64,7 +64,7 @@ class Profile extends React.Component {
                         </Button>
                         <Button style={{color: '#a65cff', fontFamily: 'houschka-rounded,sans-serif', fontWeight: 600,
                             fontStyle: 'normal', textTransform: 'none', fontSize: '1.5vw', float: 'right', marginRight: '2%'}} onClick={() => {this.setState({editOpen: true})}}>edit profile</Button>
-                        <img src={'src/images/icons/' + this.props.profileImg} alt={'profile icon'} id={'profile-img'} />
+                        <div id={'profile-img-div'}><img src={'src/images/icons/' + this.props.profileImg} alt={'profile icon'} id={'profile-img'} /></div>
                         <div className={'profile-name'}>{this.props.firstName} {this.props.lastName}</div>
                         <div id={'num_classes_sources_div'} className={'houshcka_demibold'}>classes: {numCategories} | sources: {numSources}</div>
                         <Scrollbars

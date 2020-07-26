@@ -377,6 +377,7 @@ export default function CategoryDrawer(props) {
                                                  style={{width: 28}}/>}</ListItemIcon>
                                         <div className={'category_name_drawer'}>{category.category_name}</div>
                                     </ListItem>
+                                        <Divider />
                                         {getSubcategories(categoryID, index)}
                                     </React.Fragment>)
                                 }
