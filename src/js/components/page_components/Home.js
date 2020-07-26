@@ -5,7 +5,7 @@ import MenuBar from "../general_components/MenuBar";
 import CategoryDrawer from "../category_components/CategoryDrawer";
 import AddCategoryPopup from "../add_popups/AddCategoryPopup";
 import AddSourcePopup from "../add_popups/AddSourcePopup";
-import Button from "@material-ui/core/Button";
+import * as constants from "../../constants.js";
 
 
 class Home extends Component {
@@ -160,7 +160,8 @@ class Home extends Component {
                     mapSubcategories: mapSubcategories, rootCategories: rootCategories});
             }
         });
-        xhr.open('POST', 'http://localhost:3000/get_categories', false);
+        // xhr.open('POST', 'http://localhost:3000/get_categories', false);
+        xhr.open('POST', constants.HOST_NAME + 'get_categories', false);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(postParameters));
 

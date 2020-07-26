@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import CloseIcon from "@material-ui/icons/Close";
+import * as constants from "../../constants.js";
 
 const useStyles = makeStyles(theme => ({
     submitBtnStyle: {
@@ -70,7 +71,8 @@ export default function VerificationCodePopup(props) {
                     props.onSuccess(xhr.response)
                 }
             });
-            xhr.open('POST', 'http://localhost:3000/verify_code', false);
+            // xhr.open('POST', 'http://localhost:3000/verify_code', false);
+            xhr.open('POST', constants.HOST_NAME + 'verify_code', false);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(postParameters));
         }

@@ -1,17 +1,11 @@
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Zoom from '@material-ui/core/Zoom';
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
 import Scrollbars from "react-scrollbars-custom";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
 import CloseIcon from "@material-ui/icons/Close";
+import * as constants from "../../constants.js";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
@@ -153,7 +147,8 @@ export default function AddSourcePopup(props) {
                 props.setSourceImg(JSON.parse(xhr.response), categoryID, sourceID);
             }
         });
-        xhr.open('POST', 'http://localhost:3000/get_source_img', false);
+        // xhr.open('POST', 'http://localhost:3000/get_source_img', false);
+        xhr.open('POST', constants.HOST_NAME + 'get_source_img', false);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(postParameters));
     };
@@ -194,7 +189,8 @@ export default function AddSourcePopup(props) {
                     }
                 }
             });
-            xhr.open('POST', 'http://localhost:3000/new_source', false);
+            // xhr.open('POST', 'http://localhost:3000/new_source', false);
+            xhr.open('POST', constants.HOST_NAME + 'new_source', false);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(postParameters));
         }
@@ -227,7 +223,8 @@ export default function AddSourcePopup(props) {
                     }
                 }
             });
-            xhr.open('POST', 'http://localhost:3000/get_suggested_title', true);
+            // xhr.open('POST', 'http://localhost:3000/get_suggested_title', true);
+            xhr.open('POST', constants.HOST_NAME + 'get_suggested_title', true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify({ url: sourceUrl}));
         }

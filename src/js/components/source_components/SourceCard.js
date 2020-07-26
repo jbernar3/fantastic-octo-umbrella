@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import DeleteIcon from '@material-ui/icons/Delete';
+import * as constants from "../../constants.js";
 
 const useStyles = makeStyles({
     root: {
@@ -107,17 +108,6 @@ export default function SourceCard(props) {
 
     const getSourceImg = (source) => {
         if (source.source_urlImgFlag) {
-            // let styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
-            //     backgroundPosition: 'center', height: '11.3vw', width: '18.5vw', backgroundSize: 'cover', marginTop: '-1.7vw', float: 'right',
-            //     marginRight: '1.45vw'};
-            // if (!props.drawerOpen) {
-            //     styleImg = {backgroundImage: "url(" + props.source.source_urlImg + ")", border:'2px solid #a65cff',
-            //         backgroundPosition: 'center', height: '11.3vw', width: '18.5vw', backgroundSize: 'cover', marginTop: '-1.7vw', float: 'right',
-            //         marginRight: '1.45vw'}
-            // }
-            // return (<div style={styleImg}>
-            // </div>);
-            // let styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw', float: 'right', marginRight: '.5vw'};
             return (<div className={classes.sourceimg}>
                 <img src={source.source_urlImg}  alt={"temp source img"}
                      style={styleImg}/>
@@ -131,10 +121,6 @@ export default function SourceCard(props) {
                 <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={styleGif} />
             </div>);
         } else {
-            // let styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw', float: 'right', marginRight: '.5vw'};
-            // if (!props.drawerOpen) {
-            //     styleImg = {width: '18.5vw', height: '11.3vw', border:'2px solid #a65cff', marginTop: '-1.7vw', marginLeft: '5vw'};
-            // }
             return (<div className={classes.sourceimg}>
                 <img src={`data:image/png;base64,${arrayBufferToBase64(source.source_img.data.data)}`}  alt={"temp source img"}
                      style={styleImg}/>

@@ -2,16 +2,10 @@ import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Avatar from "@material-ui/core/Avatar";
-import ListItemText from "@material-ui/core/ListItemText";
+import * as constants from "../../constants.js";
 import CardHeader from "@material-ui/core/CardHeader";
 import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Dialog from "@material-ui/core/Dialog";
-import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles({
     popupcard: {

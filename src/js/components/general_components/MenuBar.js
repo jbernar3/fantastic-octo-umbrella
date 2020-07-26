@@ -1,11 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
+import * as constants from "../../constants.js";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddIcon from '@material-ui/icons/Add';
@@ -16,7 +13,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Popper from "@material-ui/core/Popper";
 import Fade from "@material-ui/core/Fade";
 import Slide from "@material-ui/core/Slide";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -1,23 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
-import MenuBar from "../general_components/MenuBar";
 import {
-    changeDisplayCategory,
     editProfile,
     signoutUser,
-    updateCategories,
     updateEmail,
     updateUsername
 } from "../../../actions";
-import SideBar from "../general_components/SideBar";
 import Button from "@material-ui/core/Button";
-import SourceCard from "../source_components/SourceCard";
 import Scrollbars from "react-scrollbars-custom";
-import NewSourcePopup from "../add_popups/NewSourcePopup";
-import Dialog from "@material-ui/core/Dialog";
 import EditProfilePopup from "../add_popups/EditProfilePopup";
 import Redirect from "react-router-dom/es/Redirect";
-import {makeStyles} from "@material-ui/core/styles";
 import ChangePasswordPopup from "../add_popups/ChangePasswordPopup";
 import ChangeEmailPopup from "../add_popups/ChangeEmailPopup";
 import ChangeUsernamePopup from "../add_popups/ChangeUsernamePopup";

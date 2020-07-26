@@ -2,6 +2,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import * as React from "react";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
+import * as constants from "../../constants.js";
 
 const useStyles = makeStyles(theme => ({
     submitBtnStyle: {
@@ -68,7 +69,8 @@ export default function ForgotPwdPopup(props) {
                     setShowConfirmation(true);
                 }
             });
-            xhr.open('POST', 'http://localhost:3000/forgot_password', false);
+            // xhr.open('POST', 'http://localhost:3000/forgot_password', false);
+            xhr.open('POST', constants.HOST_NAME + 'forgot_password', false);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(postParameters));
         }

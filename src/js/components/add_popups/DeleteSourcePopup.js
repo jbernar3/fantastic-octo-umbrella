@@ -1,20 +1,10 @@
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Zoom from '@material-ui/core/Zoom';
+import * as constants from "../../constants.js";
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
-import Scrollbars from "react-scrollbars-custom";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
 import CloseIcon from '@material-ui/icons/Close';
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="right" ref={ref} {...props} />;
@@ -82,7 +72,8 @@ export default function DeleteSourcePopup(props) {
                     props.handleClose();
                 }
             });
-            xhr.open('POST', 'http://localhost:3000/delete_source', false);
+            // xhr.open('POST', 'http://localhost:3000/delete_source', false);
+            xhr.open('POST', constants.HOST_NAME + 'delete_source', false);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(postParameters));
         }

@@ -2,23 +2,13 @@ import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import * as constants from "../../constants.js";
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import FolderIcon from "@material-ui/icons/Folder";
 import SourceCard from "../source_components/SourceCard";
 import Scrollbars from "react-scrollbars-custom";
-import Dialog from "@material-ui/core/Dialog";
-import Slide from "@material-ui/core/Slide";
 import SourcePopup from "../add_popups/SourcePopup";
 import Expand from "react-expand-animated";
 import ClearIcon from '@material-ui/icons/Clear';
@@ -27,47 +17,6 @@ import DeleteClassPopup from "../add_popups/DeleteClassPopup";
 import DeleteSourcePopup from "../add_popups/DeleteSourcePopup";
 
 const drawerWidth = 240;
-
-// const Accordion = withStyles({
-//     root: {
-//         border: '1px solid rgba(0, 0, 0, .125)',
-//         boxShadow: 'none',
-//         '&:not(:last-child)': {
-//             borderBottom: 0,
-//         },
-//         '&:before': {
-//             display: 'none',
-//         },
-//         '&$expanded': {
-//             margin: 'auto',
-//         },
-//     },
-//     expanded: {},
-// })(MuiAccordion);
-//
-// const AccordionSummary = withStyles({
-//     root: {
-//         backgroundColor: 'rgba(0, 0, 0, .03)',
-//         borderBottom: '1px solid rgba(0, 0, 0, .125)',
-//         marginBottom: -1,
-//         minHeight: 56,
-//         '&$expanded': {
-//             minHeight: 56,
-//         },
-//     },
-//     content: {
-//         '&$expanded': {
-//             margin: '12px 0',
-//         },
-//     },
-//     expanded: {},
-// })(MuiAccordionSummary);
-//
-// const AccordionDetails = withStyles((theme) => ({
-//     root: {
-//         padding: theme.spacing(2),
-//     },
-// }))(MuiAccordionDetails);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -256,7 +205,8 @@ export default function CategoryDrawer(props) {
                 props.handleDeleteCat(categoryID);
             }
         });
-        xhr.open('POST', 'http://localhost:3000/delete_category', false);
+        // xhr.open('POST', 'http://localhost:3000/delete_category', false);
+        xhr.open('POST', constants.HOST_NAME + 'delete_category', false);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(postParameters));
     };

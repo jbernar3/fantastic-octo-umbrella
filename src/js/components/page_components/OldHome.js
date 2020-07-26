@@ -1,13 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {changeDisplayCategory, signinUser, signoutUser, toggleDisplayCategory, updateCategories} from "../../../actions";
-import TextField from '@material-ui/core/TextField'
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import NewCategoryPopup from "../add_popups/NewCategoryPopup";
 import NewSourcePopup from "../add_popups/NewSourcePopup";
 import CategoryDisplayPopup from "../category_components/CategoryDisplayPopup";

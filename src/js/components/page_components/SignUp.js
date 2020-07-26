@@ -1,17 +1,10 @@
 import React, {Component} from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import * as constants from "../../constants.js";
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
 import Dialog from "@material-ui/core/Dialog";
 import VerificationCodePopup from "../add_popups/VerificationCodePopup";
@@ -102,7 +95,8 @@ function SignUp(props) {
                 setUserNeedVerify(JSON.parse(xhr.response));
             }
         });
-        xhr.open('POST', 'http://localhost:3000/signup', false);
+        // xhr.open('POST', 'http://localhost:3000/signup', false);
+        xhr.open('POST', constants.HOST_NAME + 'signup', false);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(postParameters));
     };

@@ -1,17 +1,11 @@
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Zoom from '@material-ui/core/Zoom';
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
-import Scrollbars from "react-scrollbars-custom";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import CloseIcon from "@material-ui/icons/Close";
 import VerificationCodePopup from "./VerificationCodePopup";
+import * as constants from "../../constants.js";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Zoom ref={ref} {...props} />;
@@ -101,7 +95,8 @@ export default function ChangeEmailPopup(props) {
                     setShowVerifyCode(true);
                 }
             });
-            xhr.open('POST', 'http://localhost:3000/change_email', false);
+            // xhr.open('POST', 'http://localhost:3000/change_email', false);
+            xhr.open('POST', constants.HOST_NAME + 'change_email', false);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(postParameters));
         }

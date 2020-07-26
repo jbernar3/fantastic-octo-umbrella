@@ -1,18 +1,11 @@
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import * as constants from "../../constants.js";
 import Zoom from '@material-ui/core/Zoom';
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
 import Scrollbars from "react-scrollbars-custom";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from "@material-ui/icons/Close";
-import Grid from '@material-ui/core/Grid';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Zoom ref={ref} {...props} />;
@@ -130,26 +123,6 @@ export default function ChooseProfileImagePopup(props) {
                                 </div>
                                 })
                             }
-                            {/*<div className={'img-row'}>*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/cityscape.png'} alt={'cityscape icon'} />*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/medic.png'} alt={'medic icon'} />*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/cut.png'} alt={'cut icon'} />*/}
-                            {/*</div>*/}
-                            {/*<div className={'img-row'}>*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/silverware.png'} alt={'silverware icon'} />*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/chicken.png'} alt={'chicken icon'} />*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/wine.png'} alt={'wine icon'} />*/}
-                            {/*</div>*/}
-                            {/*<div className={'img-row'}>*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/fish.png'} alt={'fish icon'} />*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/cat.png'} alt={'cat icon'} />*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/palette.png'} alt={'palette icon'} />*/}
-                            {/*</div>*/}
-                            {/*<div className={'img-row'}>*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/headphones.png'} alt={'headphones icon'} />*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/microphone.png'} alt={'microphone icon'} />*/}
-                            {/*    <img className={'img-choose-img'} src={'src/images/icons/music.png'} alt={'music icon'} />*/}
-                            {/*</div>*/}
                         </div>
                     </Scrollbars>
                     <div style={{textAlign: 'center'}}><Button id={'img-save-btn'} onClick={handleSave}>save</Button></div>

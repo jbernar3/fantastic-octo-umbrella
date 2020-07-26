@@ -1,19 +1,12 @@
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Zoom from '@material-ui/core/Zoom';
+import * as constants from "../../constants.js";
 import React, {useEffect} from "react";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
 import Scrollbars from "react-scrollbars-custom";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
 import CloseIcon from "@material-ui/icons/Close";
 import {CopyToClipboard} from "react-copy-to-clipboard";
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(theme => ({
     submitButton: {
@@ -208,7 +201,8 @@ export default function SourcePopup(props) {
                         setIsEditMode(false);
                     }
                 });
-                xhr.open('POST', 'http://localhost:3000/edit_source', false);
+                // xhr.open('POST', 'http://localhost:3000/edit_source', false);
+                xhr.open('POST', constants.HOST_NAME + 'edit_source', false);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(postParameters));
             }

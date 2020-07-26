@@ -1,14 +1,9 @@
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import * as constants from "../../constants.js";
 import Zoom from '@material-ui/core/Zoom';
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
 import Scrollbars from "react-scrollbars-custom";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from "@material-ui/icons/Close";
@@ -129,7 +124,8 @@ export default function EditProfilePopup(props) {
                 props.editProfile(updatedFName, updatedLName, updatedBio, updatedImg);
             }
         });
-        xhr.open('POST', 'http://localhost:3000/edit_profile', false);
+        // xhr.open('POST', 'http://localhost:3000/edit_profile', false);
+        xhr.open('POST', constants.HOST_NAME + 'edit_profile', false);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(postParameters));
     };
@@ -153,10 +149,6 @@ export default function EditProfilePopup(props) {
                     <div className={'text-input-profile-description'} style={{float: 'left', marginLeft: '4.6vw'}}>first name</div>
                     <div className={'text-input-profile-description'} style={{float: 'right', marginRight: '9vw'}}>last name</div>
                     <input id={'new-fname'} className={'new-cat-inputs'} name={'fName'} value={updatedFName} onChange={handleInputChange} />
-                    {/*<TextField name={'fName'} className={classes.textInput} InputProps={InputPropsShort} value={updatedFName} onChange={handleInputChange}*/}
-                    {/*           style={{float: 'left', marginLeft: '63px', width: '180px', height: '50px'}} variant={'outlined'} />*/}
-                    {/*<TextField name={'lName'} className={classes.textInput} InputProps={InputPropsShort} value={updatedLName} onChange={handleInputChange}*/}
-                    {/*           style={{float: 'right', marginRight: '63px', width: '180px', height: '50px'}} variant={'outlined'} />*/}
                     <input id={'new-lname'} className={'new-cat-inputs'} name={'lName'} value={updatedLName} onChange={handleInputChange} />
                     <div id={'bio-input-profile-description'}>bio (250 characters max)</div>
                     <Scrollbars
@@ -167,14 +159,6 @@ export default function EditProfilePopup(props) {
                     >
                         <textarea id={'bio-textarea'} className={'scrollable-textarea'} name={'bio'} value={updatedBio} onChange={handleInputChange} onInput={handleOnInput} />
                     </Scrollbars>
-                    {/*<Scrollbars*/}
-                    {/*    style={{ width: '450px', height: '213px', marginLeft: '63px', marginTop: '130px' }}*/}
-                    {/*    thumbYProps={{ className: "thumbY" }}*/}
-                    {/*    trackXProps={{ className: "trackX" }}*/}
-                    {/*>*/}
-                    {/*    <TextField className={classes.textInput} InputProps={InputProps} name={'bio'} value={updatedBio} variant={'outlined'} multiline onChange={handleInputChange}*/}
-                    {/*               style={{ width: '425px'}} />*/}
-                    {/*</Scrollbars>*/}
                     <Button id={'update-profile-btn'} onClick={handleSubmit}>Update Profile</Button>
                 </div>
             </Dialog>
