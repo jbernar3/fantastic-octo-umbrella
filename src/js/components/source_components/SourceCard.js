@@ -82,17 +82,6 @@ export default function SourceCard(props) {
         return window.btoa(binary);
     };
 
-    const moreUpperCaseChar = (str) => {
-        let counter = 0;
-        let sizeStr = str.length;
-        for (let i=0; i<sizeStr; i++) {
-            if (str[i] === str[i].toUpperCase()) {
-                counter += 1;
-            }
-        }
-        return ((sizeStr / 2) <= counter);
-    };
-
     const handleClick = (event, name) => {
         if (name === 'open-button') {
             window.open(source.url,'_blank');

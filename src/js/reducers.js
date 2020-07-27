@@ -1,7 +1,6 @@
 import {SIGNIN_USER, SIGNOUT_USER, UPDATE_CATEGORIES, CHANGE_DISPLAY_CATEGORY, EDIT_PROFILE, UPDATE_EMAIL, UPDATE_USERNAME} from "../actions";
 import {INITIAL_STATE} from "../actions";
-import { combineReducers } from 'redux'
-import { REHYDRATE} from "redux-persist";
+import { combineReducers } from 'redux';
 
 const assert = require('assert');
 
@@ -52,15 +51,6 @@ function signin(state = INITIAL_STATE, action) {
             return Object.assign({}, state, {
                 username: action.username
             });
-
-        // case REHYDRATE:
-        //     const signin = action.payload.signin;
-        //     return Object.assign({}, state, {
-        //         userID: signin.userID,
-        //         email: signin.email,
-        //         firstName: signin.firstName,
-        //         lastName: signin.lastName
-        //     });
         default:
             return state;
     }

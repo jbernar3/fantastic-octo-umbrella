@@ -6,6 +6,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slide from "@material-ui/core/Slide";
 import CloseIcon from "@material-ui/icons/Close";
 import * as constants from "../../constants.js";
+import 'babel-polyfill';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
