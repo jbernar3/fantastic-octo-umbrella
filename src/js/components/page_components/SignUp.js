@@ -86,7 +86,7 @@ function SignUp(props) {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             console.log(xhr.response);
-            if (xhr.response.substring(0, 5) === "ERROR:") {
+            if (xhr.response.startsWith("ERROR:")) {
                 setErrorMsg(xhr.response.substring(6));
             } else {
                 setErrorMsg("");
@@ -105,7 +105,7 @@ function SignUp(props) {
         setSignedUp(true);
         if (userNeedVerify !== null) {
             props.onSignin(userNeedVerify._id, userNeedVerify.email, userNeedVerify.first_name,
-                userNeedVerify.last_name, userNeedVerify.bio, userNeedVerify.username);
+                userNeedVerify.last_name, userNeedVerify.bio, userNeedVerify.username, userNeedVerify.profileImg);
         }
     };
 
@@ -187,8 +187,8 @@ class SignupContainer extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onClick: (userID, email, fName, lName, bio, username) => {
-            dispatch(signinUser(userID, email, fName, lName, bio, username))
+        onClick: (userID, email, fName, lName, bio, username, profileImg) => {
+            dispatch(signinUser(userID, email, fName, lName, bio, username, profileImg))
         }
     };
 };

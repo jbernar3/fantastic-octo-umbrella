@@ -86,13 +86,16 @@ function SignInSide(props) {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             setLoading(false);
-            if (xhr.response === "dne") {
-                console.log("DNE");
-                setErrorMsg("Incorrect username or password.");
-            } else if (xhr.response === "incorrect password") {
-                setErrorMsg("Incorrect password.")
-            } else if (xhr.response === "error") {
-                setErrorMsg("Error signing up. Please try again.");
+            // if (xhr.response === "dne") {
+            //     console.log("DNE");
+            //     setErrorMsg("Incorrect username or password.");
+            // } else if (xhr.response === "incorrect password") {
+            //     setErrorMsg("Incorrect password.")
+            // } else if (xhr.response === "error") {
+            //     setErrorMsg("Error signing up. Please try again.");
+            // }
+            if (xhr.response.startsWith("ERROR:")) {
+                setErrorMsg(xhr.response.substring(6));
             } else {
                 setErrorMsg("");
                 console.log("THIS IS RAW RESPONSE");
@@ -147,7 +150,7 @@ function SignInSide(props) {
                                    className={'signin-input'} />}
 
                         <br /><br />
-                        {errorMsg !== "" ? <Link href="/#/signup" variant="body2" style={{color: "#ffffff", marginLeft: "35px"}}>{"Incorrect Username or Password. Forgot password?"}</Link> :
+                        {errorMsg !== "" ? <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff", marginLeft: "35px"}}>{"Incorrect Username or Password. Forgot password?"}</Link> :
                             <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff"}}>
                                 <div className={"houshcka_demibold"} style={{marginLeft: "138px", cursor: 'pointer'}}>Forgot password?</div>
                             </Link>}
