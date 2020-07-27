@@ -95,6 +95,8 @@ function SignInSide(props) {
                 setErrorMsg("Error signing up. Please try again.");
             } else {
                 setErrorMsg("");
+                console.log("THIS IS RAW RESPONSE");
+                console.log(xhr.response);
                 const user = JSON.parse(xhr.response);
                 console.log("This is user.");
                 console.log(user);
