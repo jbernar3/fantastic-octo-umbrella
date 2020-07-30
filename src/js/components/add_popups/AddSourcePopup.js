@@ -140,8 +140,6 @@ export default function AddSourcePopup(props) {
 
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
-            console.log("THIS IS RESPONSE FOR GET IMAGE");
-            console.log(xhr.response);
             if (xhr.response.startsWith("ERROR:")) {
                 setErrorMsg(xhr.response.substring(6));
             } else {
@@ -175,8 +173,6 @@ export default function AddSourcePopup(props) {
 
             const xhr = new XMLHttpRequest();
             xhr.addEventListener('load', async () => {
-                console.log(postParameters);
-                console.log(JSON.parse(xhr.response));
                 if (xhr.response.startsWith("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else {

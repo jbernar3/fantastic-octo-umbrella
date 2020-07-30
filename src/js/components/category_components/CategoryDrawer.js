@@ -340,7 +340,7 @@ export default function CategoryDrawer(props) {
                         [classes.contentShift]: props.drawerOpen,
                     })}
                 >
-                    <div className={'category_name_title'}>{rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined ? mapCategories.get(currCatID).category_name : "No Categories"}</div>
+                    <div className={'category_name_title'}>{rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined ? mapCategories.get(currCatID).category_name : "No Classes"}</div>
                     <Scrollbars
                         style={{ marginLeft: '-10vh', height: '70vh', marginTop: '5vh' }}
                         id='source_scroll_div'
@@ -348,14 +348,16 @@ export default function CategoryDrawer(props) {
                         thumbYProps={{ className: "thumbY" }}
                         trackXProps={{ className: "trackX" }}
                     >
-                        {rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined && mapCategories.get(currCatID).sources.length !== 0 ? mapCategories.get(currCatID).sources.map((source, index) => (
-                            <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)} changeDeleteSource={(source) => setDeleteSource(source)} />
+                        {rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined &&
+                        mapCategories.get(currCatID).sources.length !== 0 ? mapCategories.get(currCatID).sources.map((source, index) => (
+                            <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)}
+                                        changeDeleteSource={(source) => setDeleteSource(source)} />
                         )) : <div id={'no-sources-icon-div'}><img id={'no-sources-icon'} src={'src/images/no-sources.png'} alt={'no sources'}/></div>}
                     </Scrollbars>
                 </main>
                 {mapCategories.get(currCatID) === undefined ? <SourcePopup source={sourcePopup} handleClose={handleCloseSourcePopup} popupOpen={false} /> :
-                    <SourcePopup userID={props.userID} categoryID={mapCategories.get(currCatID) === undefined ? "" : mapCategories.get(currCatID)._id} handleEditSource={props.handleEditSource}
-                                 categoryName={mapCategories.get(currCatID) === undefined ? "" : mapCategories.get(currCatID).category_name} source={sourcePopup} handleClose={handleCloseSourcePopup}
+                    <SourcePopup userID={props.userID} categoryID={mapCategories.get(currCatID) === undefined ? "" : mapCategories.get(currCatID)._id}
+                                 handleEditSource={props.handleEditSource} categoryName={mapCategories.get(currCatID) === undefined ? "" : mapCategories.get(currCatID).category_name} source={sourcePopup} handleClose={handleCloseSourcePopup}
                                  popupOpen={openSourcePopup}/>}
                 <DeleteClassPopup popupOpen={deleteClassOpen} category={deleteClass} handleDelete={handleDeleteCat}
                     handleClose={handleDeleteCatClose} />

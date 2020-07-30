@@ -96,16 +96,18 @@ export default function SourceCard(props) {
         [props.source]);
 
     const getSourceImg = (source) => {
+        console.log("THIS IS SOURCE IN GET SOURCE IMG");
+        console.log(source);
         if (source.source_urlImgFlag) {
             return (<div className={classes.sourceimg}>
                 <img src={source.source_urlImg}  alt={"temp source img"}
                      style={styleImg}/>
             </div>);
-        } else if (source.source_img === undefined) {
-            let styleGif = {width: '50%', height: '50%', marginTop: '-4%', marginLeft: '20%'};
-            if (!props.drawerOpen) {
-                styleGif = {width: '50%', height: '50%', marginTop: '-8.3%', marginLeft: '23%'};
-            }
+        } else if (source.source_img === undefined || source.source_img.data === undefined) {
+            let styleGif = {width: '10vw', height: '10vw', marginTop: '-.5vw', marginRight: '5vw', float: 'right'};
+            // if (!props.drawerOpen) {
+            //     styleGif = {width: '50%', height: '50%', marginTop: '-8.3%', marginLeft: '23%'};
+            // }
             return (<div className={classes.sourceimg}>
                 <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={styleGif} />
             </div>);

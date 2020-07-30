@@ -56,7 +56,7 @@ class Home extends Component {
         this.setState({addSourceOpen: false});
         if (this.state.mapCategories.get(categoryID)) {
             const newCat = this.state.mapCategories.get(categoryID);
-            newCat.sources.push(source);
+            newCat.sources.unshift(source);
             this.state.mapCategories.set(categoryID, newCat);
         }
     }
