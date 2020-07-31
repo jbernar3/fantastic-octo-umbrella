@@ -90,7 +90,7 @@ export default function SourcePopup(props) {
             marginLeft: '5vw'};
             return (<div style={styleImg}>
             </div>);
-        } else if (source.source_img === undefined) {
+        } else if (source.source_img === undefined || source.source_img.data === undefined) {
             let styleGif = {width: '50%', height: '50%', marginTop: '-4%', marginLeft: '20%'};
             return (<div className={classes.sourceimg}>
                 <img src={'src/images/loadingclasifygif.gif'} alt={'clasify loading gif'} style={styleGif} />

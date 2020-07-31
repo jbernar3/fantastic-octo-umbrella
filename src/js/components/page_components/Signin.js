@@ -85,14 +85,6 @@ function SignInSide(props) {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
             setLoading(false);
-            // if (xhr.response === "dne") {
-            //     console.log("DNE");
-            //     setErrorMsg("Incorrect username or password.");
-            // } else if (xhr.response === "incorrect password") {
-            //     setErrorMsg("Incorrect password.")
-            // } else if (xhr.response === "error") {
-            //     setErrorMsg("Error signing up. Please try again.");
-            // }
             if (xhr.response.startsWith("ERROR:")) {
                 setErrorMsg(xhr.response.substring(6));
             } else {
@@ -118,17 +110,13 @@ function SignInSide(props) {
     };
 
     const handleSignin = (user) => {
-        console.log("IN USER HANDLE SIGNIN");
-        console.log(user);
         props.onSignin(user._id, user.email, user.first_name, user.last_name, user.bio, user.username, user.profileImg);
-        // setUserCategories(user.categories);
         setSignedIn(true);
     };
 
     if (signedIn || props.auth) {
         return (<Redirect to={{
-            pathname: 'home',
-            // state: { categories: userCategories }
+            pathname: 'home'
         }}/>);
 
     }
