@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SignInSide(props) {
     const classes = useStyles();
-    const [email, setEmail] = React.useState("hello jeff");
+    const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [signedIn, setSignedIn] = React.useState(false);
     const [errorMsg, setErrorMsg] = React.useState("");
