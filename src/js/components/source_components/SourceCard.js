@@ -122,7 +122,7 @@ export default function SourceCard(props) {
     const getSourceNotes = (source) => {
         if (source.source_urlImgFlag && !source.has_user_notes) {
             return <div id={'source-card-description'} dangerouslySetInnerHTML={{ __html: source.source_notes }} />
-        } else if (!source.has_user_notes) {
+        } else if (source.source_notes === undefined || source.source_notes === "") {
             return <div id={'source-card-description'}>no source notes.</div>
         } else {
             return source.source_notes;

@@ -60,7 +60,7 @@ class Profile extends React.Component {
                         <div className={'profile-name'}>{this.props.firstName} {this.props.lastName}</div>
                         <div id={'num_classes_sources_div'} className={'houshcka_demibold'}>classes: {numCategories} | sources: {numSources}</div>
                         <Scrollbars
-                            style={{ height: '34%', margin: '5vh auto auto', width: '70%' }}
+                            style={{ height: '30%', margin: '5vh auto auto', width: '70%' }}
                             id='source_scroll_div'
                             thumbYProps={{ className: "thumbY" }}
                             trackXProps={{ className: "trackX" }}
@@ -83,8 +83,6 @@ class Profile extends React.Component {
                             <Button onClick={() => this.setState({changeEmailOpen: true})} style={changeBtnStyle}>change email</Button>
                             <Button onClick={() => this.setState({changePwdOpen: true})} style={changeBtnStyle}>change password</Button>
                         </div>
-                        {/*<div id={'num-classes-div'}>classes {numCategories}</div>*/}
-                        {/*<div id={'num-sources-div'}>sources {numSources}</div>*/}
                         <ChangePasswordPopup userID={this.props.userID} changePwdOpen={this.state.changePwdOpen}
                                              handleClose={() => {this.setState({changePwdOpen: false})}} />
                         <ChangeEmailPopup userID={this.props.userID} currEmail={this.props.email} changeEmailOpen={this.state.changeEmailOpen}

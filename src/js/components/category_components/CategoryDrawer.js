@@ -15,6 +15,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteClassPopup from "../add_popups/DeleteClassPopup";
 import DeleteSourcePopup from "../add_popups/DeleteSourcePopup";
+import CreateIcon from '@material-ui/icons/Create';
 
 const drawerWidth = 240;
 
@@ -78,6 +79,13 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
     },
     deleteIconStyle: {
+        color: '#a65cff',
+        '&:hover': {
+            color: 'rgba(166,92,254,0.42)'
+        },
+        marginLeft: -6
+    },
+    editIconStyle: {
         color: '#a65cff',
         '&:hover': {
             color: 'rgba(166,92,254,0.42)'
@@ -239,7 +247,10 @@ export default function CategoryDrawer(props) {
                                                           setOpenCurrCatIDs(tempOpenIDs);
                                                           document.getElementById('source_scroll_div').scrollTop = 0;
                                                       }}>
-                        <ListItemIcon>{currCatListHover === subID ? <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(subID, event)} /> :
+                        <ListItemIcon>{currCatListHover === subID ? <React.Fragment>
+                                <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(subID, event)} />
+                                <CreateIcon className={classes.editIconStyle} />
+                        </React.Fragment> :
                             <img alt={'folder-icon'}
                                            src={mapSubcategories.get(subID) === undefined || mapSubcategories.get(subID).length === 0 ?
                                                'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
@@ -320,7 +331,10 @@ export default function CategoryDrawer(props) {
                                                                           // setIndexCurrCat(index);
                                                                           document.getElementById('source_scroll_div').scrollTop = 0;
                                                                       }}>
-                                        <ListItemIcon>{currCatListHover === categoryID ? <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(categoryID, event)} /> :
+                                        <ListItemIcon>{currCatListHover === categoryID ? <React.Fragment>
+                                                <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(categoryID, event)} />
+                                                <CreateIcon className={classes.editIconStyle}/>
+                                        </React.Fragment> :
                                             <img alt={'folder-icon'}
                                                  src={mapSubcategories.get(categoryID) === undefined || mapSubcategories.get(categoryID).length === 0 ?
                                                      'src/images/subfoldericon.png' : 'src/images/parent-category-icon.png'}
