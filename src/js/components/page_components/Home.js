@@ -6,6 +6,7 @@ import CategoryDrawer from "../category_components/CategoryDrawer";
 import AddCategoryPopup from "../add_popups/AddCategoryPopup";
 import AddSourcePopup from "../add_popups/AddSourcePopup";
 import * as constants from "../../constants.js";
+import EditCategoryPopup from "../add_popups/EditCategoryPopup";
 
 
 class Home extends Component {
@@ -185,9 +186,10 @@ class Home extends Component {
                     </div>
                     <div id={'new_class_div'} onClick={() => this.setState({addCatOpen: true})}>+ Add Class</div>
                     <div id={'add_source_div'} onClick={() => this.setState({addSourceOpen: true})}>+ Add Source</div>
-                    {this.state.mapCategories !== undefined ? <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
-                                                                             mapCategories={this.state.mapCategories} rootCategories={this.state.rootCategories} mapSubcategories={this.state.mapSubcategories}
-                                                                                addNewCategory={this.addNewCategory} currCatID={this.state.currCatID} />
+                    {this.state.mapCategories !== undefined ?
+                            <AddCategoryPopup userID={this.props.userID} popupOpen={this.state.addCatOpen} handleClose={() => this.setState({addCatOpen: false})}
+                                              mapCategories={this.state.mapCategories} rootCategories={this.state.rootCategories} mapSubcategories={this.state.mapSubcategories}
+                                              addNewCategory={this.addNewCategory} currCatID={this.state.currCatID} />
                     : ""}
                     {this.state.mapCategories !== undefined ? <AddSourcePopup userID={this.props.userID} popupOpen={this.state.addSourceOpen} handleClose={() => this.setState({addSourceOpen: false})}
                                                                               mapCategories={this.state.mapCategories} rootCategories={this.state.rootCategories} mapSubcategories={this.state.mapSubcategories}

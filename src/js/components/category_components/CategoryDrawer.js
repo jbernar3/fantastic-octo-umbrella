@@ -16,6 +16,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteClassPopup from "../add_popups/DeleteClassPopup";
 import DeleteSourcePopup from "../add_popups/DeleteSourcePopup";
 import CreateIcon from '@material-ui/icons/Create';
+import EditCategoryPopup from "../add_popups/EditCategoryPopup";
 
 const drawerWidth = 240;
 
@@ -116,6 +117,8 @@ export default function CategoryDrawer(props) {
     const [deleteClassOpen, setDeleteClassOpen] = React.useState(false);
     const [deleteClass, setDeleteClass] = React.useState(undefined);
     const [deleteSource, setDeleteSource] = React.useState(null);
+    const [editClassID, setEditClassID] = React.useState(undefined);
+    const [editCatOpen, setEditCatOpen] = React.useState(false);
 
     let scrollbars = null;
 
@@ -168,6 +171,12 @@ export default function CategoryDrawer(props) {
         event.stopPropagation();
         setDeleteClass(mapCategories.get(categoryID));
         setDeleteClassOpen(true);
+    };
+
+    const handleClickEdit = (categoryID, event) => {
+        event.stopPropagation();
+        setEditClassID(categoryID);
+        setEditCatOpen(true);
     };
 
     const handleDeleteSourceClose = () => {
@@ -249,7 +258,7 @@ export default function CategoryDrawer(props) {
                                                       }}>
                         <ListItemIcon>{currCatListHover === subID ? <React.Fragment>
                                 <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(subID, event)} />
-                                <CreateIcon className={classes.editIconStyle} />
+                                <CreateIcon className={classes.editIconStyle} onClick={(event) => handleClickEdit(subID, event)} />
                         </React.Fragment> :
                             <img alt={'folder-icon'}
                                            src={mapSubcategories.get(subID) === undefined || mapSubcategories.get(subID).length === 0 ?
@@ -333,7 +342,7 @@ export default function CategoryDrawer(props) {
                                                                       }}>
                                         <ListItemIcon>{currCatListHover === categoryID ? <React.Fragment>
                                                 <DeleteIcon className={classes.deleteIconStyle} onClick={(event) => handleClickDelete(categoryID, event)} />
-                                                <CreateIcon className={classes.editIconStyle}/>
+                                                <CreateIcon className={classes.editIconStyle} onClick={(event) => handleClickEdit(categoryID, event)} />
                                         </React.Fragment> :
                                             <img alt={'folder-icon'}
                                                  src={mapSubcategories.get(categoryID) === undefined || mapSubcategories.get(categoryID).length === 0 ?
@@ -377,6 +386,9 @@ export default function CategoryDrawer(props) {
                     handleClose={handleDeleteCatClose} />
                 <DeleteSourcePopup userID={props.userID} popupOpen={deleteSource !== null} source={deleteSource} handleClose={handleDeleteSourceClose} categoryID={currCatID}
                     categoryName={!mapCategories || !mapCategories.get(currCatID) ? "" : mapCategories.get(currCatID).category_name} handleDeleteSource={props.handleDeleteSource}/>
+                <EditCategoryPopup userID={props.userID} popupOpen={editCatOpen} handleClose={() => setEditCatOpen(false)}
+                                   mapCategories={props.mapCategories} rootCategories={props.rootCategories} mapSubcategories={props.mapSubcategories}
+                                   editCategory={() => console.log("edit category")} editClassID={editClassID}/>
             </div>
         );
     }

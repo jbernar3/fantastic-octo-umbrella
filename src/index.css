@@ -496,6 +496,15 @@ body {
     overflow: hidden;
 }
 
+#edit-category-div {
+    height: 37vw;
+    width: 37vw;
+    background-image: url('images/edit-class-popup.png');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
 #add-source-div {
     height: 43vw;
     width: 73.2vw;
@@ -1128,4 +1137,13 @@ body {
     margin-right: -30.1vw;
     margin-top: 3.5vw;
     text-align: center;
+}
+
+#edit-class-title {
+    width: 34vw;
+    margin-left: 3vw;
+    /*background-color: rgba(255, 20, 39, 0.46);*/
+    text-align: center;
+    font-size: 1.9vw;
+    margin-top: 1.6vw;
 }
