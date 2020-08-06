@@ -119,20 +119,20 @@ export default function EditCategoryPopup(props) {
             }
         } else {
             setParentID(eventValue);
-            setParentName(eventName);
             event.target.blur();
         }
     };
 
 
     const handleSubmit = () => {
-        if (catName === "") {
+        if (catName === "" || !props.editClassID) {
             setErrorMsg("category is name empty");
         } else {
             console.log("PARENT ID IN HANDLE SUBMIT of ADD CAT");
             console.log(parentID);
             const postParameters = {
                 userID: props.userID,
+                catID: props.editClassID,
                 catName: catName,
                 parentID: parentID
             };
@@ -142,12 +142,12 @@ export default function EditCategoryPopup(props) {
                 if (xhr.response.startsWith("ERROR:")) {
                     setErrorMsg(xhr.response.substring(6));
                 } else {
-                    setCatName("");
-                    props.addNewCategory(JSON.parse(xhr.response), parentID);
+                    handleClose();
+                    props.editClass(JSON.parse(xhr.response), props.editClassID, catName, parentID);
                 }
             });
-            // xhr.open('POST', 'http://localhost:3000/new_category', false);
-            xhr.open('POST', constants.HOST_NAME + 'new_category', false);
+            // xhr.open('POST', 'http://localhost:3000/edit_category', false);
+            xhr.open('POST', constants.HOST_NAME + 'edit_category', false);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(postParameters));
         }
@@ -165,6 +165,12 @@ export default function EditCategoryPopup(props) {
         }
         return (<React.Fragment>
             {props.mapSubcategories.get(categoryID) ? props.mapSubcategories.get(categoryID).map((subCat) => {
+                if (props.mapCategories && props.editClassID && subCat === props.mapCategories.get(props.editClassID).parent_id) {
+                    (<React.Fragment><option className={'select-options'} key={subCat}
+                                             value={subCat} selected>{props.mapCategories.get(subCat).category_name}</option>
+                        {generateOptions(subCat)}
+                    </React.Fragment>);
+                }
                 return (<React.Fragment><option className={'select-options'} key={subCat}
                                                 value={subCat}>{props.mapCategories.get(subCat).category_name}</option>
                     {generateOptions(subCat)}
@@ -202,6 +208,13 @@ export default function EditCategoryPopup(props) {
                     <select id={'parent-cat-select'} onMouseDown={handleMouseDown} onBlur={(event) => {event.target.size = 0}} className={'new-cat-inputs'} name={'parent_cat_select'} onChange={handleInputChange}>
                         <option id={-1} className={'select-options'} value={-1}>no parent</option>
                         {props.rootCategories ? props.rootCategories.map((rootID, index) => {
+                            if (props.mapCategories && props.editClassID && rootID === props.mapCategories.get(props.editClassID).parent_id) {
+                                return (<React.Fragment>
+                                    <option className={'select-options'} key={rootID}
+                                            value={rootID} selected>{props.mapCategories.get(rootID).category_name}</option>
+                                    {generateOptions(rootID)}
+                                </React.Fragment>);
+                            }
                             return (<React.Fragment>
                                 <option className={'select-options'} key={rootID}
                                         value={rootID}>{props.mapCategories.get(rootID).category_name}</option>

@@ -388,7 +388,7 @@ export default function CategoryDrawer(props) {
                     categoryName={!mapCategories || !mapCategories.get(currCatID) ? "" : mapCategories.get(currCatID).category_name} handleDeleteSource={props.handleDeleteSource}/>
                 <EditCategoryPopup userID={props.userID} popupOpen={editCatOpen} handleClose={() => setEditCatOpen(false)}
                                    mapCategories={props.mapCategories} rootCategories={props.rootCategories} mapSubcategories={props.mapSubcategories}
-                                   editCategory={() => console.log("edit category")} editClassID={editClassID}/>
+                                   editClass={props.editClass} editClassID={editClassID}/>
             </div>
         );
     }

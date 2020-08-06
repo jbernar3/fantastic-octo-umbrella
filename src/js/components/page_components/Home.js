@@ -31,10 +31,49 @@ class Home extends Component {
         this.handleEditSource = this.handleEditSource.bind(this);
         this.handleDeleteCat = this.handleDeleteCat.bind(this);
         this.handleDeleteSource = this.handleDeleteSource.bind(this);
+        this.editClass = this.editClass.bind(this);
     }
 
     setCurrCatID(id) {
         this.setState({currCatID: id});
+    }
+
+    editClass(changedParent, catID, catName, parentID) {
+        const tempCat = this.state.mapCategories.get(catID);
+        if (tempCat) {
+            console.log("IN THE IF STATEMENT: EDIT CLASS");
+            tempCat.category_name = catName;
+            if (changedParent) {
+                console.log("IN IF STATEMENT IF CHANGED PARENT: EDIT CLASS");
+                const oldParentID = tempCat.parent_id;
+                tempCat.parent_id = parentID;
+                if (parentID === '-1') {
+                    this.state.rootCategories.push(catID);
+                } else {
+                    const tempSubcats = this.state.mapSubcategories.get(parentID) ? this.state.mapSubcategories.get(parentID) : [];
+                    tempSubcats.push(catID);
+                    this.state.mapSubcategories.set(parentID, tempSubcats);
+                }
+                if (this.state.mapSubcategories.get(oldParentID)) {
+                    const tempSubcats = [];
+                    this.state.mapSubcategories.get(oldParentID).forEach((subID) => {
+                        if (subID !== catID) {
+                            tempSubcats.push(subID);
+                        }
+                    });
+                    this.state.mapSubcategories.set(oldParentID, tempSubcats);
+                } else if (oldParentID === '-1') {
+                    const tempRoots = [];
+                    this.state.rootCategories.forEach((rootID) => {
+                        if (rootID !== catID) {
+                            tempRoots.push(rootID);
+                        }
+                    });
+                    this.setState({rootCategories: tempRoots});
+                }
+            }
+            this.state.mapCategories.set(catID, tempCat);
+        }
     }
 
     addNewCategory(category, parentID) {
@@ -196,7 +235,7 @@ class Home extends Component {
                                                                            addNewSource={this.addNewSource} setSourceImg={this.setSourceImg} currCatID={this.state.currCatID} />
                         : ""}
                 </div>
-                <CategoryDrawer setCurrCatID={this.setCurrCatID}
+                <CategoryDrawer setCurrCatID={this.setCurrCatID} editClass={this.editClass}
                                 rootCategories={this.state.rootCategories} mapCategories={this.state.mapCategories}
                                 mapSubcategories={this.state.mapSubcategories} drawerOpen={this.state.drawerOpen}
                                 userID={this.props.userID} handleEditSource={this.handleEditSource} handleDeleteCat={this.handleDeleteCat}
