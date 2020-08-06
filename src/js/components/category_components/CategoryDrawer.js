@@ -17,6 +17,8 @@ import DeleteClassPopup from "../add_popups/DeleteClassPopup";
 import DeleteSourcePopup from "../add_popups/DeleteSourcePopup";
 import CreateIcon from '@material-ui/icons/Create';
 import EditCategoryPopup from "../add_popups/EditCategoryPopup";
+import LockIcon from '@material-ui/icons/Lock';
+import SearchIcon from '@material-ui/icons/Search';
 
 const drawerWidth = 240;
 
@@ -101,6 +103,15 @@ const clearIconStyle = {
     cursor: 'pointer'
 };
 
+const clearIconSourceStyle = {
+    // marginLeft: -3,
+    marginTop: 3.4,
+    float: 'right',
+    color: '#a65cff',
+    cursor: 'pointer',
+    display: 'inline-block',
+};
+
 export default function CategoryDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
@@ -119,6 +130,7 @@ export default function CategoryDrawer(props) {
     const [deleteSource, setDeleteSource] = React.useState(null);
     const [editClassID, setEditClassID] = React.useState(undefined);
     const [editCatOpen, setEditCatOpen] = React.useState(false);
+    const [sourceSearchValue, setSourceSearchValue] = React.useState("");
 
     let scrollbars = null;
 
@@ -132,9 +144,11 @@ export default function CategoryDrawer(props) {
     };
 
     const handleInputChange = (event) => {
-        setSearchValue(event.target.value);
-        console.log("CURRENT CATEGORY ID");
-        console.log(currCatID);
+        if (event.target.name === 'source-search') {
+            setSourceSearchValue(event.target.value.toLowerCase());
+        } else {
+            setSearchValue(event.target.value);
+        }
     };
 
     useEffect(() => {
@@ -165,6 +179,10 @@ export default function CategoryDrawer(props) {
             }
         }
         return output;
+    };
+
+    const generateSourceSearchName = (source) => {
+        return (source.source_name + " " + source.source_notes).toLowerCase();
     };
 
     const handleClickDelete = (categoryID, event) => {
@@ -363,7 +381,17 @@ export default function CategoryDrawer(props) {
                         [classes.contentShift]: props.drawerOpen,
                     })}
                 >
-                    <div className={'category_name_title'}>{rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined ? mapCategories.get(currCatID).category_name : "No Classes"}</div>
+                    <div className={'category_name_title'}>
+                        {rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined ? !mapCategories.get(currCatID).isPublic ?
+                            <React.Fragment><LockIcon /> {mapCategories.get(currCatID).category_name}</React.Fragment> : mapCategories.get(currCatID).category_name
+                            : "No Classes"}
+                    </div>
+                    {rootCategories.length > 0 && mapCategories.get(currCatID) && mapCategories.get(currCatID).sources.length > 0 ?
+                        <div id={'category-search-bar-div'}>
+                            <input id={'source-search-bar'} name={'source-search'} value={sourceSearchValue} onChange={handleInputChange} className={'houshcka_demibold'} />
+                            {sourceSearchValue === "" ? "" : <ClearIcon style={clearIconSourceStyle} onClick={() => setSourceSearchValue("")} /> }
+                        </div> : ""}
+
                     <Scrollbars
                         style={{ marginLeft: '-10vh', height: '70vh', marginTop: '5vh' }}
                         id='source_scroll_div'
@@ -372,10 +400,12 @@ export default function CategoryDrawer(props) {
                         trackXProps={{ className: "trackX" }}
                     >
                         {rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined &&
-                        mapCategories.get(currCatID).sources.length !== 0 ? mapCategories.get(currCatID).sources.map((source, index) => (
-                            <SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)}
-                                        changeDeleteSource={(source) => setDeleteSource(source)} />
-                        )) : <div id={'no-sources-icon-div'}><img id={'no-sources-icon'} src={'src/images/no-sources.png'} alt={'no sources'}/></div>}
+                        mapCategories.get(currCatID).sources.length !== 0 ? mapCategories.get(currCatID).sources.map(function (source, index) {
+                            if (sourceSearchValue === "" || generateSourceSearchName(source).includes(sourceSearchValue)) {
+                                return (<SourceCard key={index} source={source} drawerOpen={props.drawerOpen} openSourcePopup={() => handleOpenSourcePopup(source)}
+                                            changeDeleteSource={(source) => setDeleteSource(source)} />)
+                            }
+                        }) : <div id={'no-sources-icon-div'}><img id={'no-sources-icon'} src={'src/images/no-sources.png'} alt={'no sources'}/></div>}
                     </Scrollbars>
                 </main>
                 {mapCategories.get(currCatID) === undefined ? <SourcePopup source={sourcePopup} handleClose={handleCloseSourcePopup} popupOpen={false} /> :
