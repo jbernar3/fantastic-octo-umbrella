@@ -408,8 +408,8 @@ export default function CategoryDrawer(props) {
                 >
                     <div className={'category_name_title'}>
                         {rootCategories.length > 0 && mapCategories.get(currCatID) !== undefined ? !mapCategories.get(currCatID).isPublic ?
-                            <React.Fragment><LockIcon /> {mapCategories.get(currCatID).category_name}</React.Fragment> : mapCategories.get(currCatID).category_name
-                            : "No Classes"}
+                            <div id={'category_name_title_inner'}><LockIcon /> {mapCategories.get(currCatID).category_name}</div> : mapCategories.get(currCatID).category_name
+                            : <div id={'category_name_title_inner'}>No Classes</div>}
                     </div>
                     {getSearchBar()}
 
