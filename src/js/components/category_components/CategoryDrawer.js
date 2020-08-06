@@ -19,6 +19,8 @@ import CreateIcon from '@material-ui/icons/Create';
 import EditCategoryPopup from "../add_popups/EditCategoryPopup";
 import LockIcon from '@material-ui/icons/Lock';
 import SearchIcon from '@material-ui/icons/Search';
+import Slide from "@material-ui/core/Slide";
+import Popper from "@material-ui/core/Popper";
 
 const drawerWidth = 240;
 
@@ -131,6 +133,7 @@ export default function CategoryDrawer(props) {
     const [editClassID, setEditClassID] = React.useState(undefined);
     const [editCatOpen, setEditCatOpen] = React.useState(false);
     const [sourceSearchValue, setSourceSearchValue] = React.useState("");
+    const [sourceSearchOpen, setSourceSearchOpen] = React.useState(false);
 
     let scrollbars = null;
 
@@ -244,6 +247,28 @@ export default function CategoryDrawer(props) {
         xhr.open('POST', constants.HOST_NAME + 'delete_category', false);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(postParameters));
+    };
+
+    const toggleSourceSearchOpen = () => {
+        if (sourceSearchOpen) {
+            setSourceSearchValue("");
+        }
+        setSourceSearchOpen(!sourceSearchOpen);
+    };
+
+    const getSearchBar = () => {
+        if (rootCategories.length > 0 && mapCategories.get(currCatID) && mapCategories.get(currCatID).sources.length > 0) {
+            if (sourceSearchOpen) {
+                return (<div id={'category-search-bar-div'}>
+                    <input id={'source-search-bar'} name={'source-search'} value={sourceSearchValue} onChange={handleInputChange} className={'houshcka_demibold'} />
+                    <ClearIcon style={clearIconSourceStyle} onClick={toggleSourceSearchOpen} />
+                </div>);
+            } else {
+                return (<div id={'category-search-bar-div'}>
+                    <SearchIcon style={clearIconSourceStyle} onClick={toggleSourceSearchOpen} />
+                </div>)
+            }
+        }
     };
 
     const getSubcategories = (categoryID, index) => {
@@ -386,14 +411,10 @@ export default function CategoryDrawer(props) {
                             <React.Fragment><LockIcon /> {mapCategories.get(currCatID).category_name}</React.Fragment> : mapCategories.get(currCatID).category_name
                             : "No Classes"}
                     </div>
-                    {rootCategories.length > 0 && mapCategories.get(currCatID) && mapCategories.get(currCatID).sources.length > 0 ?
-                        <div id={'category-search-bar-div'}>
-                            <input id={'source-search-bar'} name={'source-search'} value={sourceSearchValue} onChange={handleInputChange} className={'houshcka_demibold'} />
-                            {sourceSearchValue === "" ? "" : <ClearIcon style={clearIconSourceStyle} onClick={() => setSourceSearchValue("")} /> }
-                        </div> : ""}
+                    {getSearchBar()}
 
                     <Scrollbars
-                        style={{ marginLeft: '-10vh', height: '70vh', marginTop: '5vh' }}
+                        style={{ marginLeft: '-10vh', height: '70vh', marginTop: '4vh' }}
                         id='source_scroll_div'
                         ref={ref => (scrollbars = ref)}
                         thumbYProps={{ className: "thumbY" }}

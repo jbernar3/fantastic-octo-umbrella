@@ -78,6 +78,14 @@
     /*background-color: aqua;*/
 }
 
+#category-search-bar-popper {
+    display: inline-block;
+    width: 20%;
+    float: right;
+    margin-right: 7%;
+    margin-top: -25px;
+}
+
 #category-search-bar-div {
     display: inline-block;
     /*background-color: chartreuse;*/
