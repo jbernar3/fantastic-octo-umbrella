@@ -95,6 +95,15 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             color: 'rgba(166,92,254,0.42)'
         }
+    }, clearIconSourceStyle: {
+        marginTop: 3.4,
+        float: 'right',
+        color: '#a65cff',
+        cursor: 'pointer',
+        display: 'inline-block',
+        '&:hover': {
+            color: 'rgba(166,92,254,0.42)'
+        }
     }
 }));
 
@@ -261,11 +270,11 @@ export default function CategoryDrawer(props) {
             if (sourceSearchOpen) {
                 return (<div id={'category-search-bar-div'}>
                     <input id={'source-search-bar'} name={'source-search'} value={sourceSearchValue} onChange={handleInputChange} className={'houshcka_demibold'} />
-                    <ClearIcon style={clearIconSourceStyle} onClick={toggleSourceSearchOpen} />
+                    <ClearIcon className={classes.clearIconSourceStyle} onClick={toggleSourceSearchOpen} />
                 </div>);
             } else {
                 return (<div id={'category-search-bar-div'}>
-                    <SearchIcon style={clearIconSourceStyle} onClick={toggleSourceSearchOpen} />
+                    <SearchIcon className={classes.clearIconSourceStyle} onClick={toggleSourceSearchOpen} />
                 </div>)
             }
         }
