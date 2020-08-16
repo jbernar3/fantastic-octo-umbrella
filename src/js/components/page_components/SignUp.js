@@ -40,6 +40,15 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 600,
         fontStyle: 'normal',
     },
+    signupBtn: {
+        backgroundColor: "#ffffff",
+        align: "center",
+        paddingLeft: "50px",
+        paddingRight: "50px",
+        paddingTop: "10px",
+        paddingBottom: "10px",
+        marginTop: "2vh"
+    }
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -131,48 +140,75 @@ function SignUp(props) {
                     {userNeedVerify !== null ? <VerificationCodePopup userID={userNeedVerify._id} email={verifyEmail} handleClose={handleClose} onSuccess={onSuccess} /> :
                     ""}
                 </Dialog>
-                <div className={classes.root} style={{marginLeft: '59.7%', marginTop: '15%', alignContent: 'center'}}>
-                    <Grid container spacing={3}>
-                        <Grid container item xs={12} style={{marginLeft: '0vh'}}>
-                            <Grid item xs={5}>
-                                {errorMsg !== "" ? <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
-                                                          className={'short-signup-input-error'} /> :
-                                    <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
-                                           className={'short-signup-input'} />}
-                            </Grid>
-                            <Grid item xs={5}>
-                                {errorMsg !== "" ? <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
-                                                          className={'short-signup-input-error'} /> :
-                                    <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
-                                            className={'short-signup-input'} />}
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                            {errorMsg !== "" ? <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}
-                                                      className={'signup-input-error'} /> :
-                                <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}
-                                      className={'signup-input'} />}
-                        </Grid>
-                        <Grid item xs={12}>
-                            {errorMsg !== "" ? <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
-                                                      className={'signup-input-error'} /> :
-                                <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
-                                       className={'signup-input'} />}
-                        </Grid>
-                        <Grid item xs={11} style={{marginLeft: "20.5%"}}>
-                            {errorMsg !== "" ? <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>
-                                    <div className={'houshcka_demibold'} style={{marginLeft: "-38px"}}>Email is already registered. Please Sign In</div>
-                                </Link> :
-                                <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>
-                                    <div className={'houshcka_demibold'} style={{marginLeft: "-21px"}}>Already have an account? Sign In</div>
-                                </Link>}
-                            <br /><br />
-                            <Button onClick={handleSubmit} disabled={fName === "" || lName === "" || email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
-                                <div className={'houshcka_demibold'}>sign up</div>
-                            </Button>
-                        </Grid>
-                    </Grid>
+                <div id={'signup-inputs-div'}>
+                    {errorMsg !== "" ? <input id="fname-signup" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
+                                              className={'short-signup-input-error'} /> :
+                        <input id="fname-signup" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}
+                               className={'short-signup-input'} />}
+                    {errorMsg !== "" ? <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
+                                              className={'short-signup-input-error'} /> :
+                        <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}
+                               className={'short-signup-input'} />}
+                    {errorMsg !== "" ? <input id="email-signup" placeholder="email" name={"email"} onChange={handleChange} value={email}
+                                              className={'signup-input-error'} /> :
+                        <input id="email-signup" placeholder="email" name={"email"} onChange={handleChange} value={email}
+                               className={'signup-input'} />}
+                    {errorMsg !== "" ? <input type={"password"} placeholder="password" id="password-signup" name={"password"} onChange={handleChange} value={password}
+                                              className={'signup-input-error'} /> :
+                        <input type={"password"} placeholder="password" id="password-signup" name={"password"} onChange={handleChange} value={password}
+                               className={'signup-input'} />}
+                    {errorMsg !== "" ? <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>
+                            <div id={'link-signup'} className={'houshcka_demibold'}>Email is already registered. Please Sign In</div>
+                        </Link> :
+                        <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>
+                            <div id={'link-signup'} className={'houshcka_demibold'}>Already have an account? Sign In</div>
+                        </Link>}
+                    <Button className={classes.signupBtn} onClick={handleSubmit} disabled={fName === "" || lName === "" || email === "" || password === ""}>
+                        <div className={'houshcka_demibold'}>sign up</div>
+                    </Button>
                 </div>
+                {/*<div className={classes.root} style={{marginLeft: '59.7%', marginTop: '15%', alignContent: 'center'}}>*/}
+                {/*    <Grid container spacing={3}>*/}
+                {/*        <Grid container item xs={12} style={{marginLeft: '0vh'}}>*/}
+                {/*            <Grid item xs={5}>*/}
+                {/*                {errorMsg !== "" ? <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}*/}
+                {/*                                          className={'short-signup-input-error'} /> :*/}
+                {/*                    <input id="firstName" placeholder="first name" name={"firstName"} onChange={handleChange} value={fName}*/}
+                {/*                           className={'short-signup-input'} />}*/}
+                {/*            </Grid>*/}
+                {/*            <Grid item xs={5}>*/}
+                {/*                {errorMsg !== "" ? <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}*/}
+                {/*                                          className={'short-signup-input-error'} /> :*/}
+                {/*                    <input id="lname-signup" placeholder="last name" name={"lastName"} onChange={handleChange} value={lName}*/}
+                {/*                            className={'short-signup-input'} />}*/}
+                {/*            </Grid>*/}
+                {/*        </Grid>*/}
+                {/*        <Grid item xs={12}>*/}
+                {/*            {errorMsg !== "" ? <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}*/}
+                {/*                                      className={'signup-input-error'} /> :*/}
+                {/*                <input id="email" placeholder="email" name={"email"} onChange={handleChange} value={email}*/}
+                {/*                      className={'signup-input'} />}*/}
+                {/*        </Grid>*/}
+                {/*        <Grid item xs={12}>*/}
+                {/*            {errorMsg !== "" ? <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}*/}
+                {/*                                      className={'signup-input-error'} /> :*/}
+                {/*                <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}*/}
+                {/*                       className={'signup-input'} />}*/}
+                {/*        </Grid>*/}
+                {/*        <Grid item xs={11} style={{marginLeft: "20.5%"}}>*/}
+                {/*            {errorMsg !== "" ? <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>*/}
+                {/*                    <div className={'houshcka_demibold'} style={{marginLeft: "-38px"}}>Email is already registered. Please Sign In</div>*/}
+                {/*                </Link> :*/}
+                {/*                <Link href="/#/signin" variant="body2" style={{color: "#ffffff"}}>*/}
+                {/*                    <div className={'houshcka_demibold'} style={{marginLeft: "-21px"}}>Already have an account? Sign In</div>*/}
+                {/*                </Link>}*/}
+                {/*            <br /><br />*/}
+                {/*            <Button onClick={handleSubmit} disabled={fName === "" || lName === "" || email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>*/}
+                {/*                <div className={'houshcka_demibold'}>sign up</div>*/}
+                {/*            </Button>*/}
+                {/*        </Grid>*/}
+                {/*    </Grid>*/}
+                {/*</div>*/}
             </div>
         );
     }

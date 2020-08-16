@@ -45,6 +45,15 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 600,
         fontStyle: 'normal',
     },
+    signinBtn: {
+        backgroundColor: "#ffffff",
+        align: "center",
+        paddingLeft: "50px",
+        paddingRight: "50px",
+        paddingTop: "10px",
+        paddingBottom: "10px",
+        marginTop: "2vh",
+    }
 }));
 
 function SignInSide(props) {
@@ -122,40 +131,61 @@ function SignInSide(props) {
     }
     return (
         <div id={"signin-container"}>
-            <div className={classes.root} style={{marginLeft: '60%', marginTop: '16%', alignContent: 'center'}}>
-                <Grid container spacing={4}>
-                    <Grid item xs={12}>
-                        {errorMsg !== "" ? <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
-                                                  className={'signin-error'} /> :
-                            <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
-                                   className={'signin-input'} />}
-                    </Grid>
-                    <Grid item xs={12}>
-                        {errorMsg !== "" ? <input type={"password"} placeholder="password" id="signin-password" name={"password"} onChange={handleChange} value={password}
-                                                   className={'signin-error'} /> :
-                            <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
-                                   className={'signin-input'} />}
-
-                        <br /><br />
-                        {errorMsg !== "" ? <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff", marginLeft: "35px"}}>{"Incorrect Username or Password. Forgot password?"}</Link> :
-                            <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff"}}>
-                                <div className={"houshcka_demibold"} style={{marginLeft: "138px", cursor: 'pointer'}}>Forgot password?</div>
-                            </Link>}
-
-                    </Grid>
-                    <Grid item xs={12} style={{marginLeft: "22.85%"}}>
-                        {loading ? <img src={'src/images/temp_loading.gif'} alt={"Loading gif"}/>: ""}
-                        <Button onClick={() => {setLoading(true); setTimeout(function cb() {
-                            handleSubmit();
-                        }, 0)}} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>
-                            <div className={'houshcka_demibold'}>sign in</div>
-                        </Button><br /><br />
-                        <Link href="/#/signup" variant="body2" style={{color: "#ffffff"}}>
-                            {<div className={'houshcka_demibold'} style={{marginLeft: "-22px"}}>Don't have an account? Sign Up</div>}
-                        </Link>
-                    </Grid>
-                </Grid>
+            <div id={'signin-inputs-div'}>
+                {errorMsg !== "" ? <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
+                                          className={'signin-error'} /> :
+                    <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}
+                           className={'signin-input'} />}
+                {errorMsg !== "" ? <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
+                                          className={'signin-error'} /> :
+                    <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}
+                           className={'signin-input'} />}
+                {errorMsg !== "" ? <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff"}}><div id={'forgot-pwd-link'} className={"houshcka_demibold"}>Incorrect Username or Password. Forgot password?</div></Link> :
+                    <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff"}}>
+                        <div id={'forgot-pwd-link'} className={"houshcka_demibold"}>Forgot password?</div>
+                    </Link>}
+                <Button onClick={() => {setLoading(true); setTimeout(function cb() {
+                    handleSubmit();
+                }, 0)}} disabled={email === "" || password === ""} className={classes.signinBtn}>
+                    <div className={'houshcka_demibold'}>sign in</div>
+                </Button>
+                <Link href="/#/signup" variant="body2" style={{color: "#ffffff"}}>
+                    {<div id={'signin-link2'} className={'houshcka_demibold'}>Don't have an account? Sign Up</div>}
+                </Link>
             </div>
+            {/*<div className={classes.root} style={{marginLeft: '60%', marginTop: '16%', alignContent: 'center'}}>*/}
+            {/*    <Grid container spacing={4}>*/}
+            {/*        <Grid item xs={12}>*/}
+            {/*            {errorMsg !== "" ? <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}*/}
+            {/*                                      className={'signin-error'} /> :*/}
+            {/*                <input id="email" placeholder="email address" name={"email"} onChange={handleChange} value={email}*/}
+            {/*                       className={'signin-input'} />}*/}
+            {/*        </Grid>*/}
+            {/*        <Grid item xs={12}>*/}
+            {/*            {errorMsg !== "" ? <input type={"password"} placeholder="password" id="signin-password" name={"password"} onChange={handleChange} value={password}*/}
+            {/*                                       className={'signin-error'} /> :*/}
+            {/*                <input type={"password"} placeholder="password" id="password" name={"password"} onChange={handleChange} value={password}*/}
+            {/*                       className={'signin-input'} />}*/}
+
+            {/*            <br /><br />*/}
+            {/*            {errorMsg !== "" ? <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff", marginLeft: "35px"}}>{"Incorrect Username or Password. Forgot password?"}</Link> :*/}
+            {/*                <Link onClick={() => setShowForgotPwd(true)} variant="body2" style={{color: "#ffffff"}}>*/}
+            {/*                    <div className={"houshcka_demibold"} style={{marginLeft: "138px", cursor: 'pointer'}}>Forgot password?</div>*/}
+            {/*                </Link>}*/}
+
+            {/*        </Grid>*/}
+            {/*        <Grid item xs={12} style={{marginLeft: "22.85%"}}>*/}
+            {/*            <Button onClick={() => {setLoading(true); setTimeout(function cb() {*/}
+            {/*                handleSubmit();*/}
+            {/*            }, 0)}} disabled={email === "" || password === ""} style={{backgroundColor: "#ffffff", align: "center", paddingLeft: "50px", paddingRight: "50px", paddingTop: "10px", paddingBottom: "10px"}}>*/}
+            {/*                <div className={'houshcka_demibold'}>sign in</div>*/}
+            {/*            </Button><br /><br />*/}
+            {/*            <Link href="/#/signup" variant="body2" style={{color: "#ffffff"}}>*/}
+            {/*                {<div className={'houshcka_demibold'} style={{marginLeft: "-22px"}}>Don't have an account? Sign Up</div>}*/}
+            {/*            </Link>*/}
+            {/*        </Grid>*/}
+            {/*    </Grid>*/}
+            {/*</div>*/}
             <Dialog
                 open={showVerification}
                 TransitionComponent={Transition}
